@@ -1,21 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Code.Traps
 {
     public class Rotator : MonoBehaviour
     {
-        [Range(-100, 100)]
-        public float RotationSpeed;
-        
-        void Update()
+        [Range(-500f, 500f)]
+        public float Rotation = 0f;
+        public Space Space = Space.Self;
+
+        private Vector3 vector;
+
+        void Start()
         {
-            var p = this.transform.position;
-            this.transform.RotateAroundLocal(new Vector3(0,0, p.z), RotationSpeed * Time.deltaTime);
-            //this.transform.RotateAround(this.transform.position, RotationSpeed * Time.deltaTime);
-;        }
+            vector = new Vector3(0, 0, Rotation);
+        }
+
+        // Update is called once per frame
+        private void Update()
+        {
+            transform.Rotate(vector * Time.deltaTime, Space);
+        }
     }
 }
