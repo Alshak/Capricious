@@ -6,7 +6,7 @@ public class testscript2 : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//Todo: Make magic hereddd
+		//Todo: Make magic heredddasdsadsadas
 	}
 	
 	// Update is called once per frame
