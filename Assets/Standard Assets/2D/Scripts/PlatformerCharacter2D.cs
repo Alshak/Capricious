@@ -80,8 +80,7 @@ namespace UnityStandardAssets._2D
         public void Move(float move, bool crouch, bool run, bool jump)
         {
             bool goingRight = Mathf.Sign(move) > 0;
-            Debug.Log(m_Rigidbody2D.velocity);
-            if (m_TouchingWall && !jump)
+            if (m_TouchingWall && !jump && m_Grounded)
             {
                 if ((!m_FacingRight && !goingRight) || (m_FacingRight && goingRight))
                 {
@@ -168,6 +167,11 @@ namespace UnityStandardAssets._2D
                     ActivateAirControlBlock();
                     Flip();
                 }
+            }
+            // Slide on a wall
+            if (!m_Grounded && m_TouchingWall)
+            {
+                m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_Rigidbody2D.velocity.y * 0.75f);
             }
             m_Rigidbody2D.velocity = new Vector2(Mathf.Clamp(m_Rigidbody2D.velocity.x, -20, 20), Mathf.Clamp(m_Rigidbody2D.velocity.y, -20, 20));
         }
