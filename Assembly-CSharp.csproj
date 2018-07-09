@@ -61,7 +61,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Code\Humanoids\KillableByTraps.cs" />
     <Compile Include="Assets\Code\testscript2.cs" />
+    <Compile Include="Assets\Code\Traps\Killscript.cs" />
+    <Compile Include="Assets\Code\Traps\Rotator.cs" />
+    <Compile Include="Assets\Code\Traps\RotatorCenter.cs" />
+    <Compile Include="Assets\Code\Traps\TrapActivator.cs" />
     <Compile Include="Assets\test.cs" />
     <Compile Include="Assets\testScript.cs" />
     <Reference Include="UnityEditor.StandardEvents">
