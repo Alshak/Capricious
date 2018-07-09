@@ -67,30 +67,6 @@
      <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
      <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
      <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\ActivateTrigger.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\AlphaButtonClickMask.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\AutoMoveAndRotate.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\CameraRefocus.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\CurveControlledBob.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\DragRigidbody.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\DynamicShadowSettings.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\EventSystemChecker.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\FollowTarget.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\ForcedReset.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\FOVKick.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\FPSCounter.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\LerpControlledBob.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\ObjectResetter.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\ParticleSystemDestroyer.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\PlatformSpecificContent.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\SimpleActivatorMenu.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\SimpleMouseRotator.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\SmoothFollow.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\TimedObjectActivator.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\TimedObjectDestructor.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\WaypointCircuit.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\WaypointProgressTracker.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/david/source/repos/Capricious/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
@@ -304,9 +280,6 @@
  </Reference>
  <Reference Include="UnityEngine.Analytics">
  <HintPath>C:/Users/david/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Users/david/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.1/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.StandardEvents">
  <HintPath>C:/Users/david/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
