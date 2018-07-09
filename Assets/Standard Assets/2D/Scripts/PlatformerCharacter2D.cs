@@ -8,10 +8,10 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_MaxWalkingSpeed = 10f;                    // The fastest the player can travel in the x axis.
         [SerializeField] private float m_MaxRunningSpeed = 15f;                    // The fastest the player can travel in the x axis.
         [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
-        [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
+        [Range(0, 4)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
-
+        [SerializeField] private float m_SlideDuration = 2f;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool m_Grounded;            // Whether or not the player is grounded.
@@ -20,6 +20,8 @@ namespace UnityStandardAssets._2D
         private Animator m_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+        private float m_CurrentSlideDuration = 1f;
+        private float m_CurrentSlideSpeed = 1f;
 
         private void Awake()
         {
@@ -52,6 +54,7 @@ namespace UnityStandardAssets._2D
 
         public void Move(float move, bool crouch, bool run, bool jump)
         {
+
             // If crouching, check to see if the character can stand up
             if (!crouch && m_Anim.GetBool("Crouch"))
             {
@@ -63,20 +66,37 @@ namespace UnityStandardAssets._2D
             }
 
             // Set whether or not the character is crouching in the animator
-            m_Anim.SetBool("Crouch", crouch);
-
+            if (m_Anim.GetBool("Crouch") != crouch)
+            {
+                m_Anim.SetBool("Crouch", crouch);
+            }
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || m_AirControl)
             {
-                // Reduce the speed if crouching by the crouchSpeed multiplier
-                move = (crouch ? move*m_CrouchSpeed : move);
+                if (crouch)
+                {
+                    m_CurrentSlideDuration += Time.deltaTime;
+                    m_CurrentSlideSpeed = m_CurrentSlideSpeed * ((m_SlideDuration - m_CurrentSlideDuration) / m_SlideDuration);
+                    if(m_CurrentSlideSpeed < .1)
+                    {
+                        m_CurrentSlideSpeed = 0;
+                    }
+                    // Reduce the speed if crouching by the crouchSpeed multiplier
+                    move = move * m_CurrentSlideSpeed;
+                    Debug.Log(m_CurrentSlideSpeed);
+                }
+                else
+                {
+                    m_CurrentSlideSpeed = m_CrouchSpeed;
+                    m_CurrentSlideDuration = 0;
+                }
 
                 // The Speed animator parameter is set to the absolute value of the horizontal input.
                 m_Anim.SetFloat("Speed", Mathf.Abs(move));
 
                 // Move the character
-                float currentSpeed = run ? m_MaxRunningSpeed : m_MaxWalkingSpeed; 
-                m_Rigidbody2D.velocity = new Vector2(move* currentSpeed, m_Rigidbody2D.velocity.y);
+                float currentSpeed = run ? m_MaxRunningSpeed : m_MaxWalkingSpeed;
+                m_Rigidbody2D.velocity = new Vector2(move * currentSpeed, m_Rigidbody2D.velocity.y);
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)
@@ -84,7 +104,7 @@ namespace UnityStandardAssets._2D
                     // ... flip the player.
                     Flip();
                 }
-                    // Otherwise if the input is moving the player left and the player is facing right...
+                // Otherwise if the input is moving the player left and the player is facing right...
                 else if (move < 0 && m_FacingRight)
                 {
                     // ... flip the player.
