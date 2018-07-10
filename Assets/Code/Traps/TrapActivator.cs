@@ -17,9 +17,12 @@ namespace Assets.Code.Traps
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            foreach(Rigidbody2D trap in Traps)
+            if (other.tag == "Player")
             {
-                trap.WakeUp();
+                foreach (Rigidbody2D trap in Traps)
+                {
+                    trap.WakeUp();
+                }
             }
         }
     }

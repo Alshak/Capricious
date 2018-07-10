@@ -11,6 +11,7 @@ namespace UnityStandardAssets._2D
         [Range(0, 4)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
+        [SerializeField] private LayerMask m_WhatIsWall;                  // A mask determining what is a wall to the character
         [SerializeField] private float m_SlideDuration = 2f;
         [SerializeField] private float m_AirControlBlockAfterWallJump = 1f;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
@@ -65,19 +66,22 @@ namespace UnityStandardAssets._2D
             m_Anim.SetBool("Ground", m_Grounded);
 
 
-            Collider2D[] wallJumpColliders = Physics2D.OverlapCircleAll(m_WallCheck.position, k_WallJumpRadius, m_WhatIsGround);
+            Collider2D[] wallJumpColliders = Physics2D.OverlapCircleAll(m_WallCheck.position, k_WallJumpRadius, m_WhatIsWall);
             for (int i = 0; i < wallJumpColliders.Length; i++)
             {
                 if (wallJumpColliders[i].gameObject != gameObject)
+                {
                     m_TouchingWall = true;
+                }
             }
-
+            Debug.Log(m_TouchingWall);
+            m_Anim.SetBool("TouchingWall", m_TouchingWall);
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
         }
 
 
-        public void Move(float move, bool crouch, bool run, bool jump)
+        public void Move(float move, bool crouch, bool run, bool throwing, bool jump)
         {
             bool goingRight = Mathf.Sign(move) > 0;
             if (m_TouchingWall && !jump && m_Grounded)
@@ -103,6 +107,9 @@ namespace UnityStandardAssets._2D
             {
                 m_Anim.SetBool("Crouch", crouch);
             }
+
+            m_Anim.SetBool("Throw", throwing);
+
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || (m_AirControl && m_CanAirControl))
             {
