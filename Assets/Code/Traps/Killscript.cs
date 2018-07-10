@@ -66,7 +66,7 @@ namespace Assets.Code.Traps
             var character = killed.GetComponent<PlatformerCharacter2D>();
             if (character != null)
             {
-                return character.m_FacingRight;
+                return character.IsFacingRight();
             }
             return true;
         }
