@@ -9,7 +9,7 @@ namespace UnityStandardAssets._2D
     {
         private PlatformerCharacter2D m_Character;
         private bool m_Jump;
-
+        public bool IsAlive = true;
 
         private void Awake()
         {
@@ -19,6 +19,9 @@ namespace UnityStandardAssets._2D
 
         private void Update()
         {
+            if (IsAlive == false) //Set to true in PlayerRespawner
+                return;
+
             if (!m_Jump)
             {
                 // Read the jump input in Update so button presses aren't missed.
@@ -29,6 +32,9 @@ namespace UnityStandardAssets._2D
 
         private void FixedUpdate()
         {
+            if (IsAlive == false) //Set to true in PlayerRespawner
+                return;
+
             // Read the inputs.
             bool crouch = CrossPlatformInputManager.GetButton("Crouch");
             bool run = CrossPlatformInputManager.GetButton("Run");
