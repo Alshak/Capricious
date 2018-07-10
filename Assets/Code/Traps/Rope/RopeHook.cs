@@ -11,9 +11,10 @@ namespace Assets.Code.Traps.Rope
         void Start()
         {
             //Vector2 destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RopeStart start = GetComponentInParent<RopeStart>();
-            curHook = Instantiate(hook, transform.position, Quaternion.identity);
-            curHook.GetComponent<Rope2D>().destiny = start.transform.position;
+            DebugSprite start = GetComponentInParent<DebugSprite>();
+            //curHook = Instantiate(hook, transform.position, Quaternion.identity);
+            //curHook.GetComponent<Rope2D>().destiny = start.transform.position;
+            
         }
     }
 }

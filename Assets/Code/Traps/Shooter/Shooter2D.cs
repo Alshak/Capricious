@@ -25,7 +25,6 @@ namespace Assets.Code.Traps.Shooter
         {
             var spawnPoints = GetComponentsInChildren<Spawnpoint>();
             ListSpawnpoints = new List<Spawnpoint>(spawnPoints);
-            Debug.Log("ListSpawnpoints: " + ListSpawnpoints.Count);
         }
 
         void Update()
