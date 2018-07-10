@@ -16,21 +16,30 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_SlideDuration = 2f;
         [SerializeField] private GameObject ThrowableTemplate;
         [Range(0, 1)] [SerializeField] private float m_AirControlBlockAfterWallJump = 1f;
+
+        private Animator m_Anim;            // Reference to the player's animator component.
+        private Rigidbody2D m_Rigidbody2D;
+
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool m_Grounded;            // Whether or not the player is grounded.
+
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
-        private Animator m_Anim;            // Reference to the player's animator component.
-        private Rigidbody2D m_Rigidbody2D;
-        private bool m_FacingRight = true;  // For determining which way the player is currently facing.
-        private float m_CurrentSlideDuration = 1f;
-        private float m_CurrentSlideSpeed = 1f;
+
         private Transform m_WallCheck;
         const float k_WallJumpRadius = .2f; // Radius of the overlap circle to determine if player can wall jump
         private bool m_TouchingWall;            // Whether or not the player can wall jump.
+
+        private Transform m_ThrowPosition;
+
         private bool m_CanAirControl = false;
         private float m_AirControlTimerValue = 1f;
+
+        private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+
+        private float m_CurrentSlideDuration = 1f;
+        private float m_CurrentSlideSpeed = 1f;
 
         private void Awake()
         {
@@ -38,6 +47,7 @@ namespace UnityStandardAssets._2D
             m_GroundCheck = transform.Find("GroundCheck");
             m_CeilingCheck = transform.Find("CeilingCheck");
             m_WallCheck = transform.Find("WallCheck");
+            m_ThrowPosition = transform.Find("ThrowPosition");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
         }
@@ -112,13 +122,13 @@ namespace UnityStandardAssets._2D
             if (throwing)
             {
                 m_Anim.SetTrigger("Throw");
-                GameObject throwable = Instantiate(ThrowableTemplate, m_WallCheck.position, Quaternion.identity);
+                GameObject throwable = Instantiate(ThrowableTemplate, m_ThrowPosition.position, Quaternion.identity);
                 float isRightJump = -1;
                 if (m_FacingRight)
                 {
                     isRightJump = 1;
                 }
-                throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(isRightJump * m_ThrowForce, m_ThrowForce));
+                throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(isRightJump * m_ThrowForce, m_ThrowForce * 0.25f));
             }
 
             //only control the player if grounded or airControl is turned on
