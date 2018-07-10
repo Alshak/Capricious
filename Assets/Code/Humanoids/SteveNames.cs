@@ -14,7 +14,6 @@ namespace Assets.Code.Humanoids
 
         public String GetName()
         {
-            Debug.Log("Get a name!");
             if (indexNr < ListPrefixes.Count - 1)
             {
                 indexNr++;

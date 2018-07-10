@@ -46,7 +46,7 @@ namespace Assets.Code.Spawning
 
             if (PrevTimeLife != null)
             {
-                Debug.Log("prev life null");
+                //Debug.Log("prev life null");
                 PrevTimeLife.IsActived = true;
             }
             PrevTimeLife = newTimedLife;
@@ -79,7 +79,10 @@ namespace Assets.Code.Spawning
                 rigid.velocity = Vector3.zero;
                 rigid.angularVelocity = 0f;
             }
-            currentCheckpoint.SetNextSteveName();
+            if (currentCheckpoint != null)
+            {
+                currentCheckpoint.SetNextSteveName();
+            }
         }
     }
 }
