@@ -12,7 +12,6 @@ namespace Assets.Code.Traps
     {
         [SerializeField] private bool ShouldDieOnHit = false;
         [SerializeField] private bool DeactivateOnFloor = false;
-        [SerializeField] private bool UseTrigger = false;
         private bool doNotKill = false;
 
         public bool FreezeMovementWhenHittingGround = false;
@@ -20,12 +19,28 @@ namespace Assets.Code.Traps
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (UseTrigger && !doNotKill)
+            Collide(other);
+        }
+
+        private void Collide(Collider2D other)
+        {
+            if (!doNotKill)
             {
                 var killable = other.GetComponent<KillableByTraps>();
                 if (killable != null)
                 {
                     killable.Kill(IsFacingRight(killable));
+                }
+                else
+                {
+                    if (other.transform.parent != null)
+                    {
+                        killable = other.transform.parent.GetComponent<KillableByTraps>();
+                        if (killable != null)
+                        {
+                            killable.Kill(IsFacingRight(killable));
+                        }
+                    }
                 }
 
                 if (ShouldDieOnHit && other.tag != "Gibs")
@@ -54,26 +69,7 @@ namespace Assets.Code.Traps
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (!UseTrigger && !doNotKill)
-            {
-                var killable = other.collider.GetComponent<KillableByTraps>();
-                if (killable != null)
-                {
-                    killable.Kill(IsFacingRight(killable));
-                }
-
-                if (ShouldDieOnHit && other.collider.tag != "Gibs")
-                {
-                    Destroy(gameObject);
-                }
-
-                var ourCollider = GetComponent<Collider2D>();
-                //Debug.Log("is hitting floor: " + ourCollider.IsTouchingLayers(Physics2D.GetLayerCollisionMask(LayerMask.NameToLayer("Ground"))));
-                if (DeactivateOnFloor && ourCollider.IsTouchingLayers(Physics2D.GetLayerCollisionMask(LayerMask.NameToLayer("Ground"))))
-                {
-                    doNotKill = true;
-                }
-            }
+            Collide(other.collider);
         }
 
         private bool IsFacingRight(KillableByTraps killed)

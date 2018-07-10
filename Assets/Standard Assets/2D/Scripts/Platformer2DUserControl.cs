@@ -16,7 +16,6 @@ namespace UnityStandardAssets._2D
             m_Character = GetComponent<PlatformerCharacter2D>();
         }
 
-
         private void Update()
         {
             if (IsAlive == false) //Set to true in PlayerRespawner
@@ -27,8 +26,15 @@ namespace UnityStandardAssets._2D
                 // Read the jump input in Update so button presses aren't missed.
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }
-        }
 
+            // Read the inputs.
+            bool crouch = CrossPlatformInputManager.GetButtonDown("Crouch");
+            bool run = CrossPlatformInputManager.GetButton("Run");
+            bool throwing = CrossPlatformInputManager.GetButtonDown("Throw");
+            // Pass all parameters to the character control script.
+            m_Character.Action(crouch, run, throwing, m_Jump);
+            m_Jump = false;
+        }
 
         private void FixedUpdate()
         {
@@ -36,13 +42,9 @@ namespace UnityStandardAssets._2D
                 return;
 
             // Read the inputs.
-            bool crouch = CrossPlatformInputManager.GetButton("Crouch");
-            bool run = CrossPlatformInputManager.GetButton("Run");
-            bool throwing = CrossPlatformInputManager.GetButtonDown("Throw");
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             // Pass all parameters to the character control script.
-            m_Character.Move(h, crouch, run, throwing, m_Jump);
-            m_Jump = false;
+            m_Character.Move(h);
         }
     }
 }
