@@ -21,7 +21,7 @@ namespace Assets.Code.Traps
             {
                 foreach (Rigidbody2D trap in Traps)
                 {
-                    trap.WakeUp();
+                    trap.isKinematic = false;
                 }
             }
         }

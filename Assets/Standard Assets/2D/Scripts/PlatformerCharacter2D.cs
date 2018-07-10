@@ -13,7 +13,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
         [SerializeField] private LayerMask m_WhatIsWall;                  // A mask determining what is a wall to the character
         [SerializeField] private float m_SlideDuration = 2f;
-        [SerializeField] private float m_AirControlBlockAfterWallJump = 1f;
+        [Range(0, 1)] [SerializeField] private float m_AirControlBlockAfterWallJump = 1f;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool m_Grounded;            // Whether or not the player is grounded.
