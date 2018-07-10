@@ -38,7 +38,7 @@ namespace UnityStandardAssets._2D
 
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
-        private float m_CurrentSlideDuration = 1f;
+        private float m_CurrentSlideDuration = 0f;
         private float m_CurrentSlideSpeed = 1f;
 
         private void Awake()
@@ -49,7 +49,7 @@ namespace UnityStandardAssets._2D
             m_WallCheck = transform.Find("WallCheck");
             m_ThrowPosition = transform.Find("ThrowPosition");
             m_Anim = GetComponent<Animator>();
-            m_Rigidbody2D = GetComponent<Rigidbody2D>();
+            m_Rigidbody2D = transform.GetComponent<Rigidbody2D>();
         }
 
 
@@ -91,18 +91,19 @@ namespace UnityStandardAssets._2D
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
         }
 
-
-        public void Move(float move, bool crouch, bool run, bool throwing, bool jump)
+        public void Action(bool crouch, bool run, bool throwing, bool jump)
         {
-            bool goingRight = Mathf.Sign(move) > 0;
-            if (m_TouchingWall && !jump && m_Grounded)
+            float rightCoef = -1;
+            if (m_FacingRight)
             {
-                if ((!m_FacingRight && !goingRight) || (m_FacingRight && goingRight))
-                {
-                    m_Anim.SetFloat("Speed", 0f);
-                    return;
-                }
+                rightCoef = 1;
             }
+
+            if (m_CurrentSlideDuration > 0f)
+            {
+                return;
+            }
+
             // If crouching, check to see if the character can stand up
             if (!crouch && m_Anim.GetBool("Crouch"))
             {
@@ -113,50 +114,73 @@ namespace UnityStandardAssets._2D
                 }
             }
 
-            // Set whether or not the character is crouching in the animator
-            if (m_Anim.GetBool("Crouch") != crouch)
+            if (m_Grounded)
             {
-                m_Anim.SetBool("Crouch", crouch);
+                // Set whether or not the character is crouching in the animator
+                if (m_Anim.GetBool("Crouch") != crouch)
+                {
+                    m_Anim.SetBool("Crouch", crouch);
+                }
+
+                if (crouch && m_Grounded)
+                {
+                    m_CurrentSlideDuration = m_SlideDuration;
+                }
             }
 
             if (!crouch && throwing)
             {
                 m_Anim.SetTrigger("Throw");
                 GameObject throwable = Instantiate(ThrowableTemplate, m_ThrowPosition.position, Quaternion.identity);
-                float isRightJump = -1;
-                if (m_FacingRight)
-                {
-                    isRightJump = 1;
-                }
-                throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(isRightJump * m_ThrowForce, m_ThrowForce * 0.25f));
+                throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(rightCoef * m_ThrowForce, m_ThrowForce * 0.25f));
             }
+
+            // If the player should jump...
+            if (jump)
+            {
+                // Add a vertical force to the player.
+                if (m_Grounded && m_Anim.GetBool("Ground"))
+                {
+                    m_Grounded = false;
+                    m_Anim.SetBool("Ground", false);
+                    m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                }
+                else if (m_TouchingWall)
+                {
+                    m_Rigidbody2D.velocity = Vector2.zero;
+                    m_Rigidbody2D.AddForce(new Vector2(rightCoef * -1f * m_JumpForce, m_JumpForce * 1.1f));
+
+                    ActivateAirControlBlock();
+                    Flip();
+                }
+            }
+        }
+
+        public void Move(float move)
+        {
+            bool goingRight = Mathf.Sign(move) > 0;
+            float rightCoef = -1;
+            if (m_FacingRight)
+            {
+                rightCoef = 1;
+            }
+
+            if (m_CurrentSlideDuration > 0f)
+            {
+                m_CurrentSlideDuration -= Time.deltaTime;
+                m_Rigidbody2D.velocity = new Vector2(rightCoef * m_MaxWalkingSpeed, 0);
+                return;
+            }
+
 
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || (m_AirControl && m_CanAirControl))
             {
-                if (crouch)
-                {
-                    m_CurrentSlideDuration += Time.deltaTime;
-                    m_CurrentSlideSpeed = m_CurrentSlideSpeed * ((m_SlideDuration - m_CurrentSlideDuration) / m_SlideDuration);
-                    if (m_CurrentSlideSpeed < .1)
-                    {
-                        m_CurrentSlideSpeed = 0;
-                    }
-                    // Reduce the speed if crouching by the crouchSpeed multiplier
-                    move = move * m_CurrentSlideSpeed;
-                }
-                else
-                {
-                    m_CurrentSlideSpeed = m_CrouchSpeed;
-                    m_CurrentSlideDuration = 0;
-                }
-
                 // The Speed animator parameter is set to the absolute value of the horizontal input.
                 m_Anim.SetFloat("Speed", Mathf.Abs(move));
 
-                // Move the character
-                float currentSpeed = run ? m_MaxRunningSpeed : m_MaxWalkingSpeed;
-                m_Rigidbody2D.velocity = new Vector2(move * currentSpeed, m_Rigidbody2D.velocity.y);
+                // Move the character                
+                m_Rigidbody2D.velocity = new Vector2(move * m_MaxWalkingSpeed, m_Rigidbody2D.velocity.y);
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)
@@ -171,32 +195,7 @@ namespace UnityStandardAssets._2D
                     Flip();
                 }
             }
-            // If the player should jump...
-            if (jump)
-            {
-                // Add a vertical force to the player.
-                if (m_Grounded && m_Anim.GetBool("Ground"))
-                {
-                    m_Grounded = false;
-                    m_Anim.SetBool("Ground", false);
-                    m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-                }
-                else if (m_TouchingWall)
-                {
-                    float isThrowingRight = -1;
-                    if (m_FacingRight)
-                    {
-                        isThrowingRight = 1;
-                    }
 
-                    m_Rigidbody2D.velocity = Vector2.zero;
-                    m_Rigidbody2D.AddForce(new Vector2(isThrowingRight * -1f * m_JumpForce, m_JumpForce * 1.1f));
-
-                    ActivateAirControlBlock();
-                    Flip();
-                }
-            }
-            Debug.Log(m_Rigidbody2D.velocity.y);
             // Slide on a wall
             if (!m_Grounded && m_TouchingWall && m_Rigidbody2D.velocity.y < 0f)
             {
