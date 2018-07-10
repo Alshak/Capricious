@@ -196,7 +196,7 @@ namespace UnityStandardAssets._2D
                     Flip();
                 }
             }
-            Debug.Log(m_Rigidbody2D.velocity.y);
+            //Debug.Log(m_Rigidbody2D.velocity.y);
             // Slide on a wall
             if (!m_Grounded && m_TouchingWall && m_Rigidbody2D.velocity.y < 0f)
             {
