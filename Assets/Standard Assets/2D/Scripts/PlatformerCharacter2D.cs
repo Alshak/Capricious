@@ -8,6 +8,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_MaxWalkingSpeed = 10f;                    // The fastest the player can travel in the x axis.
         [SerializeField] private float m_MaxRunningSpeed = 15f;                    // The fastest the player can travel in the x axis.
         [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
+        [SerializeField] private float m_ThrowForce = 50f;                  // Amount of force added when the player jumps.
         [Range(0, 4)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
@@ -117,7 +118,7 @@ namespace UnityStandardAssets._2D
                 {
                     isRightJump = 1;
                 }
-                throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(isRightJump * m_JumpForce, m_JumpForce));
+                throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(isRightJump * m_ThrowForce, m_ThrowForce));
             }
 
             //only control the player if grounded or airControl is turned on
