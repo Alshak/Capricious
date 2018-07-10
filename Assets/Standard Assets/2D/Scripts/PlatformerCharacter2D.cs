@@ -52,6 +52,11 @@ namespace UnityStandardAssets._2D
             m_Rigidbody2D = transform.GetComponent<Rigidbody2D>();
         }
 
+        private void Start()
+        {
+            m_CurrentSlideDuration = 0f;
+        }
+
 
         private void FixedUpdate()
         {
@@ -163,6 +168,15 @@ namespace UnityStandardAssets._2D
             if (m_FacingRight)
             {
                 rightCoef = 1;
+            }
+
+            if (m_TouchingWall && m_Grounded)
+            {
+                if ((!m_FacingRight && !goingRight) || (m_FacingRight && goingRight))
+                {
+                    m_Anim.SetFloat("Speed", 0f);
+                    return;
+                }
             }
 
             if (m_CurrentSlideDuration > 0f)
