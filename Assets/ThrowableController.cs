@@ -9,7 +9,6 @@ public class ThrowableController : MonoBehaviour {
     void Start () {
         int randomIndex = Random.Range(0,100);
         GetComponent<SpriteRenderer>().sprite = throwables[randomIndex];
-        Debug.Log(randomIndex);
     }
 	
 	// Update is called once per frame
