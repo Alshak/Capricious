@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Code.Spawning;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Assets.Code.Humanoids
     public class KillableByTraps : MonoBehaviour
     {
         public GameObject CreateUponDeath;
+        public bool IsPlayer = false;
         public virtual void Kill()
         {
             if (CreateUponDeath != null)
@@ -20,7 +22,18 @@ namespace Assets.Code.Humanoids
                 Instantiate(CreateUponDeath);
             }
 
-            Destroy(gameObject);
+            if (IsPlayer)
+            {
+                PlayerRespawner respawner = GetComponent<PlayerRespawner>();
+                if (respawner != null)
+                {
+                    respawner.RespawnPlayer(gameObject);
+                }
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

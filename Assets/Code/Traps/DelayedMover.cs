@@ -49,7 +49,6 @@ namespace Assets.Code.Traps
 
         private void WaitTime()
         {
-            var movement = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             timeCurrent = StopTime;
 
             if (targetPosition == endPosition)
@@ -60,7 +59,6 @@ namespace Assets.Code.Traps
             {
                 targetPosition = endPosition;
             }
-
         }
 
         private void Move()

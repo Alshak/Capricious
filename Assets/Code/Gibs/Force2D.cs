@@ -4,10 +4,10 @@ namespace Assets.Code.Gibs
 {
     public class Force2D : MonoBehaviour
     {
-        [Range(0, 100)]
+        [Range(0, 1000)]
         public float MinForce;
 
-        [Range(0, 100)]
+        [Range(0, 1000)]
         public float MaxForce;
 
         void Start()
@@ -16,7 +16,7 @@ namespace Assets.Code.Gibs
             
             if (body2D != null)
             {
-                body2D.AddForce(GetRandomForce());
+                body2D.AddForce(GetRandomForce()); //GetRandomForce()
             }
         }
 
