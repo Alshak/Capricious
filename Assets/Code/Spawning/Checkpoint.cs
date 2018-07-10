@@ -18,7 +18,7 @@ namespace Assets.Code.Spawning
         public bool IsActived = false;
 
         private TextMesh[] textMeshes;
-        public SteveNames SteveNames;
+        private SteveNames SteveNames;
 
 
         void Start()
@@ -26,6 +26,7 @@ namespace Assets.Code.Spawning
             rend = GetComponent<SpriteRenderer>();
             spawnpoint = GetComponentInChildren<Spawnpoint>();
             textMeshes = GetComponentsInChildren<TextMesh>();
+            SteveNames = GameObject.FindObjectOfType<SteveNames>();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -52,10 +53,8 @@ namespace Assets.Code.Spawning
             return spawnpoint;
         }
 
-
         public void SetNextSteveName()
         {
-            Debug.Log("setnextname:");
             string name = SteveNames.GetName();
             foreach (TextMesh textMesh in textMeshes)
             {
