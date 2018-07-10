@@ -14,6 +14,7 @@ namespace Assets.Code.Traps
         [SerializeField] private bool DeactivateOnFloor = false;
         [SerializeField] private bool UseTrigger = false;
         private bool doNotKill = false;
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (UseTrigger && !doNotKill)
@@ -31,7 +32,7 @@ namespace Assets.Code.Traps
 
                 if (DeactivateOnFloor && other.IsTouchingLayers(Physics2D.GetLayerCollisionMask(LayerMask.NameToLayer("Ground"))))
                 {
-                    doNotKill = true;
+                    //doNotKill = true;
                 }
             }
         }
@@ -51,9 +52,11 @@ namespace Assets.Code.Traps
                     Destroy(gameObject);
                 }
 
-                if (DeactivateOnFloor && other.collider.IsTouchingLayers(Physics2D.GetLayerCollisionMask(LayerMask.NameToLayer("Ground"))))
+                var ourCollider = GetComponent<Collider2D>();
+                //Debug.Log("is hitting floor: " + ourCollider.IsTouchingLayers(Physics2D.GetLayerCollisionMask(LayerMask.NameToLayer("Ground"))));
+                if (DeactivateOnFloor && ourCollider.IsTouchingLayers(Physics2D.GetLayerCollisionMask(LayerMask.NameToLayer("Ground"))))
                 {
-                    doNotKill = true;
+                    //doNotKill = true;
                 }
             }
         }

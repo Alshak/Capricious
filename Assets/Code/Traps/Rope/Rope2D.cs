@@ -6,13 +6,14 @@ namespace Assets.Code.Traps
 {
     public class Rope2D : MonoBehaviour
     {
-
         //holds where the hook is going to
         [HideInInspector]
         public Vector2 destiny;
 
         //velocity that the hook goes onto the destiny
         public float speed = 1;
+
+        private int nrOfNodes = 0;
 
         //distance between each node
         public float distance = 2;
@@ -21,7 +22,7 @@ namespace Assets.Code.Traps
         public GameObject nodePrefab;
 
         //player gameobject
-        public GameObject player;
+        public GameObject Bat;
 
         //last node instantiated
         GameObject lastNode;
@@ -47,13 +48,12 @@ namespace Assets.Code.Traps
         // Use this for initialization
         void Start()
         {
-
             //sets the line renderer
             lr = GetComponent<LineRenderer>();
 
             //sets player
-            if (player == null)
-                player = GameObject.FindGameObjectWithTag("Player");
+            //if (Bat == null)
+            //    Bat = GameObject.FindGameObjectWithTag("Player");
 
             //sets last node to the hook
             lastNode = transform.gameObject;
@@ -89,18 +89,14 @@ namespace Assets.Code.Traps
             {
                 distance = 1;
             }
-
-
         }
 
         // Update is called once per frame
         void Update()
         {
-
-
             //moves hook to desired position
-            if (transform.position != (Vector3)destiny && !done)
-                transform.position = Vector2.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
+            //if (transform.position != (Vector3)destiny && !done)
+            //    transform.position = Vector2.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
 
 
             //while hook is not on destiny
@@ -108,9 +104,8 @@ namespace Assets.Code.Traps
             {
 
                 //if distance from last node to player, is big enough
-                if (Vector2.Distance(player.transform.position, lastNode.transform.position) > distance)
+                if (Vector2.Distance(Bat.transform.position, lastNode.transform.position) > distance)
                 {
-
                     //create a node
                     CreateNode();
 
@@ -126,7 +121,7 @@ namespace Assets.Code.Traps
 
 
                 //creates node between last node and player (in the same frame)
-                while (Vector2.Distance(player.transform.position, lastNode.transform.position) > distance)
+                while (Vector2.Distance(Bat.transform.position, lastNode.transform.position) > distance)
                 {
                     CreateNode();
                 }
@@ -136,7 +131,7 @@ namespace Assets.Code.Traps
                     hinge.autoConfigureConnectedAnchor = false;
 
                 //binds last node to player
-                lastNode.GetComponent<HingeJoint2D>().connectedBody = player.GetComponent<Rigidbody2D>();
+                lastNode.GetComponent<HingeJoint2D>().connectedBody = Bat.GetComponent<Rigidbody2D>();
 
 
             }
@@ -160,17 +155,18 @@ namespace Assets.Code.Traps
             }
 
             //sets last vetex of rope to be the player
-            lr.SetPosition(i, player.transform.position);
+            lr.SetPosition(i, Bat.transform.position);
 
         }
 
 
         void CreateNode()
         {
+            nrOfNodes++;
             //finds position to create and creates node (vertex)
 
             //makes vector that points from last node to player
-            Vector2 pos2Create = player.transform.position - lastNode.transform.position;
+            Vector2 pos2Create = Bat.transform.position - lastNode.transform.position;
 
             //makes it desired lenght
             pos2Create.Normalize();
