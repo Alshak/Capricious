@@ -15,6 +15,9 @@ namespace Assets.Code.Traps
         [SerializeField] private bool UseTrigger = false;
         private bool doNotKill = false;
 
+        public bool FreezeMovementWhenHittingGround = false;
+        private bool freezeMovement = false;
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (UseTrigger && !doNotKill)
@@ -33,6 +36,18 @@ namespace Assets.Code.Traps
                 if (DeactivateOnFloor && this.GetComponent<Collider2D>().IsTouchingLayers(Physics2D.GetLayerCollisionMask(LayerMask.NameToLayer("Ground"))))
                 {
                     doNotKill = true;
+                }
+            }
+        }
+
+        void Update()
+        {
+            if (FreezeMovementWhenHittingGround && freezeMovement == false)
+            {
+                if (GetComponent<Collider2D>().IsTouchingLayers(Physics2D.GetLayerCollisionMask(LayerMask.NameToLayer("Ground"))))
+                {
+                    freezeMovement = true;
+                    GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
                 }
             }
         }
