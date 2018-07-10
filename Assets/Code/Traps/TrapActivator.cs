@@ -12,7 +12,7 @@ namespace Assets.Code.Traps
 
         void Start()
         {
-            Traps = GetComponentsInChildren<Rigidbody2D>();
+            Traps = transform.parent.GetComponentsInChildren<Rigidbody2D>();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -21,7 +21,7 @@ namespace Assets.Code.Traps
             {
                 foreach (Rigidbody2D trap in Traps)
                 {
-                    trap.WakeUp();
+                    trap.isKinematic = false;
                 }
             }
         }
