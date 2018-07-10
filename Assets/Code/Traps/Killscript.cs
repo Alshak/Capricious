@@ -30,9 +30,9 @@ namespace Assets.Code.Traps
                     Destroy(gameObject);
                 }
 
-                if (DeactivateOnFloor && other.IsTouchingLayers(Physics2D.GetLayerCollisionMask(LayerMask.NameToLayer("Ground"))))
+                if (DeactivateOnFloor && this.GetComponent<Collider2D>().IsTouchingLayers(Physics2D.GetLayerCollisionMask(LayerMask.NameToLayer("Ground"))))
                 {
-                    //doNotKill = true;
+                    doNotKill = true;
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace Assets.Code.Traps
                 //Debug.Log("is hitting floor: " + ourCollider.IsTouchingLayers(Physics2D.GetLayerCollisionMask(LayerMask.NameToLayer("Ground"))));
                 if (DeactivateOnFloor && ourCollider.IsTouchingLayers(Physics2D.GetLayerCollisionMask(LayerMask.NameToLayer("Ground"))))
                 {
-                    //doNotKill = true;
+                    doNotKill = true;
                 }
             }
         }
