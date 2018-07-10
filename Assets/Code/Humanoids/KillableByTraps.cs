@@ -13,19 +13,33 @@ namespace Assets.Code.Humanoids
     /// </summary>
     public class KillableByTraps : MonoBehaviour
     {
-        public GameObject CreateUponDeath;
+        public GameObject LeftDeathObj;
+        public GameObject RightDeathObj;
         public float XOffset;
         public float YOffset;
 
         public bool IsPlayer = false;
-        public virtual void Kill()
+        public virtual void Kill(bool isFacingRight)
         {
             GameObject createdObj = null;
-            if (CreateUponDeath != null)
+
+            if (isFacingRight)
             {
-                var pos = transform.position;
-                CreateUponDeath.transform.position = new Vector3(pos.x + XOffset, pos.y + YOffset, pos.z);
-                createdObj = Instantiate(CreateUponDeath);
+                if (RightDeathObj != null)
+                {
+                    var pos = transform.position;
+                    RightDeathObj.transform.position = new Vector3(pos.x + XOffset, pos.y + YOffset, pos.z);
+                    createdObj = Instantiate(RightDeathObj);
+                }
+            }
+            else
+            {
+                if (LeftDeathObj != null)
+                {
+                    var pos = transform.position;
+                    LeftDeathObj.transform.position = new Vector3(pos.x + XOffset, pos.y + YOffset, pos.z);
+                    createdObj = Instantiate(LeftDeathObj);
+                }
             }
 
             if (IsPlayer)

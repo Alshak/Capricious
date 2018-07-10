@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityStandardAssets._2D;
 
 namespace Assets.Code.Traps
 {
@@ -14,16 +15,16 @@ namespace Assets.Code.Traps
         [SerializeField] private bool UseTrigger = false;
         private bool doNotKill = false;
         private void OnTriggerEnter2D(Collider2D other)
-        {            
+        {
             if (UseTrigger && !doNotKill)
             {
                 var killable = other.GetComponent<KillableByTraps>();
                 if (killable != null)
                 {
-                    killable.Kill();
+                    killable.Kill(IsFacingRight(killable));
                 }
 
-                if (ShouldDieOnHit)
+                if (ShouldDieOnHit && other.tag != "Gibs")
                 {
                     Destroy(gameObject);
                 }
@@ -42,10 +43,10 @@ namespace Assets.Code.Traps
                 var killable = other.collider.GetComponent<KillableByTraps>();
                 if (killable != null)
                 {
-                    killable.Kill();
+                    killable.Kill(IsFacingRight(killable));
                 }
 
-                if (ShouldDieOnHit)
+                if (ShouldDieOnHit && other.collider.tag != "Gibs")
                 {
                     Destroy(gameObject);
                 }
@@ -55,6 +56,16 @@ namespace Assets.Code.Traps
                     doNotKill = true;
                 }
             }
+        }
+
+        private bool IsFacingRight(KillableByTraps killed)
+        {
+            var character = killed.GetComponent<PlatformerCharacter2D>();
+            if (character != null)
+            {
+                return character.m_FacingRight;
+            }
+            return true;
         }
     }
 }

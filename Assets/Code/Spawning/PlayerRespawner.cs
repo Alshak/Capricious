@@ -1,8 +1,4 @@
 ﻿using Assets.Code.Gibs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Code.Spawning
@@ -10,7 +6,8 @@ namespace Assets.Code.Spawning
     public class PlayerRespawner : MonoBehaviour
     {
         public Spawnpoint CurrentSpawn;
-        public TimedLife PrevTimeLife;
+        private Checkpoint currentCheckpoint;
+        private TimedLife PrevTimeLife;
 
         public void RespawnPlayer(GameObject player, TimedLife newTimedLife)
         {
@@ -30,6 +27,16 @@ namespace Assets.Code.Spawning
                 rigid.velocity = Vector3.zero;
                 rigid.angularVelocity = 0f;
             }
+        }
+
+        public void SetRespawn(Checkpoint checkpoint)
+        {
+            if (currentCheckpoint != null)
+            {
+                currentCheckpoint.SetActived(false);
+            }
+            currentCheckpoint = checkpoint;
+            CurrentSpawn = currentCheckpoint.GetSpawnpoint();
         }
     }
 }

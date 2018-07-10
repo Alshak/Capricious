@@ -39,10 +39,10 @@ namespace Assets.Code.Traps
         bool done = false;
 
         //is something if an object with a rigidbody is hit
-        Transform target;
+        Transform target = null;
 
         //added hinge joint if there is relative object
-        HingeJoint2D hinge;
+        HingeJoint2D hinge = null;
 
         // Use this for initialization
         void Start()
