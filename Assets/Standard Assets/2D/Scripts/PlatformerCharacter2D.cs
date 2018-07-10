@@ -74,7 +74,6 @@ namespace UnityStandardAssets._2D
                     m_TouchingWall = true;
                 }
             }
-            Debug.Log(m_TouchingWall);
             m_Anim.SetBool("TouchingWall", m_TouchingWall);
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
