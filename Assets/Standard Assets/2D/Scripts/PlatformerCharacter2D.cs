@@ -119,7 +119,7 @@ namespace UnityStandardAssets._2D
                 m_Anim.SetBool("Crouch", crouch);
             }
 
-            if (throwing)
+            if (!crouch && throwing)
             {
                 m_Anim.SetTrigger("Throw");
                 GameObject throwable = Instantiate(ThrowableTemplate, m_ThrowPosition.position, Quaternion.identity);
@@ -196,8 +196,9 @@ namespace UnityStandardAssets._2D
                     Flip();
                 }
             }
+            Debug.Log(m_Rigidbody2D.velocity.y);
             // Slide on a wall
-            if (!m_Grounded && m_TouchingWall)
+            if (!m_Grounded && m_TouchingWall && m_Rigidbody2D.velocity.y < 0f)
             {
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_Rigidbody2D.velocity.y * 0.75f);
             }

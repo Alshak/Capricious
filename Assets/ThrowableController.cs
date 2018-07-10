@@ -7,7 +7,7 @@ public class ThrowableController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        int randomIndex = Random.Range(0,100);
+        int randomIndex = Random.Range(0,162);
         GetComponent<SpriteRenderer>().sprite = throwables[randomIndex];
     }
 	

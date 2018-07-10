@@ -17,16 +17,18 @@ namespace Assets.Code.Traps
         void Start()
         {
             startPos = transform.rotation;
+//            startPos.z = 270;
         }
 
         void Update()
         {
-            if (IsActivated)
+            transform.Rotate(new Vector3(0, 0, 2 * Mathf.Sin(Time.time * speed)));
+/*            if (IsActivated)
             {
                 Quaternion a = startPos;
                 a.z += direction * (delta * Mathf.Sin(Time.time * speed));
                 transform.rotation = a;
             }
-        }
+  */      }
     }
 }
