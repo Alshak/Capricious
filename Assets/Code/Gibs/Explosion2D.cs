@@ -4,16 +4,17 @@ namespace Assets.Code.Gibs
 {
     public class Explosion2D : MonoBehaviour
     {
-        [Range(0.25f, 2f)]
+        [Range(0f, 2f)]
         public float MinPower;
 
-        [Range(0.25f, 2f)]
+        [Range(0f, 2f)]
         public float MaxPower;
         public float Radius = 1;
         void Start()
         {
             float power = Random.Range(MinPower, MaxPower);
-            AddExplosionForce(power * 100, transform.position, Radius);
+            if (MinPower > 0 || MaxPower > 0 && MinPower < MaxPower)
+                AddExplosionForce(power * 100, transform.position, Radius);
         }
 
         private void AddExplosionForce(float expForce, Vector3 expPosition, float expRadius)

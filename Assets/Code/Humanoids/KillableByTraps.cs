@@ -17,10 +17,15 @@ namespace Assets.Code.Humanoids
         public GameObject RightDeathObj;
         public float XOffset;
         public float YOffset;
+        public bool IsDead = false;
 
         public bool IsPlayer = false;
         public virtual void Kill(bool isFacingRight)
         {
+            if (IsDead)
+                return;
+
+            IsDead = true;
             GameObject createdObj = null;
 
             if (isFacingRight)
