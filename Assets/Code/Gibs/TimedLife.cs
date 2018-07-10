@@ -12,6 +12,7 @@ namespace Assets.Code.Gibs
         private bool isDead = false;
         public bool FadeOut = true;
         private Color colorStart;
+        private float alpha;
 
         private SpriteRenderer rend;
 
@@ -19,6 +20,7 @@ namespace Assets.Code.Gibs
         {
             rend = GetComponent<SpriteRenderer>();
             colorStart = rend.color;
+            alpha = 1;
         }
 
         void Update()
@@ -40,7 +42,10 @@ namespace Assets.Code.Gibs
 
         private void DoFadeOut()
         {
-            rend.material.color = new Color(colorStart.r, colorStart.g, colorStart.b);
+            alpha -= 0.5f * Time.deltaTime;
+            if (alpha < 0)
+                alpha = 0;
+            rend.material.color = new Color(colorStart.r, colorStart.g, colorStart.b, alpha);
         }
     }
 }
