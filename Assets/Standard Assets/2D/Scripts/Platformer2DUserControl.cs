@@ -32,7 +32,7 @@ namespace UnityStandardAssets._2D
             // Read the inputs.
             bool crouch = CrossPlatformInputManager.GetButton("Crouch");
             bool run = CrossPlatformInputManager.GetButton("Run");
-            bool throwing = CrossPlatformInputManager.GetButton("Throw");
+            bool throwing = CrossPlatformInputManager.GetButtonDown("Throw");
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             // Pass all parameters to the character control script.
             m_Character.Move(h, crouch, run, throwing, m_Jump);

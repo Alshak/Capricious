@@ -8,11 +8,13 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_MaxWalkingSpeed = 10f;                    // The fastest the player can travel in the x axis.
         [SerializeField] private float m_MaxRunningSpeed = 15f;                    // The fastest the player can travel in the x axis.
         [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
+        [SerializeField] private float m_ThrowForce = 50f;                  // Amount of force added when the player jumps.
         [Range(0, 4)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
         [SerializeField] private LayerMask m_WhatIsWall;                  // A mask determining what is a wall to the character
         [SerializeField] private float m_SlideDuration = 2f;
+        [SerializeField] private GameObject ThrowableTemplate;
         [Range(0, 1)] [SerializeField] private float m_AirControlBlockAfterWallJump = 1f;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -107,7 +109,17 @@ namespace UnityStandardAssets._2D
                 m_Anim.SetBool("Crouch", crouch);
             }
 
-            m_Anim.SetBool("Throw", throwing);
+            if (throwing)
+            {
+                m_Anim.SetTrigger("Throw");
+                GameObject throwable = Instantiate(ThrowableTemplate, m_WallCheck.position, Quaternion.identity);
+                float isRightJump = -1;
+                if (m_FacingRight)
+                {
+                    isRightJump = 1;
+                }
+                throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(isRightJump * m_ThrowForce, m_ThrowForce));
+            }
 
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || (m_AirControl && m_CanAirControl))
@@ -161,14 +173,14 @@ namespace UnityStandardAssets._2D
                 }
                 else if (m_TouchingWall)
                 {
-                    float isRightJump = -1;
+                    float isThrowingRight = -1;
                     if (m_FacingRight)
                     {
-                        isRightJump = 1;
+                        isThrowingRight = 1;
                     }
 
                     m_Rigidbody2D.velocity = Vector2.zero;
-                    m_Rigidbody2D.AddForce(new Vector2(isRightJump * -1f * m_JumpForce, m_JumpForce * 1.1f));
+                    m_Rigidbody2D.AddForce(new Vector2(isThrowingRight * -1f * m_JumpForce, m_JumpForce * 1.1f));
 
                     ActivateAirControlBlock();
                     Flip();
@@ -197,6 +209,11 @@ namespace UnityStandardAssets._2D
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
+        }
+
+        public bool IsFacingRight()
+        {
+            return m_FacingRight;
         }
     }
 }
