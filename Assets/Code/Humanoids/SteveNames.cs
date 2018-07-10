@@ -9,11 +9,12 @@ namespace Assets.Code.Humanoids
     public class SteveNames : MonoBehaviour
     {
         public List<String> ListPrefixes;
-        private int nameNumber = 1;
-        private int indexNr = 0;
+        public int nameNumber = 1;
+        public int indexNr = 0;
 
         public String GetName()
         {
+            Debug.Log("Get a name!");
             if (indexNr < ListPrefixes.Count - 1)
             {
                 indexNr++;

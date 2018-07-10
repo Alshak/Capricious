@@ -55,6 +55,7 @@ namespace Assets.Code.Spawning
 
         public void SetNextSteveName()
         {
+            Debug.Log("setnextname:");
             string name = SteveNames.GetName();
             foreach (TextMesh textMesh in textMeshes)
             {
