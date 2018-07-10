@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Code.Gibs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,19 @@ namespace Assets.Code.Spawning
     public class PlayerRespawner : MonoBehaviour
     {
         public Spawnpoint CurrentSpawn;
+        public TimedLife PrevTimeLife;
 
-        public void RespawnPlayer(GameObject player)
+        public void RespawnPlayer(GameObject player, TimedLife newTimedLife)
         {
-            Debug.Log("RESPAWN!");
             player.transform.position = CurrentSpawn.transform.position;
             Rigidbody2D rigid = player.GetComponent<Rigidbody2D>();
+
+            if (PrevTimeLife != null)
+            {
+                Debug.Log("prev life null");
+                PrevTimeLife.IsActived = true;
+            }
+            PrevTimeLife = newTimedLife;
 
             if (rigid != null)
             {
