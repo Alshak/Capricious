@@ -22,7 +22,7 @@ namespace Assets.Code.Traps
 
         void Update()
         {
-            transform.Rotate(new Vector3(0, 0, 1.5f * Mathf.Sin(Time.time * speed)));
+            transform.Rotate(new Vector3(0, 0, 2.5f * Mathf.Sin(Time.time * speed)));
 /*            if (IsActivated)
             {
                 Quaternion a = startPos;
