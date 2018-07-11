@@ -298,17 +298,25 @@ namespace UnityStandardAssets._2D
             }
 
 
+
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || (m_AirControl && m_CanAirControl))
             {
                 // Move the character
                 float verticalSpeed = m_Rigidbody2D.velocity.y;
-                if (!m_Grounded && Mathf.Approximately(m_Rigidbody2D.velocity.y,0) && timeSinceLastJump > 1f)
+                Debug.Log(timeSinceLastJump);
+                if (!m_Grounded && Mathf.Approximately(m_Rigidbody2D.velocity.y,0) && timeSinceLastJump > 2f)
                 {
                     verticalSpeed = -10f;
                 }
-                m_Rigidbody2D.velocity = new Vector2(move * m_MaxWalkingSpeed, verticalSpeed);
-                
+                if (m_TouchingWall && (m_FacingRight && goingRight || !m_FacingRight && !goingRight))
+                {
+
+                }
+                else
+                {
+                    m_Rigidbody2D.velocity = new Vector2(move * m_MaxWalkingSpeed, verticalSpeed);
+                }
                 m_Anim.SetFloat("Speed", Mathf.Abs(transform.position.x - previousX));
 
                 // If the input is moving the player right and the player is facing left...
