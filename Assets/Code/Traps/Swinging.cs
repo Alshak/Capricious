@@ -11,27 +11,40 @@ namespace Assets.Code.Traps
         private Quaternion startPos;
         public bool IsActivated = true;
         float timerSinceStart;
+        public float Speed = 1f;
+        float minZ = 999;
+        float maxZ = -999;
+        bool clockwise = false;
         void Start()
         {
             startPos = transform.rotation;
             timerSinceStart = 0f;
-            //            startPos.z = 270;
         }
 
         void Update()
         {
-            timerSinceStart += Time.deltaTime;
+            if(clockwise && transform.rotation.z > 0.99f)
+            {
+                clockwise = false;
+            }else if(!clockwise && transform.rotation.z < 0)
+            {
+                clockwise = true;
+            }
+
             if (Time.timeScale > 0)
             {
-                transform.Rotate(new Vector3(0, 0, 1.5f * Mathf.Sin(timerSinceStart)));
+                if (!clockwise)
+                {
+                    transform.Rotate(new Vector3(0, 0, Speed));
+                }
+                else
+                {
+                    transform.Rotate(new Vector3(0, 0, -Speed));
+                }
             }
-            /*            if (IsActivated)
-                        {
-                            Quaternion a = startPos;
-                            a.z += direction * (delta * Mathf.Sin(Time.time * speed));
-                            transform.rotation = a;
-                        }
-              */
+            minZ = Mathf.Min(minZ, transform.rotation.z);
+            maxZ = Mathf.Max(maxZ, transform.rotation.z);
+            Debug.Log(transform.rotation.z);
         }
     }
 }
