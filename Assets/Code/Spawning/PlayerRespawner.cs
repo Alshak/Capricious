@@ -1,5 +1,6 @@
 ﻿using Assets.Code.Gibs;
 using Assets.Code.Humanoids;
+using Assets.Code.LevelChange;
 using UnityEngine;
 using UnityStandardAssets._2D;
 
@@ -14,6 +15,21 @@ namespace Assets.Code.Spawning
         private float cooldown = 0;
         private GameObject player;
 
+        //private PlayerLives lives;
+        //private LivesTextCounter livesCounter;
+        private MusicManager musicManager;
+        private PlayerNameTextMover playerNameTextMover;
+
+        private AudioSource respawnSound;
+
+
+        void Start()
+        {
+            respawnSound = GetComponent<AudioSource>();
+            playerNameTextMover = GameObject.FindObjectOfType<PlayerNameTextMover>();
+            musicManager = GameObject.FindObjectOfType<MusicManager>();
+        }
+
         void Update()
         {
             if (cooldown > 0)
@@ -21,7 +37,15 @@ namespace Assets.Code.Spawning
                 cooldown -= Time.deltaTime;
                 if (cooldown <= 0)
                 {
-                    SpawnPlayer();
+                    if (playerNameTextMover.GetLives() > 0)
+                    {
+                        SpawnPlayer();
+
+                    }
+                    else
+                    {
+                        GameOver();
+                    }
                 }
             }
         }
@@ -49,6 +73,7 @@ namespace Assets.Code.Spawning
                 PrevTimeLife.IsActived = true;
             }
             PrevTimeLife = newTimedLife;
+            playerNameTextMover.Reduce();
         }
 
         public void SetRespawn(Checkpoint checkpoint)
@@ -64,7 +89,10 @@ namespace Assets.Code.Spawning
         private void SpawnPlayer()
         {
             //player.GetComponent
+            playerNameTextMover.SetNewName();
+            playerNameTextMover.UpdateLives();
             cooldown = 0;
+            respawnSound.Play();
             player.GetComponent<KillableByTraps>().IsDead = false;
             player.GetComponent<Platformer2DUserControl>().IsAlive = true;
             player.GetComponent<Animator>().enabled = true;
@@ -79,10 +107,12 @@ namespace Assets.Code.Spawning
                 rigid.velocity = Vector3.zero;
                 rigid.angularVelocity = 0f;
             }
-            if (currentCheckpoint != null)
-            {
-                currentCheckpoint.SetNextSteveName();
-            }
+        }
+
+        public void GameOver()
+        {
+            cooldown = 0;
+            musicManager.PlayDeath();
         }
     }
 }
