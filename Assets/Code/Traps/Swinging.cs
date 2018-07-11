@@ -23,7 +23,7 @@ namespace Assets.Code.Traps
 
         void Update()
         {
-            if(clockwise && transform.rotation.z > 0.99999f)
+            if(clockwise && transform.rotation.z > 0.99f)
             {
                 clockwise = false;
             }else if(!clockwise && transform.rotation.z < 0)
