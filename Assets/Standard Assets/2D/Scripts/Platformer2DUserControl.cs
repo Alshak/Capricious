@@ -17,7 +17,7 @@ namespace UnityStandardAssets._2D
 
         private void Update()
         {
-            if (IsAlive == false) //Set to true in PlayerRespawner
+            if (IsAlive == false || Time.timeScale == 0) //Set to true in PlayerRespawner
                 return;
 
             // Read the inputs.
@@ -30,7 +30,7 @@ namespace UnityStandardAssets._2D
 
         private void FixedUpdate()
         {
-            if (IsAlive == false) //Set to true in PlayerRespawner
+            if (IsAlive == false || Time.timeScale == 0) //Set to true in PlayerRespawner
                 return;
 
             // Read the inputs.
