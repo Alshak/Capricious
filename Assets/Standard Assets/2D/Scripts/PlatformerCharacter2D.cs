@@ -122,7 +122,7 @@ namespace UnityStandardAssets._2D
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
         }
 
-        public void Action(bool crouch, bool run, bool throwing, bool jump)
+        public void Action(bool crouch, bool throwing, bool jump)
         {
             float rightCoef = -1;
             if (m_FacingRight)
@@ -135,35 +135,43 @@ namespace UnityStandardAssets._2D
                 return;
             }
 
-            // If crouching, check to see if the character can stand up
-            if (!crouch && m_Anim.GetBool("Crouch"))
-            {
-                // If the character has a ceiling preventing them from standing up, keep them crouching
-                if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-                {
-                    crouch = true;
-                }
-            }
-
+            // Crouch
             if (m_Grounded)
             {
+                // If crouching, check to see if the character can stand up
+                if (!crouch && m_Anim.GetBool("Crouch"))
+                {
+                    // If the character has a ceiling preventing them from standing up, keep them crouching
+                    if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
+                    {
+                        crouch = true;
+                    }
+                }
+
                 // Set whether or not the character is crouching in the animator
                 if (m_Anim.GetBool("Crouch") != crouch)
                 {
                     m_Anim.SetBool("Crouch", crouch);
                 }
 
-                if (crouch && m_Grounded)
+                if (crouch)
                 {
                     m_CurrentSlideDuration = m_SlideDuration;
                 }
             }
 
+            // Throw
             if (!crouch && throwing)
             {
                 m_Anim.SetTrigger("Throw");
                 GameObject throwable = Instantiate(ThrowableTemplate, m_ThrowPosition.position, Quaternion.identity);
-                throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(rightCoef * m_ThrowForce, m_ThrowForce * 0.25f));
+                float jumpSlideCoef = 1;
+                // if wall slide, inverse shoot
+                if (!m_Grounded && m_TouchingWall && m_Rigidbody2D.velocity.y < 0f)
+                {
+                    jumpSlideCoef = -1;
+                }
+                throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(jumpSlideCoef * rightCoef * m_ThrowForce, m_ThrowForce * 0.25f));
             }
 
             // If the player should jump...
