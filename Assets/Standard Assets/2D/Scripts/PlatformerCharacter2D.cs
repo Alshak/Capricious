@@ -9,14 +9,19 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_MaxRunningSpeed = 15f;                    // The fastest the player can travel in the x axis.
         [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
         [SerializeField] private float m_ThrowForce = 50f;                  // Amount of force added when the player jumps.
-        [Range(0, 4)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
         [SerializeField] private LayerMask m_WhatIsWall;                  // A mask determining what is a wall to the character
         [SerializeField] private float m_SlideDuration = 2f;
+        [SerializeField] private float m_SlideCoef = 1.2f;
+        [SerializeField] private float m_SlideCooldown = 0.2f;
+        [SerializeField] private int m_JumpBuffer = 15;
+        [SerializeField] private int m_SlideBuffer = 15;
         [SerializeField] private GameObject ThrowableTemplate;
         [Range(0, 1)] [SerializeField] private float m_AirControlBlockAfterWallJump = 1f;
 
+        int slideBuffer = 0;
+        int jumpBuffer = 0;
         private Animator m_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
 
@@ -42,6 +47,8 @@ namespace UnityStandardAssets._2D
 
         private float m_CurrentSlideDuration = 0f;
         private float m_CurrentSlideSpeed = 1f;
+        private float slideCooldown = 0f;
+        private float timeSinceLastJump = 0f;
 
         private void Awake()
         {
@@ -122,14 +129,15 @@ namespace UnityStandardAssets._2D
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
         }
 
-        int crouchBuffer = 0;
-        int jumpBuffer = 0;
 
-        public void Action(bool crouch, bool throwing, bool jump)
+
+        public void Action(bool slide, bool throwing, bool jump)
         {
+            // Jump buffer
             if (jump)
             {
-                jumpBuffer = 15;
+                jumpBuffer = m_JumpBuffer;
+                slideBuffer = 0;
             }
             else
             {
@@ -139,58 +147,77 @@ namespace UnityStandardAssets._2D
                     jump = true;
                 }
             }
-            if (crouch)
+
+            // Slide buffer
+            if (slide)
             {
-                crouchBuffer = 15;
+                jumpBuffer = 0;
+                slideBuffer = m_SlideBuffer;
             }
             else
             {
-                crouchBuffer -= 1;
-                if (crouchBuffer > 0)
+                slideBuffer -= 1;
+                if (slideBuffer > 0)
                 {
-                    crouch = true;
+                    slide = true;
                 }
             }
 
+            // Direction
             float rightCoef = -1;
             if (m_FacingRight)
             {
                 rightCoef = 1;
             }
 
+            // Sliding
             if (m_CurrentSlideDuration > 0f)
             {
                 return;
             }
 
-            // Crouch
-            if (m_Grounded)
-            {
-                // If crouching, check to see if the character can stand up
-                if (!crouch && m_Anim.GetBool("Crouch"))
-                {
-                    // If the character has a ceiling preventing them from standing up, keep them crouching
-                    if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-                    {
-                        crouch = true;
-                    }
-                }
-
-                // Set whether or not the character is crouching in the animator
-                if (m_Anim.GetBool("Crouch") != crouch)
-                {
-                    m_Anim.SetBool("Crouch", crouch);
-                }
-
-                if (crouch)
-                {
-                    m_CurrentSlideDuration = m_SlideDuration;
-                    crouchBuffer = 0;
-                }
-            }
+            // Slide
+            slide = Slide(slide);
 
             // Throw
-            if (!crouch && throwing)
+            if (!slide)
+            {
+                Throw(throwing, rightCoef);
+            }
+
+            // If the player should jump...
+            Jump(jump, rightCoef);
+        }
+
+        private void Jump(bool jump, float rightCoef)
+        {
+            if (jump)
+            {
+                // Add a vertical force to the player.
+                if (m_Grounded && m_Anim.GetBool("Ground"))
+                {
+                    m_Grounded = false;
+                    m_Anim.SetBool("Ground", false);
+                    m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                    jumpBuffer = 0;
+                    timeSinceLastJump = 0f;
+                }
+                else if (m_TouchingWall)
+                {
+                    m_Rigidbody2D.velocity = Vector2.zero;
+                    m_Rigidbody2D.AddForce(new Vector2(rightCoef * -1f * m_JumpForce, m_JumpForce * 1.1f));
+
+                    ActivateAirControlBlock();
+                    Flip();
+                    jumpBuffer = 0;
+                    timeSinceLastJump = 0f;
+                }
+            }
+        }
+
+        private void Throw(bool throwing, float rightCoef)
+        {
+            if (throwing)
             {
                 m_Anim.SetTrigger("Throw");
                 GameObject throwable = Instantiate(ThrowableTemplate, m_ThrowPosition.position, Quaternion.identity);
@@ -202,35 +229,56 @@ namespace UnityStandardAssets._2D
                 }
                 throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(jumpSlideCoef * rightCoef * m_ThrowForce, m_ThrowForce * 0.25f));
             }
+        }
 
-            // If the player should jump...
-            if (jump)
+        private bool Slide(bool slide)
+        {
+            bool forceSlide = false;
+            if (m_Grounded)
             {
-                // Add a vertical force to the player.
-                if (m_Grounded && m_Anim.GetBool("Ground"))
+                // If crouching, check to see if the character can stand up
+                if (!slide && m_Anim.GetBool("Crouch"))
                 {
-                    m_Grounded = false;
-                    m_Anim.SetBool("Ground", false);
-                    m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-                    jumpBuffer = 0;
+                    // If the character has a ceiling preventing them from standing up, keep them crouching
+                    if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
+                    {
+                        slide = true;
+                        forceSlide = true;
+                    }
                 }
-                else if (m_TouchingWall)
-                {
-                    m_Rigidbody2D.velocity = Vector2.zero;
-                    m_Rigidbody2D.AddForce(new Vector2(rightCoef * -1f * m_JumpForce, m_JumpForce * 1.1f));
 
-                    ActivateAirControlBlock();
-                    Flip();
-                    jumpBuffer = 0;
+                if (slideCooldown <= 0f || forceSlide)
+                {
+                    // Set whether or not the character is crouching in the animator
+                    if (m_Anim.GetBool("Crouch") != slide)
+                    {
+                        m_Anim.SetBool("Crouch", slide);
+                    }
+
+                    if (slide)
+                    {
+                        m_CurrentSlideDuration = m_SlideDuration;
+                        slideBuffer = 0;
+                    }
+                }
+                else
+                {
+                    m_Anim.SetBool("Crouch", false);
                 }
             }
+
+            return slide;
         }
 
         float previousX;
         float previousY;
         public void Move(float move)
         {
-
+            timeSinceLastJump += Time.deltaTime;
+            if (slideCooldown > 0f)
+            {
+                slideCooldown -= Time.deltaTime;
+            }
             bool goingRight = Mathf.Sign(move) > 0;
             float rightCoef = -1;
             if (m_FacingRight)
@@ -241,7 +289,11 @@ namespace UnityStandardAssets._2D
             if (m_CurrentSlideDuration > 0f)
             {
                 m_CurrentSlideDuration -= Time.deltaTime;
-                m_Rigidbody2D.velocity = new Vector2(rightCoef * m_MaxWalkingSpeed * 1.2f, 0);
+                m_Rigidbody2D.velocity = new Vector2(rightCoef * m_MaxWalkingSpeed * m_SlideCoef, 0);
+                if (m_CurrentSlideDuration < 0f)
+                {
+                    slideCooldown = m_SlideCooldown;
+                }
                 return;
             }
 
@@ -249,9 +301,14 @@ namespace UnityStandardAssets._2D
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || (m_AirControl && m_CanAirControl))
             {
-                // Move the character                
-                m_Rigidbody2D.velocity = new Vector2(move * m_MaxWalkingSpeed, m_Rigidbody2D.velocity.y);
-
+                // Move the character
+                float verticalSpeed = m_Rigidbody2D.velocity.y;
+                if (!m_Grounded && Mathf.Approximately(m_Rigidbody2D.velocity.y,0) && timeSinceLastJump > 1f)
+                {
+                    verticalSpeed = -10f;
+                }
+                m_Rigidbody2D.velocity = new Vector2(move * m_MaxWalkingSpeed, verticalSpeed);
+                
                 m_Anim.SetFloat("Speed", Mathf.Abs(transform.position.x - previousX));
 
                 // If the input is moving the player right and the player is facing left...
