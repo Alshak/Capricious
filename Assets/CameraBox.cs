@@ -6,6 +6,8 @@ public class CameraBox : MonoBehaviour
 {
     Vector3 exitPosition;
     GameObject player;
+    public Transform leftTopBound;
+    public Transform rightBottomBound;
     // Use this for initialization
     void Start()
     {
@@ -22,17 +24,22 @@ public class CameraBox : MonoBehaviour
         {
             float distanceX = Mathf.Abs(player.transform.position.x - transform.position.x);
             float distanceY = Mathf.Abs(player.transform.position.y - transform.position.y);
-            if (distanceY > 1)
+            if (distanceY > 1.5f)
             {
                 transform.position = Vector2.Lerp(transform.position, player.transform.position, Time.deltaTime * 3f);
             }
-            else if (distanceX > 2.5)
+            else if (distanceX > 2.5f)
             {
                 transform.position = Vector2.Lerp(transform.position, player.transform.position, Time.deltaTime * 2f);
             }
-            else if (distanceX > 1.5)
+            else if (distanceX > 1.5f)
             {
                 transform.position = Vector2.Lerp(transform.position, player.transform.position, Time.deltaTime * 1.2f);
+            }
+            if(leftTopBound != null  && rightBottomBound !=null)
+            {
+                transform.position = new Vector2(Mathf.Clamp(transform.position.x, leftTopBound.position.x, rightBottomBound.position.x),
+                    Mathf.Clamp(transform.position.y, rightBottomBound.position.y, leftTopBound.position.y));
             }
         }
     }

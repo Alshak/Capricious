@@ -30,7 +30,7 @@ namespace UnityStandardAssets._2D
         private bool m_Grounded;            // Whether or not the player is grounded.
 
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
-        const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
+        const float k_CeilingRadius = .05f; // Radius of the overlap circle to determine if the player can stand up
 
         private Transform m_WallCheck;
         private Transform m_WallCheck2;
@@ -213,7 +213,7 @@ namespace UnityStandardAssets._2D
                 else if (m_TouchingWall)
                 {
                     m_Rigidbody2D.velocity = Vector2.zero;
-                    m_Rigidbody2D.AddForce(new Vector2(rightCoef * -1f * m_JumpForce, m_JumpForce * 1.1f));
+                    m_Rigidbody2D.AddForce(new Vector2(rightCoef * -1f * m_JumpForce * 0.8f, m_JumpForce * 1.3f));
 
                     ActivateAirControlBlock();
                     Flip();
