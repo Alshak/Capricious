@@ -122,8 +122,36 @@ namespace UnityStandardAssets._2D
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
         }
 
+        int crouchBuffer = 0;
+        int jumpBuffer = 0;
+
         public void Action(bool crouch, bool throwing, bool jump)
         {
+            if (jump)
+            {
+                jumpBuffer = 15;
+            }
+            else
+            {
+                jumpBuffer -= 1;
+                if (jumpBuffer > 0)
+                {
+                    jump = true;
+                }
+            }
+            if (crouch)
+            {
+                crouchBuffer = 15;
+            }
+            else
+            {
+                crouchBuffer -= 1;
+                if (crouchBuffer > 0)
+                {
+                    crouch = true;
+                }
+            }
+
             float rightCoef = -1;
             if (m_FacingRight)
             {
@@ -157,6 +185,7 @@ namespace UnityStandardAssets._2D
                 if (crouch)
                 {
                     m_CurrentSlideDuration = m_SlideDuration;
+                    crouchBuffer = 0;
                 }
             }
 
@@ -183,6 +212,7 @@ namespace UnityStandardAssets._2D
                     m_Grounded = false;
                     m_Anim.SetBool("Ground", false);
                     m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                    jumpBuffer = 0;
                 }
                 else if (m_TouchingWall)
                 {
@@ -191,6 +221,7 @@ namespace UnityStandardAssets._2D
 
                     ActivateAirControlBlock();
                     Flip();
+                    jumpBuffer = 0;
                 }
             }
         }
@@ -210,7 +241,7 @@ namespace UnityStandardAssets._2D
             if (m_CurrentSlideDuration > 0f)
             {
                 m_CurrentSlideDuration -= Time.deltaTime;
-                m_Rigidbody2D.velocity = new Vector2(rightCoef * m_MaxWalkingSpeed, 0);
+                m_Rigidbody2D.velocity = new Vector2(rightCoef * m_MaxWalkingSpeed * 1.2f, 0);
                 return;
             }
 
