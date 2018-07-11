@@ -18,6 +18,7 @@ namespace Assets.Code.Humanoids
         public float XOffset;
         public float YOffset;
         public bool IsDead = false;
+        public bool IsKillableByEvilSteve = true;
 
         public bool IsPlayer = false;
         public virtual void Kill(bool isFacingRight)

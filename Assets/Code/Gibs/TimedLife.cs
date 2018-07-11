@@ -52,7 +52,10 @@ namespace Assets.Code.Gibs
             
             foreach(SpriteRenderer rend in renders)
             {
-                rend.material.color = colorAlpha;
+                if (rend != null)
+                {
+                    rend.material.color = colorAlpha;
+                }
             }
         }
     }
