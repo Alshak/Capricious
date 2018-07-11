@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
 
 
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+    public bool IsFacingRight { get { return m_FacingRight; } }
 
     private void Awake()
     {

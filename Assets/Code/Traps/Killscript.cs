@@ -26,6 +26,14 @@ namespace Assets.Code.Traps
         {
             if (!doNotKill)
             {
+                //Evil Steve check
+                if (this.tag == "Enemy" && other.tag == "Enemy")
+                    return;
+
+                //Gibs can only be destroyed by Throwables
+                if (other.tag == "Gibs" && this.tag != "Throwable")
+                    return;
+
                 var killable = other.GetComponent<KillableByTraps>();
                 if (killable != null)
                 {
@@ -78,6 +86,12 @@ namespace Assets.Code.Traps
             if (character != null)
             {
                 return character.IsFacingRight();
+            }
+
+            var enemy = killed.GetComponent<EnemyController>();
+            if (enemy != null)
+            {
+                return enemy.IsFacingRight;
             }
             return true;
         }
