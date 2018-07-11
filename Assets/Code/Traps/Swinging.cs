@@ -11,27 +11,20 @@ namespace Assets.Code.Traps
         private Quaternion startPos;
         public bool IsActivated = true;
         float timerSinceStart;
+        public float Speed = 1f;
         void Start()
         {
             startPos = transform.rotation;
             timerSinceStart = 0f;
-            //            startPos.z = 270;
         }
 
         void Update()
         {
-            timerSinceStart += Time.deltaTime;
+            timerSinceStart += Time.deltaTime * Speed;
             if (Time.timeScale > 0)
             {
-                transform.Rotate(new Vector3(0, 0, 1.5f * Mathf.Sin(timerSinceStart)));
+                transform.Rotate(new Vector3(0, 0, 1.5f * Speed * Mathf.Sin(timerSinceStart)));
             }
-            /*            if (IsActivated)
-                        {
-                            Quaternion a = startPos;
-                            a.z += direction * (delta * Mathf.Sin(Time.time * speed));
-                            transform.rotation = a;
-                        }
-              */
         }
     }
 }
