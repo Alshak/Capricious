@@ -21,13 +21,15 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
-        const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+        const float k_GroundedRadius = .01f; // Radius of the overlap circle to determine if grounded
         private bool m_Grounded;            // Whether or not the player is grounded.
 
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
 
         private Transform m_WallCheck;
+        private Transform m_WallCheck2;
+        private Transform m_WallCheck3;
         const float k_WallJumpRadius = .2f; // Radius of the overlap circle to determine if player can wall jump
         private bool m_TouchingWall;            // Whether or not the player can wall jump.
 
@@ -47,6 +49,8 @@ namespace UnityStandardAssets._2D
             m_GroundCheck = transform.Find("GroundCheck");
             m_CeilingCheck = transform.Find("CeilingCheck");
             m_WallCheck = transform.Find("WallCheck");
+            m_WallCheck2 = transform.Find("WallCheck2");
+            m_WallCheck3 = transform.Find("WallCheck3");
             m_ThrowPosition = transform.Find("ThrowPosition");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = transform.GetComponent<Rigidbody2D>();
@@ -89,6 +93,28 @@ namespace UnityStandardAssets._2D
                 if (wallJumpColliders[i].gameObject != gameObject)
                 {
                     m_TouchingWall = true;
+                }
+            }
+            if (!m_TouchingWall)
+            {
+                wallJumpColliders = Physics2D.OverlapCircleAll(m_WallCheck2.position, k_WallJumpRadius, m_WhatIsWall);
+                for (int i = 0; i < wallJumpColliders.Length; i++)
+                {
+                    if (wallJumpColliders[i].gameObject != gameObject)
+                    {
+                        m_TouchingWall = true;
+                    }
+                }
+            }
+            if (!m_TouchingWall)
+            {
+                wallJumpColliders = Physics2D.OverlapCircleAll(m_WallCheck3.position, k_WallJumpRadius, m_WhatIsWall);
+                for (int i = 0; i < wallJumpColliders.Length; i++)
+                {
+                    if (wallJumpColliders[i].gameObject != gameObject)
+                    {
+                        m_TouchingWall = true;
+                    }
                 }
             }
             m_Anim.SetBool("TouchingWall", m_TouchingWall);
@@ -161,22 +187,16 @@ namespace UnityStandardAssets._2D
             }
         }
 
+        float previousX;
+        float previousY;
         public void Move(float move)
         {
+
             bool goingRight = Mathf.Sign(move) > 0;
             float rightCoef = -1;
             if (m_FacingRight)
             {
                 rightCoef = 1;
-            }
-
-            if (m_TouchingWall && m_Grounded)
-            {
-                if ((!m_FacingRight && !goingRight) || (m_FacingRight && goingRight))
-                {
-                    m_Anim.SetFloat("Speed", 0f);
-                    return;
-                }
             }
 
             if (m_CurrentSlideDuration > 0f)
@@ -190,11 +210,10 @@ namespace UnityStandardAssets._2D
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || (m_AirControl && m_CanAirControl))
             {
-                // The Speed animator parameter is set to the absolute value of the horizontal input.
-                m_Anim.SetFloat("Speed", Mathf.Abs(move));
-
                 // Move the character                
                 m_Rigidbody2D.velocity = new Vector2(move * m_MaxWalkingSpeed, m_Rigidbody2D.velocity.y);
+
+                m_Anim.SetFloat("Speed", Mathf.Abs(transform.position.x - previousX));
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)
@@ -216,6 +235,8 @@ namespace UnityStandardAssets._2D
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_Rigidbody2D.velocity.y * 0.75f);
             }
             m_Rigidbody2D.velocity = new Vector2(Mathf.Clamp(m_Rigidbody2D.velocity.x, -20, 20), Mathf.Clamp(m_Rigidbody2D.velocity.y, -20, 20));
+            previousX = transform.position.x;
+            previousY = transform.position.y;
         }
 
         private void ActivateAirControlBlock()
