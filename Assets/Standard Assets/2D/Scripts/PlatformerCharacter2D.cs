@@ -50,6 +50,10 @@ namespace UnityStandardAssets._2D
         private float slideCooldown = 0f;
         private float timeSinceLastJump = 0f;
 
+        public void ResetEverything()
+        {
+
+        }
         private void Awake()
         {
             // Setting up references.
