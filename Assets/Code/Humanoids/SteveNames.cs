@@ -9,8 +9,8 @@ namespace Assets.Code.Humanoids
     public class SteveNames : MonoBehaviour
     {
         public List<String> ListPrefixes;
-        public int nameNumber = 1;
-        public int indexNr = 0;
+        public static int nameNumber = 1;
+        public static int indexNr = 0;
 
         public String GetName()
         {
