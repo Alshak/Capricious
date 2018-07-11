@@ -6,13 +6,13 @@ public class CameraBox : MonoBehaviour
 {
     Vector3 exitPosition;
     GameObject player;
-    GameObject mainCamera;
     // Use this for initialization
     void Start()
     {
         exitPosition = transform.position;
         player = GameObject.FindGameObjectWithTag("Player");
-
+        transform.position = player.transform.position;
+        GetComponentInChildren<Camera>().orthographicSize = 7;
     }
 
     // Update is called once per frame
