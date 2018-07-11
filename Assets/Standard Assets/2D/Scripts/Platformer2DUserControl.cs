@@ -8,7 +8,6 @@ namespace UnityStandardAssets._2D
     public class Platformer2DUserControl : MonoBehaviour
     {
         private PlatformerCharacter2D m_Character;
-        private bool m_Jump;
         public bool IsAlive = true;
 
         private void Awake()
@@ -21,19 +20,12 @@ namespace UnityStandardAssets._2D
             if (IsAlive == false) //Set to true in PlayerRespawner
                 return;
 
-            if (!m_Jump)
-            {
-                // Read the jump input in Update so button presses aren't missed.
-                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-            }
-
             // Read the inputs.
+            bool jump = CrossPlatformInputManager.GetButtonDown("Jump");
             bool crouch = CrossPlatformInputManager.GetButtonDown("Crouch");
-            bool run = CrossPlatformInputManager.GetButton("Run");
             bool throwing = CrossPlatformInputManager.GetButtonDown("Throw");
             // Pass all parameters to the character control script.
-            m_Character.Action(crouch, run, throwing, m_Jump);
-            m_Jump = false;
+            m_Character.Action(crouch,  throwing, jump);
         }
 
         private void FixedUpdate()
