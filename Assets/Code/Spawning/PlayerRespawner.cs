@@ -35,6 +35,7 @@ namespace Assets.Code.Spawning
             player.GetComponent<Rigidbody2D>().simulated = false;
             this.player = player;
             player.GetComponent<Animator>().enabled = false;
+            player.GetComponent<PlatformerCharacter2D>().ResetEverything();
 
             SpriteRenderer[] renderers = player.GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer renderer in renderers)
