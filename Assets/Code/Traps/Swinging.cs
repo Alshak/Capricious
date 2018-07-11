@@ -13,22 +13,28 @@ namespace Assets.Code.Traps
         public float direction = 1;
         private Quaternion startPos;
         public bool IsActivated = true;
-
+        float timerSinceStart;
         void Start()
         {
             startPos = transform.rotation;
-//            startPos.z = 270;
+            timerSinceStart = 0f;
+            //            startPos.z = 270;
         }
 
         void Update()
         {
-            transform.Rotate(new Vector3(0, 0, 2.5f * Mathf.Sin(Time.time * speed)));
-/*            if (IsActivated)
+            timerSinceStart += Time.deltaTime;
+            if (Time.timeScale > 0)
             {
-                Quaternion a = startPos;
-                a.z += direction * (delta * Mathf.Sin(Time.time * speed));
-                transform.rotation = a;
+                transform.Rotate(new Vector3(0, 0, 1.5f * Mathf.Sin(timerSinceStart)));
             }
-  */      }
+            /*            if (IsActivated)
+                        {
+                            Quaternion a = startPos;
+                            a.z += direction * (delta * Mathf.Sin(Time.time * speed));
+                            transform.rotation = a;
+                        }
+              */
+        }
     }
 }
