@@ -46,13 +46,17 @@ namespace UnityStandardAssets._2D
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
         private float m_CurrentSlideDuration = 0f;
-        private float m_CurrentSlideSpeed = 1f;
         private float slideCooldown = 0f;
         private float timeSinceLastJump = 0f;
 
         public void ResetEverything()
         {
-
+            m_CurrentSlideDuration = 0f;
+            timeSinceLastJump = 0f;
+            slideCooldown = 0f;
+            m_AirControlTimerValue = 0f;
+            slideBuffer = 0;
+            jumpBuffer = 0;
         }
         private void Awake()
         {
@@ -78,7 +82,7 @@ namespace UnityStandardAssets._2D
             if (!m_CanAirControl)
             {
                 m_AirControlTimerValue -= Time.deltaTime;
-                if (m_AirControlTimerValue < 0f)
+                if (m_AirControlTimerValue <= 0f)
                 {
                     m_CanAirControl = true;
                 }
@@ -308,16 +312,11 @@ namespace UnityStandardAssets._2D
             {
                 // Move the character
                 float verticalSpeed = m_Rigidbody2D.velocity.y;
-                Debug.Log(timeSinceLastJump);
                 if (!m_Grounded && Mathf.Approximately(m_Rigidbody2D.velocity.y,0) && timeSinceLastJump > 2f)
                 {
                     verticalSpeed = -10f;
                 }
-                if (m_TouchingWall && (m_FacingRight && goingRight || !m_FacingRight && !goingRight))
-                {
-
-                }
-                else
+                if (!m_TouchingWall || !(m_FacingRight && goingRight || !m_FacingRight && !goingRight))
                 {
                     m_Rigidbody2D.velocity = new Vector2(move * m_MaxWalkingSpeed, verticalSpeed);
                 }
