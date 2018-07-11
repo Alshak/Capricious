@@ -33,7 +33,7 @@ namespace Assets.Code.Spawning
         {
             if (other.tag == "Player" && IsActived == false)
             {
-                PlayerRespawner respawner = other.GetComponent<PlayerRespawner>();
+                PlayerRespawner respawner = other.transform.parent.GetComponent<PlayerRespawner>();
                 if (respawner != null)
                 {
                     SetActived(true);

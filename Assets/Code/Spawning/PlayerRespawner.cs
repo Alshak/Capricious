@@ -41,8 +41,13 @@ namespace Assets.Code.Spawning
             player.GetComponent<Platformer2DUserControl>().IsAlive = false;
             player.GetComponent<Rigidbody2D>().simulated = false;
             this.player = player;
+            player.GetComponent<Animator>().enabled = false;
 
-            player.GetComponent<SpriteRenderer>().enabled = false;
+            SpriteRenderer[] renderers = player.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer renderer in renderers)
+            {
+                renderer.enabled = false;
+            }
 
             if (PrevTimeLife != null)
             {
@@ -68,6 +73,7 @@ namespace Assets.Code.Spawning
             cooldown = 0;
             player.GetComponent<KillableByTraps>().IsDead = false;
             player.GetComponent<Platformer2DUserControl>().IsAlive = true;
+            player.GetComponent<Animator>().enabled = true;
             player.GetComponent<SpriteRenderer>().enabled = true;
             player.transform.position = CurrentSpawn.transform.position;
             Rigidbody2D rigid = player.GetComponent<Rigidbody2D>();
