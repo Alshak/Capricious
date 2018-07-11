@@ -27,6 +27,12 @@ namespace Assets.Code.Spawning
             spawnpoint = GetComponentInChildren<Spawnpoint>();
             textMeshes = GetComponentsInChildren<TextMesh>();
             SteveNames = GameObject.FindObjectOfType<SteveNames>();
+
+            string name = SteveNames.GetCurrentName();
+            foreach (TextMesh textMesh in textMeshes)
+            {
+                textMesh.text = name;
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -55,7 +61,7 @@ namespace Assets.Code.Spawning
 
         public void SetNextSteveName()
         {
-            string name = SteveNames.GetName();
+            string name = SteveNames.GetNextName();
             foreach (TextMesh textMesh in textMeshes)
             {
                 textMesh.text = name;

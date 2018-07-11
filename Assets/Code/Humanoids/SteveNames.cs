@@ -12,7 +12,7 @@ namespace Assets.Code.Humanoids
         public static int nameNumber = 1;
         public static int indexNr = 0;
 
-        public String GetName()
+        public String GetNextName()
         {
             if (indexNr < ListPrefixes.Count - 1)
             {
@@ -22,6 +22,18 @@ namespace Assets.Code.Humanoids
             else
             {
                 nameNumber++;
+                return "Steve " + nameNumber;
+            }
+        }
+
+        public String GetCurrentName()
+        {
+            if (indexNr < ListPrefixes.Count - 1)
+            {
+                return ListPrefixes[indexNr] + " Steve";
+            }
+            else
+            {
                 return "Steve " + nameNumber;
             }
         }
