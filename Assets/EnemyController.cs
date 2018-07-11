@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Code.AI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,18 @@ public class EnemyController : MonoBehaviour
 
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
     public bool IsFacingRight { get { return m_FacingRight; } }
+
+    public void SetDirection(AIDirection direction)
+    {
+        if (direction == AIDirection.Right)
+        {
+            m_MaxWalkingSpeed = Mathf.Abs(m_MaxWalkingSpeed);
+        }
+        else
+        {
+            m_MaxWalkingSpeed = Mathf.Abs(m_MaxWalkingSpeed) * -1;
+        }
+    }
 
     private void Awake()
     {

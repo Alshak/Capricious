@@ -19,6 +19,8 @@ namespace Assets.Code.Traps
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (this.tag == "Throwable") return;
+
             Collide(other);
         }
 
@@ -31,7 +33,7 @@ namespace Assets.Code.Traps
                     return;
 
                 //Gibs can only be destroyed by Throwables
-                if (other.tag == "Gibs" && this.tag != "Throwable")
+                if (this.tag != "Throwable" && other.tag == "Gibs")
                     return;
 
                 var killable = other.GetComponent<KillableByTraps>();
