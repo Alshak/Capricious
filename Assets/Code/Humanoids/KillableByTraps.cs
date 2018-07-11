@@ -20,6 +20,13 @@ namespace Assets.Code.Humanoids
         public bool IsDead = false;
         public bool IsKillableByEvilSteve = true;
 
+        private CharacterSounds characterSounds;
+
+        void Start()
+        {
+            characterSounds = GetComponentInChildren<CharacterSounds>();
+        }
+
         public bool IsPlayer = false;
         public virtual void Kill(bool isFacingRight)
         {
@@ -46,6 +53,11 @@ namespace Assets.Code.Humanoids
                     LeftDeathObj.transform.position = new Vector3(pos.x + XOffset, pos.y + YOffset, pos.z);
                     createdObj = Instantiate(LeftDeathObj);
                 }
+            }
+
+            if (characterSounds != null)
+            {
+                characterSounds.PlayDeath();
             }
 
             if (IsPlayer)

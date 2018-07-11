@@ -13,12 +13,6 @@ namespace Assets.Code.Spawning
         public float WaitTimePerDeath = 3f;
         private float cooldown = 0;
         private GameObject player;
-        private PlayerSounds playerSounds;
-
-        void Start()
-        {
-            playerSounds = GetComponentInChildren<PlayerSounds>();
-        }
 
         void Update()
         {
@@ -37,7 +31,6 @@ namespace Assets.Code.Spawning
             if (cooldown > 0)
                 return;
             cooldown = WaitTimePerDeath;
-            playerSounds.PlayDeath();
             player.GetComponent<Platformer2DUserControl>().IsAlive = false;
             player.GetComponent<Rigidbody2D>().simulated = false;
             this.player = player;
