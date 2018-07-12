@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace UnityStandardAssets._2D
@@ -18,7 +17,9 @@ namespace UnityStandardAssets._2D
         [SerializeField] private int m_JumpBuffer = 15;
         [SerializeField] private int m_SlideBuffer = 15;
         [SerializeField] private GameObject ThrowableTemplate;
-        [SerializeField] private ParticleSystem MoveParticles;
+        [SerializeField] public ParticleSystem MoveParticles;
+        [SerializeField] public ParticleSystem JumpParticles;
+        [SerializeField] public ParticleSystem WallJumpParticles;
         [Range(0, 1)] [SerializeField] private float m_AirControlBlockAfterWallJump = 1f;
 
         int slideBuffer = 0;
@@ -91,6 +92,8 @@ namespace UnityStandardAssets._2D
                     m_CanAirControl = true;
                 }
             }
+
+            var previouslyGrounded = m_Grounded;
             m_Grounded = false;
             touchingWall = false;
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -103,6 +106,10 @@ namespace UnityStandardAssets._2D
                     m_Grounded = true;
                 }
             }
+
+            if (!previouslyGrounded && m_Grounded)
+                JumpParticles.Play();
+
             m_Anim.SetBool("Ground", m_Grounded);
 
 
@@ -218,6 +225,7 @@ namespace UnityStandardAssets._2D
                     jumpBuffer = 0;
                     timeSinceLastJump = 0f;
                     PlayJumpSound = true;
+                    JumpParticles.Play();
                 }
                 else if (touchingWall)
                 {
@@ -229,6 +237,7 @@ namespace UnityStandardAssets._2D
                     jumpBuffer = 0;
                     timeSinceLastJump = 0f;
                     PlayJumpSound = true;
+                    WallJumpParticles.Play();
                 }
             }
         }
@@ -238,7 +247,7 @@ namespace UnityStandardAssets._2D
             if (throwing)
             {
                 m_Anim.SetTrigger("Throw");
-                GameObject throwable = Instantiate(ThrowableTemplate, m_ThrowPosition.position, Quaternion.identity);
+                GameObject throwable = Instantiate(ThrowableTemplate, m_ThrowPosition.position, Quaternion.Euler(0, 0, Random.value*360));
                 float jumpSlideCoef = 1;
                 // if wall slide, inverse shoot
                 if (!m_Grounded && touchingWall && m_Rigidbody2D.velocity.y < 0f)
