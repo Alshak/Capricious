@@ -7,6 +7,7 @@ namespace Assets.Code.LevelChange
 {
     public enum LevelName
     {
+        MainMenu,
         Lvl1_Office,
         BossChase,
         Capricious,

@@ -3,6 +3,7 @@ using Assets.Code.Gibs;
 using Assets.Code.Humanoids;
 using Assets.Code.LevelChange;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityStandardAssets._2D;
 
 namespace Assets.Code.Spawning
@@ -15,6 +16,9 @@ namespace Assets.Code.Spawning
         public float WaitTimePerDeath = 3f;
         private float cooldown = 0;
         private GameObject player;
+
+        private float cooldownDeath = 0;
+        private bool gameOver = false;
 
         private ResetManager resetManager;
 
@@ -50,6 +54,15 @@ namespace Assets.Code.Spawning
                     {
                         GameOver();
                     }
+                }
+            }
+
+            if (gameOver && cooldownDeath > 0)
+            {
+                cooldownDeath -= Time.deltaTime;
+                if (cooldownDeath <= 0)
+                {
+                    LoadMainMenu();
                 }
             }
         }
@@ -121,7 +134,18 @@ namespace Assets.Code.Spawning
         public void GameOver()
         {
             cooldown = 0;
+            cooldownDeath = 2f;
+            gameOver = true;
             musicManager.PlayDeath();
+        }
+
+        private void LoadMainMenu()
+        {
+            Debug.Log("RELOAD MAENU");
+            gameOver = false;
+            cooldown = 0;
+            cooldownDeath = 0;
+            SceneManager.LoadScene(LevelName.MainMenu.ToString(), LoadSceneMode.Single);
         }
     }
 }
