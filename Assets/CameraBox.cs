@@ -28,7 +28,7 @@ public class CameraBox : MonoBehaviour
 
             var facingCoef = _character.IsFacingRight() ? 1 : -1;
 
-            var cameraLead = player.transform.position + new Vector3(1, 0) * _lastSpeeds * 9 * facingCoef;
+            var cameraLead = player.transform.position + new Vector3(1, 0) * _lastSpeeds * 6 * facingCoef;
             float distanceX = Mathf.Abs(cameraLead.x - transform.position.x);
             float distanceY = Mathf.Abs(cameraLead.y - transform.position.y);
             if (distanceY > 1.5f)
