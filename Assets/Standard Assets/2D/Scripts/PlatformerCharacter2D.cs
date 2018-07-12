@@ -50,6 +50,7 @@ namespace UnityStandardAssets._2D
         private float timeSinceLastJump = 0f;
 
         public bool PlayJumpSound = false;
+        public bool PlaySlideSound = false;
 
         public void ResetEverything()
         {
@@ -188,6 +189,10 @@ namespace UnityStandardAssets._2D
 
             // Slide
             slide = Slide(slide);
+            if (m_Grounded && m_Anim.GetBool("Ground") && slide)
+            {
+                PlaySlideSound = true;
+            }
 
             // Throw
             if (!slide)
@@ -222,6 +227,7 @@ namespace UnityStandardAssets._2D
                     Flip();
                     jumpBuffer = 0;
                     timeSinceLastJump = 0f;
+                    PlayJumpSound = true;
                 }
             }
         }
@@ -277,7 +283,6 @@ namespace UnityStandardAssets._2D
                     m_Anim.SetBool("Crouch", false);
                 }
             }
-
             return slide;
         }
 
