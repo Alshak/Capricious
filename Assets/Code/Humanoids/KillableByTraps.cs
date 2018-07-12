@@ -40,7 +40,8 @@ namespace Assets.Code.Humanoids
             IsDead = true;
             GameObject createdObj = null;
 
-            _characterInput.MoveParticles.Stop();
+            if(_characterInput != null)
+                _characterInput.MoveParticles.Stop();
 
             if (isFacingRight)
             {

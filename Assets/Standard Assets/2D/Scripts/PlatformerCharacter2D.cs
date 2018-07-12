@@ -18,6 +18,8 @@ namespace UnityStandardAssets._2D
         [SerializeField] private int m_SlideBuffer = 15;
         [SerializeField] private GameObject ThrowableTemplate;
         [SerializeField] public ParticleSystem MoveParticles;
+        [SerializeField] public ParticleSystem JumpParticles;
+        [SerializeField] public ParticleSystem WallJumpParticles;
         [Range(0, 1)] [SerializeField] private float m_AirControlBlockAfterWallJump = 1f;
 
         int slideBuffer = 0;
@@ -90,6 +92,8 @@ namespace UnityStandardAssets._2D
                     m_CanAirControl = true;
                 }
             }
+
+            var previouslyGrounded = m_Grounded;
             m_Grounded = false;
             touchingWall = false;
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -102,6 +106,10 @@ namespace UnityStandardAssets._2D
                     m_Grounded = true;
                 }
             }
+
+            if (!previouslyGrounded && m_Grounded)
+                JumpParticles.Play();
+
             m_Anim.SetBool("Ground", m_Grounded);
 
 
@@ -217,6 +225,7 @@ namespace UnityStandardAssets._2D
                     jumpBuffer = 0;
                     timeSinceLastJump = 0f;
                     PlayJumpSound = true;
+                    JumpParticles.Play();
                 }
                 else if (touchingWall)
                 {
@@ -228,6 +237,7 @@ namespace UnityStandardAssets._2D
                     jumpBuffer = 0;
                     timeSinceLastJump = 0f;
                     PlayJumpSound = true;
+                    WallJumpParticles.Play();
                 }
             }
         }
