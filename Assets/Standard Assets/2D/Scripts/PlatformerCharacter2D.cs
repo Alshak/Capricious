@@ -284,11 +284,11 @@ namespace UnityStandardAssets._2D
                     m_Anim.SetBool("Crouch", false);
                 }
             }
+            //previousX = transform.position.x;
             return slide;
         }
 
         float previousX;
-        float previousY;
         public void Move(float move)
         {
             timeSinceLastJump += Time.deltaTime;
@@ -311,6 +311,9 @@ namespace UnityStandardAssets._2D
                 {
                     slideCooldown = m_SlideCooldown;
                 }
+
+                UpdateParticles();
+
                 return;
             }
 
@@ -333,16 +336,7 @@ namespace UnityStandardAssets._2D
                 var speed = Mathf.Abs(transform.position.x - previousX);
                 m_Anim.SetFloat("Speed", speed);
 
-                if (speed > 0 && !MoveParticles.isPlaying)
-                {
-                    Debug.Log("Running");
-                    MoveParticles.Play();
-                }
-                else
-                {
-                    Debug.Log("Stopping");
-                    MoveParticles.Stop();
-                }
+                UpdateParticles();
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)
@@ -365,7 +359,20 @@ namespace UnityStandardAssets._2D
             }
             m_Rigidbody2D.velocity = new Vector2(Mathf.Clamp(m_Rigidbody2D.velocity.x, -20, 20), Mathf.Clamp(m_Rigidbody2D.velocity.y, -20, 20));
             previousX = transform.position.x;
-            previousY = transform.position.y;
+        }
+
+        private void UpdateParticles()
+        {
+            var speed = Mathf.Abs(transform.position.x - previousX);
+            if (m_Grounded && speed > 0)
+            {
+                if (!MoveParticles.isPlaying)
+                    MoveParticles.Play();
+            }
+            else if (MoveParticles.isPlaying)
+            {
+                MoveParticles.Stop();
+            }
         }
 
         private void ActivateAirControlBlock()
