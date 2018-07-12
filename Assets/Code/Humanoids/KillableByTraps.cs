@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityStandardAssets._2D;
 
 namespace Assets.Code.Humanoids
 {
@@ -25,9 +26,12 @@ namespace Assets.Code.Humanoids
         void Start()
         {
             characterSounds = GetComponentInChildren<CharacterSounds>();
+            _characterInput = GetComponent<PlatformerCharacter2D>();
         }
 
         public bool IsPlayer = false;
+        private PlatformerCharacter2D _characterInput;
+
         public virtual void Kill(bool isFacingRight)
         {
             if (IsDead)
@@ -35,6 +39,8 @@ namespace Assets.Code.Humanoids
 
             IsDead = true;
             GameObject createdObj = null;
+
+            _characterInput.MoveParticles.Stop();
 
             if (isFacingRight)
             {

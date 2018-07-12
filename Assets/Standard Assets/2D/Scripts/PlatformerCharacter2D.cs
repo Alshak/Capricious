@@ -18,7 +18,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private int m_JumpBuffer = 15;
         [SerializeField] private int m_SlideBuffer = 15;
         [SerializeField] private GameObject ThrowableTemplate;
-        [SerializeField] private ParticleSystem MoveParticles;
+        [SerializeField] public ParticleSystem MoveParticles;
         [Range(0, 1)] [SerializeField] private float m_AirControlBlockAfterWallJump = 1f;
 
         int slideBuffer = 0;
