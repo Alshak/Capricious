@@ -289,8 +289,11 @@ namespace UnityStandardAssets._2D
         }
 
         float previousX;
+        float previousY;
         public void Move(float move)
         {
+            UpdateParticles();
+
             timeSinceLastJump += Time.deltaTime;
             if (slideCooldown > 0f)
             {
@@ -312,8 +315,6 @@ namespace UnityStandardAssets._2D
                     slideCooldown = m_SlideCooldown;
                 }
 
-                UpdateParticles();
-
                 return;
             }
 
@@ -324,7 +325,7 @@ namespace UnityStandardAssets._2D
             {
                 // Move the character
                 float verticalSpeed = m_Rigidbody2D.velocity.y;
-                if (!m_Grounded && Mathf.Approximately(m_Rigidbody2D.velocity.y,0) && timeSinceLastJump > 2f)
+                if (!m_Grounded && Mathf.Approximately(m_Rigidbody2D.velocity.y, 0) && timeSinceLastJump > 2f)
                 {
                     verticalSpeed = -10f;
                 }
@@ -335,8 +336,6 @@ namespace UnityStandardAssets._2D
 
                 var speed = Mathf.Abs(transform.position.x - previousX);
                 m_Anim.SetFloat("Speed", speed);
-
-                UpdateParticles();
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)
@@ -359,12 +358,15 @@ namespace UnityStandardAssets._2D
             }
             m_Rigidbody2D.velocity = new Vector2(Mathf.Clamp(m_Rigidbody2D.velocity.x, -20, 20), Mathf.Clamp(m_Rigidbody2D.velocity.y, -20, 20));
             previousX = transform.position.x;
+            previousY = transform.position.y;
         }
 
         private void UpdateParticles()
         {
-            var speed = Mathf.Abs(transform.position.x - previousX);
-            if (m_Grounded && speed > 0)
+            var speed = new Vector2(Mathf.Abs(transform.position.x - previousX), Mathf.Abs(transform.position.y - previousY));
+            var movingOnGround = m_Grounded && speed.x > 0.00001;
+            var slidingOnWall = m_TouchingWall && speed.y > 0.0001;
+            if (movingOnGround || slidingOnWall)
             {
                 if (!MoveParticles.isPlaying)
                     MoveParticles.Play();
