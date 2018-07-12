@@ -1,38 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityStandardAssets._2D;
 
 public class CameraBox : MonoBehaviour
 {
     GameObject player;
     public Transform leftTopBound;
     public Transform rightBottomBound;
-    // Use this for initialization
-    void Start()
+
+    private PlatformerCharacter2D _character;
+    private float _lastSpeeds = 0;
+
+    public void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.Find("Player");
+        _character = player.GetComponent<PlatformerCharacter2D>();
         transform.position = player.transform.position;
         GetComponentInChildren<Camera>().orthographicSize = 7;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (player != null)
         {
-            float distanceX = Mathf.Abs(player.transform.position.x - transform.position.x);
-            float distanceY = Mathf.Abs(player.transform.position.y - transform.position.y);
+            var historyLean = 0.7f;
+            var currentLean = _character.m_Grounded ? 1 + (1 - historyLean) : 0;
+            _lastSpeeds = _character.CurrentSpeed().x*currentLean + _lastSpeeds * historyLean;
+
+            var facingCoef = _character.IsFacingRight() ? 1 : -1;
+
+            var cameraLead = player.transform.position + new Vector3(1, 0) * _lastSpeeds * 9 * facingCoef;
+            float distanceX = Mathf.Abs(cameraLead.x - transform.position.x);
+            float distanceY = Mathf.Abs(cameraLead.y - transform.position.y);
             if (distanceY > 1.5f)
             {
-                transform.position = Vector2.Lerp(transform.position, player.transform.position, Time.deltaTime * 3f);
+                transform.position = Vector2.Lerp(transform.position, cameraLead, Time.deltaTime * 3f);
             }
             else if (distanceX > 2.5f)
             {
-                transform.position = Vector2.Lerp(transform.position, player.transform.position, Time.deltaTime * 2f);
+                transform.position = Vector2.Lerp(transform.position, cameraLead, Time.deltaTime * 3f);
             }
             else if (distanceX > 1.5f)
             {
-                transform.position = Vector2.Lerp(transform.position, player.transform.position, Time.deltaTime * 1.2f);
+                transform.position = Vector2.Lerp(transform.position, cameraLead, Time.deltaTime * 1.2f);
             }
             if(leftTopBound != null  && rightBottomBound !=null)
             {
