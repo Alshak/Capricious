@@ -44,7 +44,6 @@ namespace Assets.Code.Traps
             }
             minZ = Mathf.Min(minZ, transform.rotation.z);
             maxZ = Mathf.Max(maxZ, transform.rotation.z);
-            Debug.Log(transform.rotation.z);
         }
     }
 }
