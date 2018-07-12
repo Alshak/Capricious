@@ -28,7 +28,7 @@ namespace UnityStandardAssets._2D
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .01f; // Radius of the overlap circle to determine if grounded
-        private bool m_Grounded;            // Whether or not the player is grounded.
+        public bool m_Grounded;            // Whether or not the player is grounded.
 
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
         const float k_CeilingRadius = .05f; // Radius of the overlap circle to determine if the player can stand up
@@ -37,7 +37,7 @@ namespace UnityStandardAssets._2D
         private Transform m_WallCheck2;
         private Transform m_WallCheck3;
         const float k_WallJumpRadius = .2f; // Radius of the overlap circle to determine if player can wall jump
-        private bool m_TouchingWall;            // Whether or not the player can wall jump.
+        private bool touchingWall;            // Whether or not the player can wall jump.
 
         private Transform m_ThrowPosition;
 
@@ -92,7 +92,7 @@ namespace UnityStandardAssets._2D
                 }
             }
             m_Grounded = false;
-            m_TouchingWall = false;
+            touchingWall = false;
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
             Collider2D[] groundColliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
@@ -111,32 +111,32 @@ namespace UnityStandardAssets._2D
             {
                 if (wallJumpColliders[i].gameObject != gameObject)
                 {
-                    m_TouchingWall = true;
+                    touchingWall = true;
                 }
             }
-            if (!m_TouchingWall)
+            if (!touchingWall)
             {
                 wallJumpColliders = Physics2D.OverlapCircleAll(m_WallCheck2.position, k_WallJumpRadius, m_WhatIsWall);
                 for (int i = 0; i < wallJumpColliders.Length; i++)
                 {
                     if (wallJumpColliders[i].gameObject != gameObject)
                     {
-                        m_TouchingWall = true;
+                        touchingWall = true;
                     }
                 }
             }
-            if (!m_TouchingWall)
+            if (!touchingWall)
             {
                 wallJumpColliders = Physics2D.OverlapCircleAll(m_WallCheck3.position, k_WallJumpRadius, m_WhatIsWall);
                 for (int i = 0; i < wallJumpColliders.Length; i++)
                 {
                     if (wallJumpColliders[i].gameObject != gameObject)
                     {
-                        m_TouchingWall = true;
+                        touchingWall = true;
                     }
                 }
             }
-            m_Anim.SetBool("TouchingWall", m_TouchingWall);
+            m_Anim.SetBool("TouchingWall", touchingWall);
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
         }
@@ -219,7 +219,7 @@ namespace UnityStandardAssets._2D
                     timeSinceLastJump = 0f;
                     PlayJumpSound = true;
                 }
-                else if (m_TouchingWall)
+                else if (touchingWall)
                 {
                     m_Rigidbody2D.velocity = Vector2.zero;
                     m_Rigidbody2D.AddForce(new Vector2(rightCoef * -1f * m_JumpForce * 0.8f, m_JumpForce * 1.3f));
@@ -241,7 +241,7 @@ namespace UnityStandardAssets._2D
                 GameObject throwable = Instantiate(ThrowableTemplate, m_ThrowPosition.position, Quaternion.identity);
                 float jumpSlideCoef = 1;
                 // if wall slide, inverse shoot
-                if (!m_Grounded && m_TouchingWall && m_Rigidbody2D.velocity.y < 0f)
+                if (!m_Grounded && touchingWall && m_Rigidbody2D.velocity.y < 0f)
                 {
                     jumpSlideCoef = -1;
                 }
@@ -315,6 +315,8 @@ namespace UnityStandardAssets._2D
                     slideCooldown = m_SlideCooldown;
                 }
 
+                previousX = transform.position.x;
+                previousY = transform.position.y;
                 return;
             }
 
@@ -329,24 +331,13 @@ namespace UnityStandardAssets._2D
                 {
                     verticalSpeed = -10f;
                 }
-                if (!m_TouchingWall || !(m_FacingRight && goingRight || !m_FacingRight && !goingRight))
+                if (!touchingWall || !(m_FacingRight && goingRight || !m_FacingRight && !goingRight))
                 {
                     m_Rigidbody2D.velocity = new Vector2(move * m_MaxWalkingSpeed, verticalSpeed);
                 }
 
                 var speed = Mathf.Abs(transform.position.x - previousX);
                 m_Anim.SetFloat("Speed", speed);
-
-                if (speed > 0 && !MoveParticles.isPlaying)
-                {
-                    //Debug.Log("Running");
-                    MoveParticles.Play();
-                }
-                else
-                {
-                    //Debug.Log("Stopping");
-                    MoveParticles.Stop();
-                }
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)
@@ -363,7 +354,7 @@ namespace UnityStandardAssets._2D
             }
 
             // Slide on a wall
-            if (!m_Grounded && m_TouchingWall && m_Rigidbody2D.velocity.y < 0f)
+            if (!m_Grounded && touchingWall && m_Rigidbody2D.velocity.y < 0f)
             {
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_Rigidbody2D.velocity.y * 0.75f);
             }
@@ -372,11 +363,12 @@ namespace UnityStandardAssets._2D
             previousY = transform.position.y;
         }
 
+
         private void UpdateParticles()
         {
-            var speed = new Vector2(Mathf.Abs(transform.position.x - previousX), Mathf.Abs(transform.position.y - previousY));
+            var speed = CurrentSpeed();
             var movingOnGround = m_Grounded && speed.x > 0.00001;
-            var slidingOnWall = m_TouchingWall && speed.y > 0.0001;
+            var slidingOnWall = touchingWall && speed.y > 0.0001;
             if (movingOnGround || slidingOnWall)
             {
                 if (!MoveParticles.isPlaying)
@@ -386,6 +378,11 @@ namespace UnityStandardAssets._2D
             {
                 MoveParticles.Stop();
             }
+        }
+
+        public Vector3 CurrentSpeed()
+        {
+            return new Vector3(Mathf.Abs(transform.position.x - previousX), Mathf.Abs(transform.position.y - previousY));
         }
 
         private void ActivateAirControlBlock()

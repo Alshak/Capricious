@@ -92,5 +92,14 @@ namespace Assets.Code.Spawning
             playerName.Fadeout(alpha);
             textCounter.Fadeout(alpha);
         }
+
+        public void HideAll()
+        {
+            if (playerName != null)
+                playerName.Hide();
+
+            if (textCounter != null)
+                textCounter.Hide();
+        }
     }
 }

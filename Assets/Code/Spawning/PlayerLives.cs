@@ -9,6 +9,7 @@ namespace Assets.Code.Spawning
     public class PlayerLives : MonoBehaviour
     {
         public static int LivesLeft = 30;
+        private int livesMax = 30;
 
         public int GetLives()
         {
@@ -18,6 +19,11 @@ namespace Assets.Code.Spawning
         public void Reduce()
         {
             LivesLeft--;
+        }
+
+        public void ResetAllLives()
+        {
+            LivesLeft = livesMax;
         }
     }
 }
