@@ -8,42 +8,26 @@ namespace Assets.Code.Traps
 {
     public class Swinging : MonoBehaviour
     {
-        private Quaternion startPos;
-        public bool IsActivated = true;
-        float timerSinceStart;
-        public float Speed = 1f;
-        float minZ = 999;
-        float maxZ = -999;
-        bool clockwise = false;
+        Rigidbody2D body2d;
+        public float leftPushRange;
+        public float rightPushRange;
+        public float velocityThreshold;
         void Start()
         {
-            startPos = transform.rotation;
-            timerSinceStart = 0f;
+            body2d = GetComponent<Rigidbody2D>();
+            body2d.angularVelocity = velocityThreshold;
         }
 
         void Update()
         {
-            if(clockwise && transform.rotation.z > 0.99f)
+            if(transform.rotation.z > 0 && transform.rotation.z < rightPushRange && body2d.angularVelocity > 0 && body2d.angularVelocity < velocityThreshold)
             {
-                clockwise = false;
-            }else if(!clockwise && transform.rotation.z < 0)
-            {
-                clockwise = true;
+                body2d.angularVelocity = velocityThreshold;
             }
-
-            if (Time.timeScale > 0)
+            if (transform.rotation.z < 0 && transform.rotation.z > leftPushRange && body2d.angularVelocity < 0 && body2d.angularVelocity > velocityThreshold * -1)
             {
-                if (!clockwise)
-                {
-                    transform.Rotate(new Vector3(0, 0, Speed));
-                }
-                else
-                {
-                    transform.Rotate(new Vector3(0, 0, -Speed));
-                }
+                body2d.angularVelocity = velocityThreshold * -1;
             }
-            minZ = Mathf.Min(minZ, transform.rotation.z);
-            maxZ = Mathf.Max(maxZ, transform.rotation.z);
         }
     }
 }
