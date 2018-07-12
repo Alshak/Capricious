@@ -1,4 +1,5 @@
-﻿using Assets.Code.Gibs;
+﻿using Assets.Code.ChaseLevel;
+using Assets.Code.Gibs;
 using Assets.Code.Humanoids;
 using Assets.Code.LevelChange;
 using UnityEngine;
@@ -15,6 +16,8 @@ namespace Assets.Code.Spawning
         private float cooldown = 0;
         private GameObject player;
 
+        private ResetManager resetManager;
+
         //private PlayerLives lives;
         //private LivesTextCounter livesCounter;
         private MusicManager musicManager;
@@ -28,6 +31,7 @@ namespace Assets.Code.Spawning
             respawnSound = GetComponent<AudioSource>();
             playerNameTextMover = GameObject.FindObjectOfType<PlayerNameTextMover>();
             musicManager = GameObject.FindObjectOfType<MusicManager>();
+            resetManager = GameObject.FindObjectOfType<ResetManager>();
         }
 
         void Update()
@@ -74,6 +78,11 @@ namespace Assets.Code.Spawning
             }
             PrevTimeLife = newTimedLife;
             playerNameTextMover.Reduce();
+
+            if (resetManager != null)
+            {
+                resetManager.ResetLevel();
+            }
         }
 
         public void SetRespawn(Checkpoint checkpoint)

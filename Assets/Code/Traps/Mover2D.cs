@@ -14,11 +14,15 @@ namespace Assets.Code.Traps
         [Range(-10, 10f)]
         public float SpeedY;
 
+        public bool IsActivated = true;
+
         void Update()
         {
-            Vector3 pos = transform.position;
-            transform.position = new Vector3(pos.x + SpeedX * Time.deltaTime, pos.y + SpeedY * Time.deltaTime, pos.z);
+            if (IsActivated)
+            {
+                Vector3 pos = transform.position;
+                transform.position = new Vector3(pos.x + SpeedX * Time.deltaTime, pos.y + SpeedY * Time.deltaTime, pos.z);
+            }
         }
-
     }
 }
