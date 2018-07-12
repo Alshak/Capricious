@@ -40,5 +40,13 @@ namespace Assets.Code.Spawning
                 textMesh.text = "";
             }
         }
+
+        public void Fadeout(float alpha)
+        {
+            foreach (TextMesh textMesh in textMeshes)
+            {
+                textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, alpha);
+            }
+        }
     }
 }

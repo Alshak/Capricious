@@ -49,6 +49,8 @@ namespace UnityStandardAssets._2D
         private float slideCooldown = 0f;
         private float timeSinceLastJump = 0f;
 
+        public bool PlayJumpSound = false;
+
         public void ResetEverything()
         {
             m_CurrentSlideDuration = 0f;
@@ -209,6 +211,7 @@ namespace UnityStandardAssets._2D
                     m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
                     jumpBuffer = 0;
                     timeSinceLastJump = 0f;
+                    PlayJumpSound = true;
                 }
                 else if (m_TouchingWall)
                 {

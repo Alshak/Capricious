@@ -6,8 +6,15 @@ namespace Assets.Code.Humanoids
     public class CharacterSounds : MonoBehaviour
     {
         public List<AudioClip> ListDeath;
+        public List<AudioClip> ListJump;
         public Sound2DLocation SoundPrefab;
-     
+
+        public void PlayJump()
+        {
+            int i = Random.Range(0, ListJump.Count - 1);
+            PlaySound(ListJump[i]);
+        }
+
         public void PlayDeath()
         {
             int i = Random.Range(0, ListDeath.Count - 1);
