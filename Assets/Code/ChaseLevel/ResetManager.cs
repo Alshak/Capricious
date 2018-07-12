@@ -13,7 +13,6 @@ namespace Assets.Code.ChaseLevel
         public LevelName CurrentLevel;
         public float cooldownWait = 3f;
         private float cooldown = 0f;
-
         private bool isActivated = false;
 
         void Update()
@@ -38,7 +37,7 @@ namespace Assets.Code.ChaseLevel
             if (isActivated == false)
             {
                 isActivated = true;
-                SceneManager.LoadScene(CurrentLevel.ToString(), LoadSceneMode.Single);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
     }
