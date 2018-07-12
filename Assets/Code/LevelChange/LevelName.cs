@@ -11,6 +11,7 @@ namespace Assets.Code.LevelChange
         Lvl1_Office,
         BossChase,
         Capricious,
+        BossFight,
         LevelEnding,
     }
 }
