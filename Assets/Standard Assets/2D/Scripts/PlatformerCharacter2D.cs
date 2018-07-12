@@ -337,6 +337,17 @@ namespace UnityStandardAssets._2D
                 var speed = Mathf.Abs(transform.position.x - previousX);
                 m_Anim.SetFloat("Speed", speed);
 
+                if (speed > 0 && !MoveParticles.isPlaying)
+                {
+                    //Debug.Log("Running");
+                    MoveParticles.Play();
+                }
+                else
+                {
+                    //Debug.Log("Stopping");
+                    MoveParticles.Stop();
+                }
+
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)
                 {
