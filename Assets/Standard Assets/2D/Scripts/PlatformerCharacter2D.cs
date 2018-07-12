@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace UnityStandardAssets._2D
@@ -238,7 +237,7 @@ namespace UnityStandardAssets._2D
             if (throwing)
             {
                 m_Anim.SetTrigger("Throw");
-                GameObject throwable = Instantiate(ThrowableTemplate, m_ThrowPosition.position, Quaternion.identity);
+                GameObject throwable = Instantiate(ThrowableTemplate, m_ThrowPosition.position, Quaternion.Euler(0, 0, Random.value*360));
                 float jumpSlideCoef = 1;
                 // if wall slide, inverse shoot
                 if (!m_Grounded && touchingWall && m_Rigidbody2D.velocity.y < 0f)
