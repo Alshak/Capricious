@@ -284,6 +284,7 @@ namespace UnityStandardAssets._2D
                     m_Anim.SetBool("Crouch", false);
                 }
             }
+            //previousX = transform.position.x;
             return slide;
         }
 
@@ -291,6 +292,8 @@ namespace UnityStandardAssets._2D
         float previousY;
         public void Move(float move)
         {
+            UpdateParticles();
+
             timeSinceLastJump += Time.deltaTime;
             if (slideCooldown > 0f)
             {
@@ -311,6 +314,7 @@ namespace UnityStandardAssets._2D
                 {
                     slideCooldown = m_SlideCooldown;
                 }
+
                 return;
             }
 
@@ -321,7 +325,7 @@ namespace UnityStandardAssets._2D
             {
                 // Move the character
                 float verticalSpeed = m_Rigidbody2D.velocity.y;
-                if (!m_Grounded && Mathf.Approximately(m_Rigidbody2D.velocity.y,0) && timeSinceLastJump > 2f)
+                if (!m_Grounded && Mathf.Approximately(m_Rigidbody2D.velocity.y, 0) && timeSinceLastJump > 2f)
                 {
                     verticalSpeed = -10f;
                 }
@@ -332,17 +336,6 @@ namespace UnityStandardAssets._2D
 
                 var speed = Mathf.Abs(transform.position.x - previousX);
                 m_Anim.SetFloat("Speed", speed);
-
-                if (speed > 0 && !MoveParticles.isPlaying)
-                {
-                    //Debug.Log("Running");
-                    MoveParticles.Play();
-                }
-                else
-                {
-                    //Debug.Log("Stopping");
-                    MoveParticles.Stop();
-                }
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)
@@ -366,6 +359,22 @@ namespace UnityStandardAssets._2D
             m_Rigidbody2D.velocity = new Vector2(Mathf.Clamp(m_Rigidbody2D.velocity.x, -20, 20), Mathf.Clamp(m_Rigidbody2D.velocity.y, -20, 20));
             previousX = transform.position.x;
             previousY = transform.position.y;
+        }
+
+        private void UpdateParticles()
+        {
+            var speed = new Vector2(Mathf.Abs(transform.position.x - previousX), Mathf.Abs(transform.position.y - previousY));
+            var movingOnGround = m_Grounded && speed.x > 0.00001;
+            var slidingOnWall = m_TouchingWall && speed.y > 0.0001;
+            if (movingOnGround || slidingOnWall)
+            {
+                if (!MoveParticles.isPlaying)
+                    MoveParticles.Play();
+            }
+            else if (MoveParticles.isPlaying)
+            {
+                MoveParticles.Stop();
+            }
         }
 
         private void ActivateAirControlBlock()
