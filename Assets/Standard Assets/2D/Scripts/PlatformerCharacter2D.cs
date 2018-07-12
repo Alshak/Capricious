@@ -335,12 +335,12 @@ namespace UnityStandardAssets._2D
 
                 if (speed > 0 && !MoveParticles.isPlaying)
                 {
-                    Debug.Log("Running");
+                    //Debug.Log("Running");
                     MoveParticles.Play();
                 }
                 else
                 {
-                    Debug.Log("Stopping");
+                    //Debug.Log("Stopping");
                     MoveParticles.Stop();
                 }
 
