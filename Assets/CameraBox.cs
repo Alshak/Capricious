@@ -28,7 +28,7 @@ public class CameraBox : MonoBehaviour
 
             var facingCoef = _character.IsFacingRight() ? 1 : -1;
 
-            var cameraLead = player.transform.position + new Vector3(1, 0) * _lastSpeeds * 6 * facingCoef;
+            var cameraLead = player.transform.position + new Vector3(1, 0) * _lastSpeeds * 2.5f * facingCoef;
             float distanceX = Mathf.Abs(cameraLead.x - transform.position.x);
             float distanceY = Mathf.Abs(cameraLead.y - transform.position.y);
             if (distanceY > 1.5f)
@@ -37,7 +37,7 @@ public class CameraBox : MonoBehaviour
             }
             else if (distanceX > 2.5f)
             {
-                transform.position = Vector2.Lerp(transform.position, cameraLead, Time.deltaTime * 3f);
+                transform.position = Vector2.Lerp(transform.position, cameraLead, Time.deltaTime * 4f);
             }
             else if (distanceX > 1.5f)
             {
