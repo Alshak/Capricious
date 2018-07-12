@@ -10,7 +10,6 @@ namespace Assets.Code.ChaseLevel
 {
     public class ResetManager :  MonoBehaviour
     {
-        public LevelName CurrentLevel;
         public float cooldownWait = 3f;
         private float cooldown = 0f;
         private bool isActivated = false;

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,12 +11,25 @@ public class HurricaneController : MonoBehaviour
     private List<int> randomPointList;
     private int currentIdxFromPath;
     List<Vector3> smoothPath;
-    List<Vector3> randomPath;
+    int TotalHealth;
+    internal int GetTotalHealth()
+    {
+        return TotalHealth;
+    }
 
+    public void SetTotalHealth(int pTotalHealth)
+    {
+        TotalHealth = pTotalHealth;
+        transform.localScale = new Vector3(0.2f * pTotalHealth + .8f, 0.2f * pTotalHealth + .8f, 0.2f * pTotalHealth + .8f);
+    }
+
+    List<Vector3> randomPath;
+    bool backToDesk = false;
     public float Speed = 4;
     // Use this for initialization
     void Start()
     {
+        backToDesk = false;
         path = GameObject.FindGameObjectWithTag("Path");
         player = GameObject.FindGameObjectWithTag("Player");
         Transform[] pointTransformList = path.GetComponentsInChildren<Transform>();
@@ -29,6 +42,12 @@ public class HurricaneController : MonoBehaviour
         ChangePath();
         smoothPath.Insert(0, allPoints[0]);
         smoothPath.Insert(1, allPoints[1]);
+    }
+
+    internal void GoBackToDesk()
+    {
+        backToDesk = true;
+        currentTime = 0f;
     }
 
     private void ChangePath()
@@ -59,23 +78,35 @@ public class HurricaneController : MonoBehaviour
     float currentTime = 0f;
     void Update()
     {
-        Vector3 start = smoothPath[currentIdxFromPath == 0 ? 0 : currentIdxFromPath - 1];
-        Vector3 destination = smoothPath[currentIdxFromPath];
-        currentTime += Time.deltaTime / Vector3.Distance(start, destination);
-        transform.position = Vector3.Lerp(start, destination, currentTime * Speed);
-        if (Vector3.Distance(transform.position, destination) < 0.1f)
+        if (!backToDesk)
         {
-            if (currentIdxFromPath + 1 == smoothPath.Count)
+            Vector3 start = smoothPath[currentIdxFromPath == 0 ? 0 : currentIdxFromPath - 1];
+            Vector3 destination = smoothPath[currentIdxFromPath];
+            currentTime += Time.deltaTime / Vector3.Distance(start, destination);
+            transform.position = Vector3.Lerp(start, destination, currentTime * Speed);
+            if (Vector3.Distance(transform.position, destination) < 0.1f)
             {
-                ChangePath();
-                smoothPath.Insert(0, destination);
-                smoothPath.Insert(2, player.transform.position);
+                if (currentIdxFromPath + 1 == smoothPath.Count)
+                {
+                    ChangePath();
+                    smoothPath.Insert(0, destination);
+                    smoothPath.Insert(2, player.transform.position);
+                }
+                else
+                {
+                    currentIdxFromPath = currentIdxFromPath + 1;
+                }
+                currentTime = 0f;
             }
-            else
+        }
+        else
+        {
+            currentTime += Time.deltaTime;
+            transform.position = Vector3.Lerp(transform.position, allPoints[0], currentTime * 0.1f);
+            if (Vector3.Distance(transform.position, allPoints[0]) < 0.1f)
             {
-                currentIdxFromPath = currentIdxFromPath + 1;
+                Destroy(this.gameObject);
             }
-            currentTime = 0f;
         }
     }
 }
