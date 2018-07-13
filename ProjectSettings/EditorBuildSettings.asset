@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/BossChase.unity
     guid: f92c0f51f59278c4e818e24e2903a290
   - enabled: 1
+    path: Assets/Scenes/BossCinematic.unity
+    guid: 047a553ad4e8902449716bdcdf659eda
+  - enabled: 1
     path: Assets/Scenes/BossFight.unity
     guid: f00287883c390de448b87b1748d15bb7
   - enabled: 1

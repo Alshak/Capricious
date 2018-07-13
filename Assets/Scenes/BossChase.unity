@@ -6263,7 +6263,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4869669643213104, guid: 139afb568540d744bbef40669bb63f15, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 1.78
       objectReference: {fileID: 0}
     - target: {fileID: 4869669643213104, guid: 139afb568540d744bbef40669bb63f15, type: 2}
       propertyPath: m_LocalPosition.z
@@ -9022,7 +9022,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4869669643213104, guid: 139afb568540d744bbef40669bb63f15, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 26.18
+      value: 24.37
       objectReference: {fileID: 0}
     - target: {fileID: 4869669643213104, guid: 139afb568540d744bbef40669bb63f15, type: 2}
       propertyPath: m_LocalPosition.y
@@ -9069,6 +9069,14 @@ Prefab:
     - target: {fileID: 1989620631591464, guid: 139afb568540d744bbef40669bb63f15, type: 2}
       propertyPath: m_Name
       value: Trap - Moving Saw (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4951582493218876, guid: 139afb568540d744bbef40669bb63f15, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4770085487792968, guid: 139afb568540d744bbef40669bb63f15, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 139afb568540d744bbef40669bb63f15, type: 2}
