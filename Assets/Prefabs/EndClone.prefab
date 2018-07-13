@@ -454,26 +454,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ListDeath:
-  - {fileID: 8300000, guid: 65de6d41828932b4f85ea8fa15c19fd8, type: 3}
-  - {fileID: 8300000, guid: abe3023473f28ea4a84e1e6ff557648a, type: 3}
-  - {fileID: 8300000, guid: 1d10ec09fea7a8f4c906b493b14d4843, type: 3}
-  - {fileID: 8300000, guid: b212d0deb0f482e4e8142d27276c56cb, type: 3}
-  - {fileID: 8300000, guid: 05a50593754405f4f81e26fff611a9c4, type: 3}
-  - {fileID: 8300000, guid: 99bc55952129b86438508af4d387bd1c, type: 3}
-  - {fileID: 8300000, guid: a51bffdabb214d34c82049977693053d, type: 3}
-  - {fileID: 8300000, guid: 3d060c7c60476244c8a7d7db25901fed, type: 3}
-  - {fileID: 8300000, guid: fdd165d2884054f449631476c71a42f7, type: 3}
-  - {fileID: 8300000, guid: 8ee20b1c21d74e74b9b0fe7b379a2f2a, type: 3}
-  - {fileID: 8300000, guid: 547a3c0f59ba99b4faf1c7a7dde75688, type: 3}
-  - {fileID: 8300000, guid: f8eeb7ff9b805a04b8bdb6937307a9d0, type: 3}
-  - {fileID: 8300000, guid: 0717ea31bc7506b4392fde1721f2d4e9, type: 3}
-  ListJump:
-  - {fileID: 8300000, guid: 782e148cfd6a03041bdb301d2b743641, type: 3}
-  - {fileID: 8300000, guid: 782e148cfd6a03041bdb301d2b743641, type: 3}
-  - {fileID: 8300000, guid: 782e148cfd6a03041bdb301d2b743641, type: 3}
-  ListSlide: []
-  SoundPrefab: {fileID: 114542202818495340, guid: 59095224e9a259b44832633fbad6363d,
-    type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ListJumpVocal: []
+  ListJumpSfx: []
+  ListSlideVocal: []
+  ListSlideSfx: []
+  ListLand: []
+  ListThrow: []
+  ListSpawn: []
+  OneShotSoundPlayer: {fileID: 0}
+  WallSlidePlayer: {fileID: 0}
+  RunPlayer: {fileID: 0}
+  IsPlayingWallSlide: 0
+  IsPlayingRun: 0
 --- !u!114 &114883470408554206
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -490,7 +495,7 @@ MonoBehaviour:
   RightDeathObj: {fileID: 1297816814048748, guid: 6f174b7b71aad88448b3bddf2ee3c997,
     type: 2}
   XOffset: 0
-  YOffset: 1
+  YOffset: 2
   IsDead: 0
   IsKillableByEvilSteve: 1
   IsPlayer: 0

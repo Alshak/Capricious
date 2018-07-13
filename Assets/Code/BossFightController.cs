@@ -20,6 +20,7 @@ public class BossFightController : MonoBehaviour
     GameObject player;
     GameObject gameController;
     List<Decimal> previousXpositions;
+    Vector3 lastTornadoPosition;
     public enum BOSS_PHASE
     {
         INTRO,
@@ -31,6 +32,7 @@ public class BossFightController : MonoBehaviour
         AFTER_SECOND_TORNADO,
         TWIN_TORNADO,
         TWIN_TORNADO_FIGHT,
+        BOSS_DYING,
         SPAWN_STEVES,
         END
     }
@@ -38,7 +40,7 @@ public class BossFightController : MonoBehaviour
     void Start()
     {
         currentTimer = 0;
-        currentBossPhase = BOSS_PHASE.INTRO;
+        currentBossPhase = BOSS_PHASE.TWIN_TORNADO;
         spriteRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player");
         gameController = GameObject.FindGameObjectWithTag("GameController");
@@ -46,10 +48,25 @@ public class BossFightController : MonoBehaviour
         previousXpositions = new List<Decimal>();
     }
     bool hasPlayedAnimation = false;
+
+    public Vector3 LastTornadoPosition
+    {
+        get
+        {
+            return lastTornadoPosition;
+        }
+
+        set
+        {
+            lastTornadoPosition = value;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         currentTimer += Time.deltaTime;
+        
         switch (currentBossPhase)
         {
             case BOSS_PHASE.INTRO:
@@ -125,15 +142,30 @@ public class BossFightController : MonoBehaviour
                 spriteRenderer.enabled = false;
                 firstTornado = Instantiate(hurricaneTemplate, transform);
                 secondTornado = Instantiate(hurricaneTemplate, transform);
-                firstTornado.GetComponent<HurricaneController>().SetTotalHealth(7);
-                secondTornado.GetComponent<HurricaneController>().SetTotalHealth(7);
+                firstTornado.GetComponent<HurricaneController>().SetTotalHealth(1);
+                firstTornado.GetComponent<HurricaneController>().DoNotGoBack(this);
+                secondTornado.GetComponent<HurricaneController>().SetTotalHealth(1);
+                secondTornado.GetComponent<HurricaneController>().DoNotGoBack(this);
                 currentBossPhase++;
                 break;
             case BOSS_PHASE.TWIN_TORNADO_FIGHT:
                 if (firstTornado == null && secondTornado == null)
                 {
+                    transform.position = lastTornadoPosition;
                     currentBossPhase++;
                     currentTimer = 0f;
+                    spriteRenderer.enabled = true;
+                    animator.SetTrigger("Die");
+                }
+                break;
+            case BOSS_PHASE.BOSS_DYING:
+                transform.position -= new Vector3(0, 0.1f, 0);
+                if(currentTimer > 2f)
+                {
+                    transform.position = new Vector3(0, -2.5f, 0);
+                    currentBossPhase++;
+                    currentTimer = 0f;
+                    spriteRenderer.enabled = false;
                 }
                 break;
             case BOSS_PHASE.SPAWN_STEVES:
@@ -167,7 +199,7 @@ public class BossFightController : MonoBehaviour
                 }
                 break;
             case BOSS_PHASE.END:
-                if(currentTimer > 90f)
+                if(currentTimer > 30f)
                 {
                     SceneManager.LoadScene(0);
                 }
