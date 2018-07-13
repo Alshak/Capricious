@@ -49,7 +49,7 @@ namespace Assets.Code.UI
                 "Steve had just been through an experience that changed him. He no longer felt pride in his job, or loyalty towards his boss. " +
                 "So, for the first time ever, his personality broke loose - He threw the cheese at his boss.",
 
-                "First half of panel: YOU INSOLENT FOOL! YOU WORTHLESS WASTE OF A CLONE! YOU'RE GOING TO REGRET THIS!\n" +
+                "YOU INSOLENT FOOL! YOU WORTHLESS WASTE OF A CLONE! YOU'RE GOING TO REGRET THIS!\n" +
                 "I’m going to rock you…\n\n" +
                 "..like a hurricane."
             };
