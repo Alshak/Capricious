@@ -15,6 +15,8 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_SlideCoef = 1.2f;
         [SerializeField] private float m_SlideCooldown = 0.2f;
         [SerializeField] private int m_JumpBuffer = 15;
+        [SerializeField] private float m_JumpCooldown = 0.2f;
+        [SerializeField] private float m_ThrowCooldown = 0.2f;
         [SerializeField] private int m_SlideBuffer = 15;
         [SerializeField] private GameObject ThrowableTemplate;
         [SerializeField] public ParticleSystem MoveParticles;
@@ -28,7 +30,7 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
-        const float k_GroundedRadius = .01f; // Radius of the overlap circle to determine if grounded
+        const float k_GroundedRadius = .12f; // Radius of the overlap circle to determine if grounded
         public bool m_Grounded;            // Whether or not the player is grounded.
 
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
@@ -37,7 +39,7 @@ namespace UnityStandardAssets._2D
         private Transform m_WallCheck;
         private Transform m_WallCheck2;
         private Transform m_WallCheck3;
-        const float k_WallJumpRadius = .2f; // Radius of the overlap circle to determine if player can wall jump
+        const float k_WallJumpRadius = .175f; // Radius of the overlap circle to determine if player can wall jump
         public bool touchingWall;            // Whether or not the player can wall jump.
 
         private Transform m_ThrowPosition;
@@ -49,6 +51,8 @@ namespace UnityStandardAssets._2D
 
         private float m_CurrentSlideDuration = 0f;
         private float slideCooldown = 0f;
+        private float jumpCooldown = 0f;
+        private float throwCooldown = 0f;
         private float timeSinceLastJump = 0f;
 
         public bool PlayJumpSound = false;
@@ -62,6 +66,8 @@ namespace UnityStandardAssets._2D
             m_CurrentSlideDuration = 0f;
             timeSinceLastJump = 0f;
             slideCooldown = 0f;
+            jumpCooldown = 0f;
+            throwCooldown = 0f;
             m_AirControlTimerValue = 0f;
             slideBuffer = 0;
             jumpBuffer = 0;
@@ -102,12 +108,15 @@ namespace UnityStandardAssets._2D
             touchingWall = false;
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-            Collider2D[] groundColliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-            for (int i = 0; i < groundColliders.Length; i++)
+            if (Mathf.Approximately(m_Rigidbody2D.velocity.y, 0f))
             {
-                if (groundColliders[i].gameObject != gameObject)
+                Collider2D[] groundColliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+                for (int i = 0; i < groundColliders.Length; i++)
                 {
-                    m_Grounded = true;
+                    if (groundColliders[i].gameObject != gameObject)
+                    {
+                        m_Grounded = true;
+                    }
                 }
             }
 
@@ -226,7 +235,7 @@ namespace UnityStandardAssets._2D
 
         private void Jump(bool jump, float rightCoef)
         {
-            if (jump)
+            if (jump && jumpCooldown <= 0f)
             {
                 // Add a vertical force to the player.
                 if (m_Grounded && m_Anim.GetBool("Ground"))
@@ -238,6 +247,7 @@ namespace UnityStandardAssets._2D
                     timeSinceLastJump = 0f;
                     PlayJumpSound = true;
                     JumpParticles.Play();
+                    jumpCooldown = m_JumpCooldown;
                 }
                 else if (touchingWall)
                 {
@@ -250,13 +260,14 @@ namespace UnityStandardAssets._2D
                     timeSinceLastJump = 0f;
                     PlayJumpSound = true;
                     WallJumpParticles.Play();
+                    jumpCooldown = m_JumpCooldown;
                 }
             }
         }
 
         private void Throw(bool throwing, float rightCoef)
         {
-            if (throwing)
+            if (throwing && throwCooldown <= 0.2f)
             {
                 PlayThrowSound = true;
                 m_Anim.SetTrigger("Throw");
@@ -268,6 +279,7 @@ namespace UnityStandardAssets._2D
                     jumpSlideCoef = -1;
                 }
                 throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(jumpSlideCoef * rightCoef * m_ThrowForce + m_Rigidbody2D.velocity.x * (m_ThrowForce / 20), m_ThrowForce * 0.4f));
+                throwCooldown = m_ThrowCooldown;
             }
         }
 
@@ -323,6 +335,14 @@ namespace UnityStandardAssets._2D
             if (slideCooldown > 0f)
             {
                 slideCooldown -= Time.deltaTime;
+            }
+            if (jumpCooldown > 0f)
+            {
+                jumpCooldown -= Time.deltaTime;
+            }
+            if (throwCooldown > 0f)
+            {
+                throwCooldown -= Time.deltaTime;
             }
             bool goingRight = Mathf.Sign(move) > 0;
             float rightCoef = -1;

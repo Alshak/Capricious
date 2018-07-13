@@ -1,10 +1,9 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class HurricaneController : MonoBehaviour
 {
-
+    BossFightController bossFightController;
     GameObject path;
     GameObject player;
     private List<Vector3> allPoints;
@@ -26,6 +25,7 @@ public class HurricaneController : MonoBehaviour
     List<Vector3> randomPath;
     bool backToDesk = false;
     public float Speed = 4;
+    public bool cancelBackToDesk = false;
     // Use this for initialization
     void Start()
     {
@@ -99,7 +99,7 @@ public class HurricaneController : MonoBehaviour
                 currentTime = 0f;
             }
         }
-        else
+        else if(backToDesk && !cancelBackToDesk)
         {
             currentTime += Time.deltaTime;
             transform.position = Vector3.Lerp(transform.position, allPoints[0], currentTime * 0.1f);
@@ -108,5 +108,16 @@ public class HurricaneController : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
+        else
+        {
+            bossFightController.LastTornadoPosition = transform.position;
+            Destroy(this.gameObject);
+        }
+    }
+
+    internal void DoNotGoBack(BossFightController fightController)
+    {
+        bossFightController = fightController;
+        cancelBackToDesk = true;
     }
 }
