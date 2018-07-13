@@ -14,6 +14,7 @@ namespace Assets.Code.Gibs
         private Color colorStart;
         private float alpha;
         public bool IsActived = true;
+        public GameObject SpawnOnDeath;
         private SpriteRenderer[] renders;
 
         void Start()
@@ -34,6 +35,11 @@ namespace Assets.Code.Gibs
                     {
                         isDead = true;
                         Destroy(gameObject);
+                        if (SpawnOnDeath != null)
+                        {
+                            var spawned = Instantiate(SpawnOnDeath, transform.position, transform.rotation);
+                            spawned.transform.localScale = transform.localScale;
+                        }
                     }
                     if (FadeOut)
                     {

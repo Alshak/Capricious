@@ -38,7 +38,7 @@ namespace UnityStandardAssets._2D
         private Transform m_WallCheck2;
         private Transform m_WallCheck3;
         const float k_WallJumpRadius = .2f; // Radius of the overlap circle to determine if player can wall jump
-        private bool touchingWall;            // Whether or not the player can wall jump.
+        public bool touchingWall;            // Whether or not the player can wall jump.
 
         private Transform m_ThrowPosition;
 
@@ -53,6 +53,9 @@ namespace UnityStandardAssets._2D
 
         public bool PlayJumpSound = false;
         public bool PlaySlideSound = false;
+        public bool PlayLandSound;
+        public bool PlayThrowSound;
+        public bool PlaySpawnSound;
 
         public void ResetEverything()
         {
@@ -84,6 +87,7 @@ namespace UnityStandardAssets._2D
 
         private void FixedUpdate()
         {
+
             if (!m_CanAirControl)
             {
                 m_AirControlTimerValue -= Time.deltaTime;
@@ -108,7 +112,10 @@ namespace UnityStandardAssets._2D
             }
 
             if (!previouslyGrounded && m_Grounded)
+            {
                 JumpParticles.Play();
+                PlayLandSound = true;
+            }
 
             m_Anim.SetBool("Ground", m_Grounded);
 
@@ -146,6 +153,11 @@ namespace UnityStandardAssets._2D
             m_Anim.SetBool("TouchingWall", touchingWall);
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+
+            IsRunning = m_Grounded && Mathf.Abs(transform.position.x - previousX) > 0.01;
+
+            previousX = transform.position.x;
+            previousY = transform.position.y;
         }
 
 
@@ -246,6 +258,7 @@ namespace UnityStandardAssets._2D
         {
             if (throwing)
             {
+                PlayThrowSound = true;
                 m_Anim.SetTrigger("Throw");
                 GameObject throwable = Instantiate(ThrowableTemplate, m_ThrowPosition.position, Quaternion.Euler(0, 0, Random.value*360));
                 float jumpSlideCoef = 1;
@@ -299,6 +312,8 @@ namespace UnityStandardAssets._2D
 
         float previousX;
         float previousY;
+        public bool IsRunning;
+
         public void Move(float move)
         {
             var speed = CurrentSpeed();
@@ -325,8 +340,6 @@ namespace UnityStandardAssets._2D
                     slideCooldown = m_SlideCooldown;
                 }
 
-                previousX = transform.position.x;
-                previousY = transform.position.y;
                 return;
             }
 
@@ -348,6 +361,8 @@ namespace UnityStandardAssets._2D
                 
                 m_Anim.SetFloat("Speed", speed.x);
 
+                IsRunning = speed.x > 0.01;
+
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)
                 {
@@ -368,8 +383,6 @@ namespace UnityStandardAssets._2D
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_Rigidbody2D.velocity.y * 0.75f);
             }
             m_Rigidbody2D.velocity = new Vector2(Mathf.Clamp(m_Rigidbody2D.velocity.x, -20, 20), Mathf.Clamp(m_Rigidbody2D.velocity.y, -20, 20));
-            previousX = transform.position.x;
-            previousY = transform.position.y;
         }
 
 

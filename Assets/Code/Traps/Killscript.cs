@@ -55,6 +55,7 @@ namespace Assets.Code.Traps
 
                 if (ShouldDieOnHit && other.tag != "Gibs" && other.tag != "Hurricane")
                 {
+
                     Destroy(gameObject);
                 }
 
