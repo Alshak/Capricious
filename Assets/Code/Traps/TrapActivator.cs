@@ -26,7 +26,7 @@ namespace Assets.Code.Traps
 
         void Update()
         {
-            if (isActivated && isDone == false)
+            if (isActivated)
             {
                 if (cooldown > 0)
                 {
@@ -42,7 +42,7 @@ namespace Assets.Code.Traps
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.tag == "Player" && isActivated == false && isDone == false)
+            if (other.tag == "Player" && isActivated == false)
             {
                 isActivated = true;
                 if (DelayPerDrop == 0)
@@ -55,17 +55,21 @@ namespace Assets.Code.Traps
 
         private void UnFreezeOne()
         {
-            Rigidbody2D trap = Traps[trapIndex];
-            trap.isKinematic = false;
-            var timedLife = trap.GetComponent<TimedLife>();
-            if (timedLife != null)
+            if (trapIndex < Traps.Count)
             {
-                timedLife.IsActived = true;
+                Rigidbody2D trap = Traps[trapIndex];
+                trap.isKinematic = false;
+                var timedLife = trap.GetComponent<TimedLife>();
+                if (timedLife != null)
+                {
+                    timedLife.IsActived = true;
+                }
+                trapIndex++;
             }
-            trapIndex++;
-            if (trapIndex >= Traps.Count)
+            else
             {
-                isDone = true;
+                isActivated = false;
+                trapIndex = 0;
             }
         }
 

@@ -29,7 +29,6 @@ namespace Assets.Code.Spawning
 
         private AudioSource respawnSound;
 
-
         void Start()
         {
             respawnSound = GetComponent<AudioSource>();
