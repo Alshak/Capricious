@@ -72,7 +72,7 @@ namespace UnityStandardAssets._2D
             slideBuffer = 0;
             jumpBuffer = 0;
         }
-        private void Awake()
+        private void Start()
         {
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
@@ -83,15 +83,11 @@ namespace UnityStandardAssets._2D
             m_ThrowPosition = transform.Find("ThrowPosition");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = transform.GetComponent<Rigidbody2D>();
-        }
-
-        private void Start()
-        {
             m_CurrentSlideDuration = 0f;
         }
 
 
-        private void FixedUpdate()
+        public void CheckColliders()
         {
 
             if (!m_CanAirControl)
@@ -161,9 +157,6 @@ namespace UnityStandardAssets._2D
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
 
             IsRunning = m_Grounded && Mathf.Abs(transform.position.x - previousX) > 0.01;
-
-            previousX = transform.position.x;
-            previousY = transform.position.y;
         }
 
 
@@ -355,7 +348,7 @@ namespace UnityStandardAssets._2D
                 {
                     slideCooldown = m_SlideCooldown;
                 }
-
+                previousX = transform.position.x;
                 return;
             }
 
@@ -400,6 +393,9 @@ namespace UnityStandardAssets._2D
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_Rigidbody2D.velocity.y * 0.75f);
             }
             m_Rigidbody2D.velocity = new Vector2(Mathf.Clamp(m_Rigidbody2D.velocity.x, -20, 20), Mathf.Clamp(m_Rigidbody2D.velocity.y, -20, 14));
+
+            previousX = transform.position.x;
+            previousY = transform.position.y;
         }
 
         private void UpdateParticles(Vector3 speed)
