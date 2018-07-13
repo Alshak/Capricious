@@ -16,6 +16,7 @@ public class BossFightController : MonoBehaviour
     public SpriteRenderer background;
     public Image logo;
     public Image blackFade;
+    public List<AudioClip> audioClips;
     int nbHurricanes = 0;
     float currentTimer;
     BOSS_PHASE currentBossPhase;
@@ -52,6 +53,32 @@ public class BossFightController : MonoBehaviour
         gameController = GameObject.FindGameObjectWithTag("GameController");
         animator = GetComponent<Animator>();
         previousXpositions = new List<Decimal>();
+
+
+    }
+
+    void PlaySound(String name)
+    {
+        if (audioClips.Count > 0)
+        {
+            int idxAudio = 0;
+            switch (name)
+            {
+                case "Dab":
+                    idxAudio = 0;
+                    break;
+                case "Angry":
+                    idxAudio = 1;
+                    break;
+                case "Happy":
+                    idxAudio = 2;
+                    break;
+            }
+            if (!GetComponent<AudioSource>().isPlaying)
+            {
+                GetComponent<AudioSource>().PlayOneShot(audioClips[idxAudio]);
+            }
+        }
     }
     bool hasPlayedAnimation = false;
 
@@ -83,6 +110,7 @@ public class BossFightController : MonoBehaviour
                 if (!hasPlayedAnimation && currentTimer > 2f)
                 {
                     animator.SetTrigger("Happy");
+                    PlaySound("Happy");
                     hasPlayedAnimation = true;
                 }
                 if (currentTimer > 5f)
@@ -109,6 +137,7 @@ public class BossFightController : MonoBehaviour
                 if (!hasPlayedAnimation && currentTimer > 2f)
                 {
                     animator.SetTrigger("Dab");
+                    PlaySound("Dab");
                     hasPlayedAnimation = true;
                 }
                 if (currentTimer > 5f)
@@ -137,6 +166,7 @@ public class BossFightController : MonoBehaviour
                 if (!hasPlayedAnimation && currentTimer > 2f)
                 {
                     animator.SetTrigger("Angry");
+                    PlaySound("Angry");
                     hasPlayedAnimation = true;
                 }
                 if (currentTimer > 5f)

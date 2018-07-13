@@ -1202,10 +1202,20 @@ Prefab:
       propertyPath: background
       value: 
       objectReference: {fileID: 2109014178}
-    - target: {fileID: 114488056707437934, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
+    - target: {fileID: 82471705634445586, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
         type: 2}
-      propertyPath: m_Color.a
-      value: 0
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82471705634445586, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
+        type: 2}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82471705634445586, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
+        type: 2}
+      propertyPath: m_Pitch
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24, type: 2}
