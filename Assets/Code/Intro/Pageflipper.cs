@@ -22,7 +22,7 @@ namespace Assets.Code.Intro
         public Platformer2DUserControl Player;
         private Checkpoint checkpoint;
         private CameraBox cameraBox;
-        public Text textPrototype;
+        private MusicManager musicManager;
 
         void Start()
         {
@@ -31,7 +31,9 @@ namespace Assets.Code.Intro
             introControls = GameObject.FindObjectOfType<IntroControls>();
             checkpoint = GameObject.FindObjectOfType<Checkpoint>();
             cameraBox = GameObject.FindObjectOfType<CameraBox>();
+            musicManager = GameObject.FindObjectOfType<MusicManager>();
             DisplayControls(false);
+            musicManager.StopAllMusic();
         }
 
         void Update()
@@ -51,8 +53,7 @@ namespace Assets.Code.Intro
             imageIndex++;
             if (imageIndex < ListImages.Count - 1)
             {
-                ReachedEnd();
-                //ShowNextPage();
+                ShowNextPage();
             }
             else
             {
@@ -76,10 +77,16 @@ namespace Assets.Code.Intro
             cameraBox.SetPlayer(player.gameObject);
             introControls.enabled = true;
             DisplayControls(true);
+            musicManager.PlayMainMenu();
 
-            if (textPrototype != null)
+            foreach (var images in GetComponentsInChildren<Image>())
             {
-                textPrototype.enabled = false;
+                images.enabled = false;
+            }
+
+            foreach (var text in GetComponentsInChildren<Text>())
+            {
+                text.enabled = false;
             }
         }
 
