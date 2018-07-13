@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 4925705440352608}
   - component: {fileID: 114436732555811876}
   - component: {fileID: 114198513215609708}
+  - component: {fileID: 114702016849868518}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -514,6 +515,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114702016849868518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1618783756748248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9abf21bdf8d47834bb069c6d9a50afd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114771956412896630
 MonoBehaviour:
   m_ObjectHideFlags: 1

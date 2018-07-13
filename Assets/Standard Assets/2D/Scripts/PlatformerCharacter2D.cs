@@ -301,7 +301,8 @@ namespace UnityStandardAssets._2D
         float previousY;
         public void Move(float move)
         {
-            UpdateParticles();
+            var speed = CurrentSpeed();
+            UpdateParticles(speed);
 
             timeSinceLastJump += Time.deltaTime;
             if (slideCooldown > 0f)
@@ -344,9 +345,8 @@ namespace UnityStandardAssets._2D
                 {
                     m_Rigidbody2D.velocity = new Vector2(move * m_MaxWalkingSpeed, verticalSpeed);
                 }
-
-                var speed = Mathf.Abs(transform.position.x - previousX);
-                m_Anim.SetFloat("Speed", speed);
+                
+                m_Anim.SetFloat("Speed", speed.x);
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)
@@ -373,9 +373,9 @@ namespace UnityStandardAssets._2D
         }
 
 
-        private void UpdateParticles()
+        private void UpdateParticles(Vector3 speed)
         {
-            var speed = CurrentSpeed();
+            
             var movingOnGround = m_Grounded && speed.x > 0.00001;
             var slidingOnWall = touchingWall && speed.y > 0.0001;
             if (movingOnGround || slidingOnWall)
@@ -389,9 +389,9 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        public Vector3 CurrentSpeed()
+        public Vector2 CurrentSpeed()
         {
-            return new Vector3(Mathf.Abs(transform.position.x - previousX), Mathf.Abs(transform.position.y - previousY));
+            return new Vector2(Mathf.Abs(transform.position.x - previousX), Mathf.Abs(transform.position.y - previousY));
         }
 
         private void ActivateAirControlBlock()
