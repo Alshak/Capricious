@@ -4090,7 +4090,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MusicGameplay: {fileID: 8300000, guid: 4b47c05ddcc202b4d9be66dbc3d84cbd, type: 3}
-  MusicMainMenu: {fileID: 8300000, guid: 2cacefd33a2936f4e91fc80705fdeca7, type: 3}
+  MusicMainMenu: {fileID: 8300000, guid: ec1c06a1d34f6ed4c8e22ec4a479cdb7, type: 3}
   MusicDeath: {fileID: 8300000, guid: 2cacefd33a2936f4e91fc80705fdeca7, type: 3}
 --- !u!82 &1504749514
 AudioSource:
