@@ -12,9 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Lvl1_Office.unity
     guid: 1d92c184cda3f18478bb404612e8ab7d
   - enabled: 1
+    path: Assets/Scenes/Capricious.unity
+    guid: a78320fcdbf4d2d4b867b40d82afdf1a
+  - enabled: 1
     path: Assets/Scenes/BossChase.unity
     guid: f92c0f51f59278c4e818e24e2903a290
   - enabled: 1
-    path: Assets/Scenes/Capricious.unity
-    guid: a78320fcdbf4d2d4b867b40d82afdf1a
+    path: Assets/Scenes/BossFight.unity
+    guid: f00287883c390de448b87b1748d15bb7
   m_configObjects: {}

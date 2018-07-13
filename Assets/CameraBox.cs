@@ -13,8 +13,11 @@ public class CameraBox : MonoBehaviour
     public void Start()
     {
         player = GameObject.Find("Player");
-        _character = player.GetComponent<PlatformerCharacter2D>();
-        transform.position = player.transform.position;
+        if (player != null)
+        {
+            _character = player.GetComponent<PlatformerCharacter2D>();
+            transform.position = player.transform.position;
+        }
         GetComponentInChildren<Camera>().orthographicSize = 7;
     }
 
@@ -49,5 +52,12 @@ public class CameraBox : MonoBehaviour
                     Mathf.Clamp(transform.position.y, rightBottomBound.position.y, leftTopBound.position.y));
             }
         }
+    }
+
+    public void SetPlayer(GameObject newPlayer)
+    {
+        player = newPlayer;
+        _character = player.GetComponent<PlatformerCharacter2D>();
+        //transform.position = player.transform.position;
     }
 }
