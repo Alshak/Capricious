@@ -382,9 +382,11 @@ namespace UnityStandardAssets._2D
             {
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_Rigidbody2D.velocity.y * 0.75f);
             }
-            m_Rigidbody2D.velocity = new Vector2(Mathf.Clamp(m_Rigidbody2D.velocity.x, -20, 20), Mathf.Clamp(m_Rigidbody2D.velocity.y, -20, 20));
+            maximumVelocity = Mathf.Max(maximumVelocity, m_Rigidbody2D.velocity.y);
+            Debug.Log(maximumVelocity);
+            m_Rigidbody2D.velocity = new Vector2(Mathf.Clamp(m_Rigidbody2D.velocity.x, -20, 20), Mathf.Clamp(m_Rigidbody2D.velocity.y, -20, 14));
         }
-
+        float maximumVelocity = -999;
 
         private void UpdateParticles(Vector3 speed)
         {
