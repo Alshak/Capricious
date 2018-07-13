@@ -113,6 +113,47 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &760496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 760499}
+  - component: {fileID: 760498}
+  m_Layer: 0
+  m_Name: BossMusicLauncher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &760498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 760496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da58c280a0bcac746bc76175699b84dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicManager: {fileID: 544329500}
+--- !u!4 &760499
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 760496}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &122874243
 Prefab:
   m_ObjectHideFlags: 0
@@ -621,6 +662,12 @@ Transform:
   m_Father: {fileID: 420744668}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &544329500 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114771956412896630, guid: 982edcdd31890214f83b60bf6e4440f3,
+    type: 2}
+  m_PrefabInternal: {fileID: 122874243}
+  m_Script: {fileID: 11500000, guid: b30b6bb3a27708b408b91e498a996672, type: 3}
 --- !u!1 &637429300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1202,20 +1249,15 @@ Prefab:
       propertyPath: background
       value: 
       objectReference: {fileID: 2109014178}
+    - target: {fileID: 114344228150207526, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
+        type: 2}
+      propertyPath: musicManager
+      value: 
+      objectReference: {fileID: 544329500}
     - target: {fileID: 82471705634445586, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
         type: 2}
       propertyPath: m_PlayOnAwake
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 82471705634445586, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
-        type: 2}
-      propertyPath: m_Volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 82471705634445586, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
-        type: 2}
-      propertyPath: m_Pitch
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24, type: 2}
