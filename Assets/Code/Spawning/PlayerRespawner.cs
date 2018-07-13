@@ -61,6 +61,7 @@ namespace Assets.Code.Spawning
                 cooldownDeath -= Time.deltaTime;
                 if (cooldownDeath <= 0)
                 {
+                    Debug.Log("RESPAWN PLS");
                     LoadMainMenu();
                 }
             }
@@ -141,11 +142,10 @@ namespace Assets.Code.Spawning
 
         private void LoadMainMenu()
         {
-            Debug.Log("RELOAD MAENU");
             gameOver = false;
             cooldown = 0;
             cooldownDeath = 0;
-            SceneManager.LoadScene(LevelName.MainMenu.ToString(), LoadSceneMode.Single);
+            SceneManager.LoadScene(LevelName.Game_End.ToString(), LoadSceneMode.Single);
         }
     }
 }

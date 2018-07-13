@@ -13,5 +13,6 @@ namespace Assets.Code.LevelChange
         Capricious,
         BossFight,
         LevelEnding,
+        Game_End,
     }
 }
