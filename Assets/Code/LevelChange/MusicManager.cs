@@ -42,6 +42,8 @@ namespace Assets.Code.LevelChange
 
         public void StopAllMusic()
         {
+            if (music == null)
+                music = GetComponent<AudioSource>();
             music.Stop();
         }
     }
