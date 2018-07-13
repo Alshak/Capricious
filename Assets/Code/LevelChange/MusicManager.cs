@@ -9,6 +9,7 @@ namespace Assets.Code.LevelChange
     public class MusicManager : MonoBehaviour
     {
         public AudioClip MusicGameplay;
+        public AudioClip MusicGameplayLoop;
         public AudioClip MusicMainMenu;
         public AudioClip MusicDeath;
 
@@ -45,6 +46,19 @@ namespace Assets.Code.LevelChange
             if (music == null)
                 music = GetComponent<AudioSource>();
             music.Stop();
+        }
+
+        public void Update()
+        {
+            if (music.isPlaying)
+                return;
+
+            if (music.clip == MusicGameplay)
+            {
+                music.clip = MusicGameplayLoop;
+            }
+
+            music.Play();
         }
     }
 }

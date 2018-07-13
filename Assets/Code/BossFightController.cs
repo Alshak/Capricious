@@ -3,13 +3,19 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityStandardAssets._2D;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class BossFightController : MonoBehaviour
 {
 
     public GameObject hurricaneTemplate;
     public GameObject endCloneTemplate;
+    public Text congratsText;
+    public SpriteRenderer background;
+    public Image logo;
+    public Image blackFade;
     int nbHurricanes = 0;
     float currentTimer;
     BOSS_PHASE currentBossPhase;
@@ -166,9 +172,13 @@ public class BossFightController : MonoBehaviour
                     currentBossPhase++;
                     currentTimer = 0f;
                     spriteRenderer.enabled = false;
+                    logo.enabled = true;
+                    congratsText.enabled = true;
+                    congratsText.text += (31 - gameController.GetComponentInChildren<PlayerLives>().GetLives());
                 }
                 break;
             case BOSS_PHASE.SPAWN_STEVES:
+                background.color = Color.Lerp(background.color, Color.white, currentTimer);
                 int currentLives = gameController.GetComponentInChildren<PlayerLives>().GetLives();
                 if (currentLives > 1)
                 {
@@ -199,9 +209,19 @@ public class BossFightController : MonoBehaviour
                 }
                 break;
             case BOSS_PHASE.END:
-                if(currentTimer > 30f)
+                if (currentTimer > 25f)
                 {
-                    SceneManager.LoadScene(0);
+                    blackFade.color = Color.Lerp(blackFade.color, Color.black, currentTimer * 0.001f);
+                }
+                if (currentTimer > 30f)
+                {
+                    bool jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                    bool crouch = CrossPlatformInputManager.GetButtonDown("Crouch");
+                    bool throwing = CrossPlatformInputManager.GetButtonDown("Throw");
+                    if (jump || crouch || throwing)
+                    {
+                        SceneManager.LoadScene(0);
+                    }
                 }
                 break;
         }
