@@ -118,6 +118,7 @@ namespace Assets.Code.Spawning
             player.GetComponent<Platformer2DUserControl>().IsAlive = true;
             player.GetComponent<Animator>().enabled = true;
             player.GetComponent<SpriteRenderer>().enabled = true;
+            player.GetComponent<PlatformerCharacter2D>().PlaySpawnSound = true;
             player.transform.position = CurrentSpawn.transform.position;
             Rigidbody2D rigid = player.GetComponent<Rigidbody2D>();
             rigid.simulated = true;
