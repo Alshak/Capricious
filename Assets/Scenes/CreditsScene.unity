@@ -625,7 +625,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4390967766049044, guid: 843bbd5eb08608b46aae435a2bbee814, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114479668994398124, guid: 843bbd5eb08608b46aae435a2bbee814,
         type: 2}
@@ -2717,6 +2717,7 @@ GameObject:
   - component: {fileID: 1839926105}
   - component: {fileID: 1839926104}
   - component: {fileID: 1839926106}
+  - component: {fileID: 1839926107}
   m_Layer: 0
   m_Name: CreditsCamera
   m_TagString: Untagged
@@ -2794,6 +2795,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b042315020205d741bba739d0ba146ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1839926107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1839926103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4ecceaf32d45d641a286bb81749090a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowInGame: 0
 --- !u!1 &1846652564
 GameObject:
   m_ObjectHideFlags: 0
