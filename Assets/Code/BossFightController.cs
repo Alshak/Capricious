@@ -1,4 +1,5 @@
-﻿using Assets.Code.Spawning;
+﻿using Assets.Code.LevelChange;
+using Assets.Code.Spawning;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,8 +54,6 @@ public class BossFightController : MonoBehaviour
         gameController = GameObject.FindGameObjectWithTag("GameController");
         animator = GetComponent<Animator>();
         previousXpositions = new List<Decimal>();
-
-
     }
 
     void PlaySound(String name)

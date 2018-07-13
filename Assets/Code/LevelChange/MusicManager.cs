@@ -12,6 +12,8 @@ namespace Assets.Code.LevelChange
         public AudioClip MusicGameplayLoop;
         public AudioClip MusicMainMenu;
         public AudioClip MusicDeath;
+        public AudioClip MusicBoss;
+        public AudioClip MusicBossLoop;
 
         private AudioSource music;
 
@@ -41,6 +43,13 @@ namespace Assets.Code.LevelChange
             music.Play();
         }
 
+        public void PlayBoss1()
+        {
+            music.Stop();
+            music.clip = MusicBoss;
+            music.Play();
+        }
+
         public void StopAllMusic()
         {
             if (music == null)
@@ -56,6 +65,11 @@ namespace Assets.Code.LevelChange
             if (music.clip == MusicGameplay)
             {
                 music.clip = MusicGameplayLoop;
+            }
+
+            if (music.clip == MusicBoss)
+            {
+                music.clip = MusicBossLoop;
             }
 
             music.Play();
