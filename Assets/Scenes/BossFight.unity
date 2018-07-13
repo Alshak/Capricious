@@ -1287,6 +1287,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4299473957028264, guid: e0ca07258f783374bb8aa7aef28e6d3c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4275490942448462, guid: e0ca07258f783374bb8aa7aef28e6d3c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0ca07258f783374bb8aa7aef28e6d3c, type: 2}
   m_IsPrefabAsset: 0

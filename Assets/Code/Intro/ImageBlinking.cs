@@ -39,7 +39,6 @@ namespace Assets.Code.Intro
                     fadeIn = true;
                 }
             }
-
             rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, alpha);
         }
     }
