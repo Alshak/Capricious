@@ -17,7 +17,6 @@ namespace Assets.Code.Intro
         private int imageIndex = 0;
         private bool reachedEnd = false;
         public List<Sprite> ListImages;
-        public List<AudioClip> ListTalk;
         private Image rend;
         private IntroControls introControls;
         public Platformer2DUserControl Player;
