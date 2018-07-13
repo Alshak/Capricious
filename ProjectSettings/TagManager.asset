@@ -11,6 +11,7 @@ TagManager:
   - Path
   - Hurricane
   - HurricaneEye
+  - EndClone
   layers:
   - Default
   - TransparentFX
@@ -29,8 +30,8 @@ TagManager:
   - FallingSpike
   - Gibs
   - Bat
-  - 
-  - 
+  - EndClone
+  - EndDesk
   - 
   - 
   - 

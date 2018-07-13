@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿using Assets.Code.Spawning;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityStandardAssets._2D;
 
 public class BossFightController : MonoBehaviour
 {
 
     public GameObject hurricaneTemplate;
+    public GameObject endCloneTemplate;
     int nbHurricanes = 0;
     float currentTimer;
     BOSS_PHASE currentBossPhase;
@@ -13,6 +17,9 @@ public class BossFightController : MonoBehaviour
     GameObject firstTornado = null;
     GameObject secondTornado = null;
     Animator animator;
+    GameObject player;
+    GameObject gameController;
+    List<Decimal> previousXpositions;
     public enum BOSS_PHASE
     {
         INTRO,
@@ -24,7 +31,8 @@ public class BossFightController : MonoBehaviour
         AFTER_SECOND_TORNADO,
         TWIN_TORNADO,
         TWIN_TORNADO_FIGHT,
-        OUTRO
+        SPAWN_STEVES,
+        END
     }
     // Use this for initialization
     void Start()
@@ -32,9 +40,11 @@ public class BossFightController : MonoBehaviour
         currentTimer = 0;
         currentBossPhase = BOSS_PHASE.INTRO;
         spriteRenderer = GetComponent<SpriteRenderer>();
-       animator = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        gameController = GameObject.FindGameObjectWithTag("GameController");
+        animator = GetComponent<Animator>();
+        previousXpositions = new List<Decimal>();
     }
-
     bool hasPlayedAnimation = false;
     // Update is called once per frame
     void Update()
@@ -43,7 +53,11 @@ public class BossFightController : MonoBehaviour
         switch (currentBossPhase)
         {
             case BOSS_PHASE.INTRO:
-                if(!hasPlayedAnimation && currentTimer > 2f)
+                if(!spriteRenderer.enabled)
+                {
+                    spriteRenderer.enabled = true;
+                }
+                if (!hasPlayedAnimation && currentTimer > 2f)
                 {
                     animator.SetTrigger("Happy");
                     hasPlayedAnimation = true;
@@ -71,7 +85,7 @@ public class BossFightController : MonoBehaviour
             case BOSS_PHASE.AFTER_FIRST_TORNADO:
                 if (!hasPlayedAnimation && currentTimer > 2f)
                 {
-                    animator.SetTrigger("Angry");
+                    animator.SetTrigger("Dab");
                     hasPlayedAnimation = true;
                 }
                 if (currentTimer > 5f)
@@ -99,7 +113,7 @@ public class BossFightController : MonoBehaviour
             case BOSS_PHASE.AFTER_SECOND_TORNADO:
                 if (!hasPlayedAnimation && currentTimer > 2f)
                 {
-                    animator.SetTrigger("Dab");
+                    animator.SetTrigger("Angry");
                     hasPlayedAnimation = true;
                 }
                 if (currentTimer > 5f)
@@ -122,8 +136,41 @@ public class BossFightController : MonoBehaviour
                     currentTimer = 0f;
                 }
                 break;
-            case BOSS_PHASE.OUTRO:
-                Debug.Log("THE END");
+            case BOSS_PHASE.SPAWN_STEVES:
+                int currentLives = gameController.GetComponentInChildren<PlayerLives>().GetLives();
+                if (currentLives > 1)
+                {
+                    GameObject steveClone = Instantiate(endCloneTemplate, new Vector3(-10, -3, 0), Quaternion.identity);
+                    Decimal roundedValue = 0;
+                    float xPosition;
+                    do
+                    {
+                        if (UnityEngine.Random.Range(1, 3) == 2)
+                        {
+                            xPosition = UnityEngine.Random.Range(-8f, -1.7f);
+                        }
+                        else
+                        {
+                            xPosition = UnityEngine.Random.Range(1.8f, 8f);
+                        }
+                        roundedValue = Math.Round((Decimal)xPosition, 1, MidpointRounding.AwayFromZero);
+                    } while (previousXpositions.Contains(roundedValue));
+                    previousXpositions.Add(roundedValue);
+                    steveClone.GetComponent<CloneController>().SetDirection(Assets.Code.AI.AIDirection.Right, new Vector3(xPosition, -3, 0));
+                    steveClone.GetComponent<SpriteRenderer>().sortingOrder = 10 - currentLives;
+                    gameController.GetComponentInChildren<PlayerLives>().Reduce();
+                }
+                else
+                {
+                    currentTimer = 0f;
+                    currentBossPhase++;
+                }
+                break;
+            case BOSS_PHASE.END:
+                if(currentTimer > 90f)
+                {
+                    SceneManager.LoadScene(0);
+                }
                 break;
         }
 

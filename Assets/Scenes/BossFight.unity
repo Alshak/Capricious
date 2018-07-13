@@ -152,11 +152,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 82520646314614380, guid: 982edcdd31890214f83b60bf6e4440f3,
-        type: 2}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 36bb3a941053e1d4b88384a4ab1597eb, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 982edcdd31890214f83b60bf6e4440f3, type: 2}
   m_IsPrefabAsset: 0
@@ -703,29 +698,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2549567, y: 14.097828}
   m_EdgeRadius: 0
---- !u!1 &1037205087 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1705309821669452, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
-    type: 2}
-  m_PrefabInternal: {fileID: 1542641761}
---- !u!95 &1037205088
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1037205087}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f1171280de85e724dad2556a7d0281cc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1076238967
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,7 +904,7 @@ GameObject:
   - component: {fileID: 1491784916}
   - component: {fileID: 1491784915}
   - component: {fileID: 1491784917}
-  m_Layer: 8
+  m_Layer: 18
   m_Name: skrivbord
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1137,7 +1109,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4123842829946888, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.33
+      value: -2.51
       objectReference: {fileID: 0}
     - target: {fileID: 4123842829946888, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1163,41 +1135,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114344228150207526, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
-        type: 2}
-      propertyPath: path
-      value: 
-      objectReference: {fileID: 420744667}
-    - target: {fileID: 114344228150207526, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
-        type: 2}
-      propertyPath: tempHurricane
-      value: 
-      objectReference: {fileID: 1203165857352132, guid: ce838ba4fcfca42469ef09295f9bab10,
-        type: 2}
-    - target: {fileID: 114344228150207526, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
-        type: 2}
-      propertyPath: hurricaneTemplate
-      value: 
-      objectReference: {fileID: 1203165857352132, guid: ce838ba4fcfca42469ef09295f9bab10,
-        type: 2}
     - target: {fileID: 212508132323201272, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
         type: 2}
-      propertyPath: m_SortingLayerID
-      value: -574474521
-      objectReference: {fileID: 0}
-    - target: {fileID: 212508132323201272, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
-        type: 2}
-      propertyPath: m_SortingLayer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 212508132323201272, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: a063d261a2e28af49be09465bda4d337,
-        type: 3}
-    - target: {fileID: 1705309821669452, guid: d434fe2b1bd1d9e4f8a36a163b8d7e24, type: 2}
-      propertyPath: m_IsActive
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1269,6 +1209,16 @@ Prefab:
     - target: {fileID: 4488723377920206, guid: e0ca07258f783374bb8aa7aef28e6d3c, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114742722215153466, guid: e0ca07258f783374bb8aa7aef28e6d3c,
+        type: 2}
+      propertyPath: m_WhatIsGround.m_Bits
+      value: 279296
+      objectReference: {fileID: 0}
+    - target: {fileID: 114742722215153466, guid: e0ca07258f783374bb8aa7aef28e6d3c,
+        type: 2}
+      propertyPath: m_WhatIsWall.m_Bits
+      value: 279296
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0ca07258f783374bb8aa7aef28e6d3c, type: 2}
