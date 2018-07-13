@@ -13,7 +13,7 @@ namespace Assets.Code.Intro
 {
     public class Pageflipper : MonoBehaviour
     {
-        public Platformer2DUserControl Player;
+        public GameObject Player;
         public Text storyText;
         public GameObject bottomBorder;
 
@@ -42,7 +42,6 @@ namespace Assets.Code.Intro
             musicManager.StopAllMusic();
 
             InitTexts();
-            storyText.text = ListStory[0];
         }
 
         void Update()
@@ -76,6 +75,7 @@ namespace Assets.Code.Intro
                 "Steve went to the front gate of the castle and begun his route up to the boss. This would be the first time he met the boss.\n" +
                 "Hopefully he wouldn't be in a capricious mood."
             };
+            storyText.text = ListStory[0];
         }
 
         private void NextPage()

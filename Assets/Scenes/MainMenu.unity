@@ -3761,7 +3761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9792a31dfbd80ba40b0831c3c42c56b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 114228613504520396, guid: e0ca07258f783374bb8aa7aef28e6d3c, type: 2}
+  Player: {fileID: 1758693801647534, guid: e0ca07258f783374bb8aa7aef28e6d3c, type: 2}
   storyText: {fileID: 1203316044}
   bottomBorder: {fileID: 1393364320}
   ListImages:

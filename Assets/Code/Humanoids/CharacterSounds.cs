@@ -19,6 +19,8 @@ namespace Assets.Code.Humanoids
         public bool IsPlayingWallSlide;
         public bool IsPlayingRun;
 
+        private float slideCooldown = 0f;
+
         public void PlayJump()
         {
             Reset();
@@ -29,9 +31,13 @@ namespace Assets.Code.Humanoids
 
         public void PlaySlide()
         {
-            Reset();
-            PlaySound(GetRandom(ListSlideVocal));
-            PlaySound(GetRandom(ListSlideSfx));
+            if (slideCooldown <= 0)
+            {
+                Reset();
+                PlaySound(GetRandom(ListSlideVocal));
+                PlaySound(GetRandom(ListSlideSfx));
+                slideCooldown = 1f;
+            }
         }
 
         public void PlayDeath()
@@ -89,6 +95,11 @@ namespace Assets.Code.Humanoids
                 var diff = 0.3f;
                 RunPlayer.pitch = 1 + (Random.value * diff - diff / 2);
                 RunPlayer.Play();
+            }
+
+            if (slideCooldown > 0)
+            {
+                slideCooldown -= Time.deltaTime;
             }
         }
 
