@@ -57,9 +57,10 @@ namespace Assets.Code.Humanoids
             else if(!isWallSliding && playerSounds.IsPlayingWallSlide)
                 playerSounds.StopWallSlide();
 
-            if (player.IsRunning && !playerSounds.IsPlayingRun)
+            var runningOnGround = player.IsRunning && player.m_Grounded;
+            if (runningOnGround && !playerSounds.IsPlayingRun)
                 playerSounds.PlayRun();
-            else if (!player.IsRunning && playerSounds.IsPlayingRun)
+            else if (!runningOnGround && playerSounds.IsPlayingRun)
                 playerSounds.StopRun();
         }
     }
