@@ -17,12 +17,14 @@ namespace Assets.Code.Intro
         private int imageIndex = 0;
         private bool reachedEnd = false;
         public List<Sprite> ListImages;
+        public List<String> ListStory;
         private Image rend;
         private IntroControls introControls;
         public Platformer2DUserControl Player;
         private Checkpoint checkpoint;
         private CameraBox cameraBox;
         private MusicManager musicManager;
+        public Text storyText;
 
         void Start()
         {
@@ -34,6 +36,7 @@ namespace Assets.Code.Intro
             musicManager = GameObject.FindObjectOfType<MusicManager>();
             DisplayControls(false);
             musicManager.StopAllMusic();
+            storyText.text = ListStory[0];
         }
 
         void Update()
@@ -54,7 +57,7 @@ namespace Assets.Code.Intro
                 pageSound.Play();
             }
             imageIndex++;
-            if (imageIndex < ListImages.Count - 1)
+            if (imageIndex < ListImages.Count)
             {
                 ShowNextPage();
             }
@@ -67,6 +70,7 @@ namespace Assets.Code.Intro
         private void ShowNextPage()
         {
             rend.sprite = ListImages[imageIndex];
+            storyText.text = ListStory[imageIndex];
         }
 
         private void ReachedEnd()
