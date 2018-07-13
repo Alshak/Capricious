@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityStandardAssets._2D;
 
-public class CameraBox : MonoBehaviour
+public class CreditsBox : MonoBehaviour
 {
     GameObject player;
     public Transform leftTopBound;
@@ -12,12 +12,7 @@ public class CameraBox : MonoBehaviour
 
     public void Start()
     {
-        player = GameObject.Find("Player");
-        if (player != null)
-        {
-            _character = player.GetComponent<PlatformerCharacter2D>();
-            transform.position = player.transform.position;
-        }
+        
         GetComponentInChildren<Camera>().orthographicSize = 7;
     }
 
@@ -25,11 +20,8 @@ public class CameraBox : MonoBehaviour
     {
         if (player != null)
         {
-            var historyLean = 0.7f;
-            var currentLean = _character.m_Grounded ? 1 + (1 - historyLean) : 0;
-            _lastSpeeds = _character.CurrentSpeed().x*currentLean + _lastSpeeds * historyLean;
-
-            var facingCoef = _character.IsFacingRight() ? 1 : -1;
+            _lastSpeeds = 2f;
+            var facingCoef = 1;
 
             var cameraLead = player.transform.position + new Vector3(1, 0) * _lastSpeeds * 2.5f * facingCoef;
             float distanceX = Mathf.Abs(cameraLead.x - transform.position.x);

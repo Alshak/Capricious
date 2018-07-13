@@ -8,17 +8,26 @@ namespace Assets.Code.Credits
 {
     public class CreditsCamera : MonoBehaviour
     {
-        private CameraBox cameraBox;
+        private CreditsBox creditsBox;
         private EnemyController player;
+
+        private float cameraSet = 1f;
 
         void Start()
         {
-            cameraBox = GameObject.FindObjectOfType<CameraBox>();
+            creditsBox = GameObject.FindObjectOfType<CreditsBox>();
             player = GameObject.FindObjectOfType<EnemyController>();
+        }
 
-            if (cameraBox != null && player != null)
+        void Update()
+        {
+            if (cameraSet > 0)
             {
-                cameraBox.SetPlayer(player.gameObject);
+                cameraSet -= Time.deltaTime;
+                if (creditsBox != null && player != null)
+                {
+                    creditsBox.SetPlayer(player.gameObject);
+                }
             }
         }
     }
