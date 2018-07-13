@@ -36,6 +36,7 @@ namespace UnityStandardAssets._2D
             // Read the inputs.
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             // Pass all parameters to the character control script.
+            m_Character.CheckColliders();
             m_Character.Move(h);
         }
     }
