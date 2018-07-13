@@ -9,8 +9,9 @@ namespace Assets.Code.LevelChange
     {
         MainMenu,
         Lvl1_Office,
-        BossChase,
         Capricious,
+        BossChase,
+        BossCinematic,
         BossFight,
         LevelEnding,
         Game_End,
