@@ -19,11 +19,12 @@ namespace Assets.Code.LevelChange
 
         void Start()
         {
-            music = GetComponent<AudioSource>();
+            InitMusicComponent();
         }
 
         public void PlayMainMenu()
         {
+            InitMusicComponent();
             music.Stop();
             music.clip = MusicMainMenu;
             music.Play();
@@ -31,6 +32,7 @@ namespace Assets.Code.LevelChange
 
         public void PlayGameplay()
         {
+            InitMusicComponent();
             music.Stop();
             music.clip = MusicGameplay;
             music.Play();
@@ -38,6 +40,7 @@ namespace Assets.Code.LevelChange
 
         public void PlayDeath()
         {
+            InitMusicComponent();
             music.Stop();
             music.clip = MusicDeath;
             music.Play();
@@ -45,6 +48,7 @@ namespace Assets.Code.LevelChange
 
         public void PlayBoss1()
         {
+            InitMusicComponent();
             music.Stop();
             music.clip = MusicBoss;
             music.Play();
@@ -52,9 +56,14 @@ namespace Assets.Code.LevelChange
 
         public void StopAllMusic()
         {
+            InitMusicComponent();
+            music.Stop();
+        }
+
+        private void InitMusicComponent()
+        {
             if (music == null)
                 music = GetComponent<AudioSource>();
-            music.Stop();
         }
 
         public void Update()

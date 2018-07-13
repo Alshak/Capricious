@@ -542,7 +542,7 @@ MonoBehaviour:
   MusicMainMenu: {fileID: 8300000, guid: ec1c06a1d34f6ed4c8e22ec4a479cdb7, type: 3}
   MusicDeath: {fileID: 8300000, guid: 2cacefd33a2936f4e91fc80705fdeca7, type: 3}
   MusicBoss: {fileID: 8300000, guid: 76a82c8eb23b5da4c9f0cfb4c5a8a696, type: 3}
-  MusicBossV2: {fileID: 8300000, guid: 36bb3a941053e1d4b88384a4ab1597eb, type: 3}
+  MusicBossLoop: {fileID: 8300000, guid: 36bb3a941053e1d4b88384a4ab1597eb, type: 3}
 --- !u!114 &114818669137652192
 MonoBehaviour:
   m_ObjectHideFlags: 1
