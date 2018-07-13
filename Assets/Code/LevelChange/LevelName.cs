@@ -15,5 +15,6 @@ namespace Assets.Code.LevelChange
         BossFight,
         LevelEnding,
         Game_End,
+        CreditsScene
     }
 }

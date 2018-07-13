@@ -3179,16 +3179,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114771956412896630, guid: 982edcdd31890214f83b60bf6e4440f3,
-        type: 2}
-      propertyPath: MusicVictory
-      value: 
-      objectReference: {fileID: 8300000, guid: ec6d64ce050cbab448a2c9f576f05cc9, type: 3}
-    - target: {fileID: 114771956412896630, guid: 982edcdd31890214f83b60bf6e4440f3,
-        type: 2}
-      propertyPath: MusicVictoryLoop
-      value: 
-      objectReference: {fileID: 8300000, guid: 005237f1c07a78d4baf3cf1a36d658fc, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 982edcdd31890214f83b60bf6e4440f3, type: 2}
   m_IsPrefabAsset: 0

@@ -28,6 +28,7 @@ public class BossFightController : MonoBehaviour
     GameObject player;
     GameObject gameController;
     List<Decimal> previousXpositions;
+    private MusicManager musicManager;
     Vector3 lastTornadoPosition;
     public enum BOSS_PHASE
     {
@@ -48,12 +49,13 @@ public class BossFightController : MonoBehaviour
     void Start()
     {
         currentTimer = 0;
-        currentBossPhase = BOSS_PHASE.INTRO;
+        currentBossPhase = BOSS_PHASE.TWIN_TORNADO_FIGHT;
         spriteRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player");
         gameController = GameObject.FindGameObjectWithTag("GameController");
         animator = GetComponent<Animator>();
         previousXpositions = new List<Decimal>();
+        musicManager = GameObject.FindObjectOfType<MusicManager>();
     }
 
     void PlaySound(String name)
@@ -191,6 +193,11 @@ public class BossFightController : MonoBehaviour
                     currentTimer = 0f;
                     spriteRenderer.enabled = true;
                     animator.SetTrigger("Die");
+                    if (musicManager != null)
+                    {
+                        Debug.Log("PLAY MUSCI");
+                        musicManager.PlayVictory();
+                    }
                 }
                 break;
             case BOSS_PHASE.BOSS_DYING:
@@ -249,7 +256,8 @@ public class BossFightController : MonoBehaviour
                     bool throwing = CrossPlatformInputManager.GetButtonDown("Throw");
                     if (jump || crouch || throwing)
                     {
-                        SceneManager.LoadScene(0);
+                        //SceneManager.LoadScene(0);
+                        SceneManager.LoadScene(LevelName.CreditsScene.ToString(), LoadSceneMode.Single);
                     }
                 }
                 break;
