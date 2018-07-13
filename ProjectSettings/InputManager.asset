@@ -106,7 +106,7 @@ InputManager:
     descriptiveName: Reset Button (Keyboard)
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: r
+    positiveButton: i
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000

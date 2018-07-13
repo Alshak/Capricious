@@ -11,6 +11,7 @@ public class HurricaneController : MonoBehaviour
     private int currentIdxFromPath;
     List<Vector3> smoothPath;
     int TotalHealth;
+    public List<AudioClip> audioClips;
     internal int GetTotalHealth()
     {
         return TotalHealth;
@@ -24,6 +25,21 @@ public class HurricaneController : MonoBehaviour
 
     List<Vector3> randomPath;
     bool backToDesk = false;
+
+    public void Hit()
+    {
+        transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+        GetComponent<Animator>().SetTrigger("Hit");
+        if (audioClips.Count > 0)
+        {
+            int idxAudio = Random.Range(0, audioClips.Count);
+            if (!GetComponent<AudioSource>().isPlaying)
+            {
+                GetComponent<AudioSource>().PlayOneShot(audioClips[idxAudio]);
+            }
+        }
+    }
+
     public float Speed = 4;
     public bool cancelBackToDesk = false;
     // Use this for initialization

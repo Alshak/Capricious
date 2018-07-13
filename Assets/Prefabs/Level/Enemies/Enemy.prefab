@@ -51,23 +51,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1986068740248812
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4634656328677954}
-  - component: {fileID: 114556129310620858}
-  - component: {fileID: 82107465650949202}
-  m_Layer: 0
-  m_Name: EnemySounds
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!4 &4629987074795852
 Transform:
   m_ObjectHideFlags: 1
@@ -81,19 +64,6 @@ Transform:
   m_Father: {fileID: 4644240470839904}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4634656328677954
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1986068740248812}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4644240470839904}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4644240470839904
 Transform:
   m_ObjectHideFlags: 1
@@ -105,7 +75,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4629987074795852}
-  - {fileID: 4634656328677954}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -194,101 +163,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.41888905, y: 1.3588476}
   m_EdgeRadius: 0
---- !u!82 &82107465650949202
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1986068740248812}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!95 &95695988262854174
 Animator:
   serializedVersion: 3
@@ -340,39 +214,9 @@ MonoBehaviour:
   YOffset: 1.35
   IsDead: 0
   IsKillableByEvilSteve: 0
+  zombieSoundPlayer: {fileID: 1662790817949168, guid: 95269b675b249884aa98ada8a771c62c,
+    type: 2}
   IsPlayer: 0
---- !u!114 &114556129310620858
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1986068740248812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3745e569e5fbe044d9687be04cd99d0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ListDeath:
-  - {fileID: 8300000, guid: d52fd4300c329e447a45f7fe23c31d4d, type: 3}
-  - {fileID: 8300000, guid: 149cb3b53330c904aa94cc872f3105ed, type: 3}
-  - {fileID: 8300000, guid: d95929131065a0b4b8a9d500c1beae54, type: 3}
-  - {fileID: 8300000, guid: 4815b6723890f1748ae8fd26f02f3039, type: 3}
-  - {fileID: 8300000, guid: a3bbc6ebbbf975c48b8c6ddbde24c04b, type: 3}
-  - {fileID: 8300000, guid: 9c8eb7443af574b43ae942f4ba1d296c, type: 3}
-  - {fileID: 8300000, guid: 144d77b76b01860478e36eda3ea1fbbf, type: 3}
-  - {fileID: 8300000, guid: 566c548b15a84214ca991bd5f1329ec5, type: 3}
-  - {fileID: 8300000, guid: 611722e74ab336a41a0fa3515a57e1c1, type: 3}
-  ListJumpVocal: []
-  ListJumpSfx: []
-  ListSlide: []
-  ListLand: []
-  ListThrow: []
-  ListSpawn: []
-  OneShotSoundPlayer: {fileID: 82107465650949202}
-  WallSlidePlayer: {fileID: 0}
-  RunPlayer: {fileID: 0}
-  IsPlayingWallSlide: 0
-  IsPlayingRun: 0
 --- !u!114 &114942740959503780
 MonoBehaviour:
   m_ObjectHideFlags: 1

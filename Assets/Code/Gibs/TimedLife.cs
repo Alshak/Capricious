@@ -20,7 +20,8 @@ namespace Assets.Code.Gibs
         void Start()
         {
             renders = GetComponentsInChildren<SpriteRenderer>();
-            colorStart = renders.First().color;
+            if(renders.Length > 0)
+                colorStart = renders.First().color;
             alpha = 1;
         }
 

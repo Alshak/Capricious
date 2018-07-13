@@ -5,6 +5,7 @@ using UnityEngine;
 public class HurricaneEyeController : MonoBehaviour {
     int Health;
     int TotalHealth;
+
     // Use this for initialization
     void Start()
     {
@@ -23,7 +24,8 @@ public class HurricaneEyeController : MonoBehaviour {
         if (collider2d.tag == "Throwable" && Health > 0)
         {
             Health--;
-            transform.parent.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+            
+            transform.parent.GetComponent<HurricaneController>().Hit();
             if (Health <= 0)
             {
                 transform.parent.GetComponent<HurricaneController>().GoBackToDesk();

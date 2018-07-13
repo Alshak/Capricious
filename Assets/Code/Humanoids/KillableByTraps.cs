@@ -22,6 +22,7 @@ namespace Assets.Code.Humanoids
         public bool IsKillableByEvilSteve = true;
 
         private CharacterSounds characterSounds;
+        public GameObject zombieSoundPlayer;
 
         void Start()
         {
@@ -65,6 +66,11 @@ namespace Assets.Code.Humanoids
             if (characterSounds != null)
             {
                 characterSounds.PlayDeath();
+            }
+
+            if (zombieSoundPlayer != null)
+            {
+                Instantiate(zombieSoundPlayer);
             }
 
             if (IsPlayer)
