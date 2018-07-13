@@ -31,6 +31,36 @@ namespace Assets.Code.Humanoids
                 player.PlaySlideSound = false;
                 playerSounds.PlaySlide();
             }
+
+            if (player.PlayLandSound)
+            {
+                player.PlayLandSound = false;
+                playerSounds.PlayLand();
+            }
+
+            if (player.PlayThrowSound)
+            {
+                player.PlayThrowSound = false;
+                playerSounds.PlayThrow();
+            }
+
+            if (player.PlaySpawnSound)
+            {
+                player.PlaySpawnSound = false;
+                playerSounds.PlaySpawn();
+            }
+
+            var isWallSliding = player.touchingWall && !player.m_Grounded;
+
+            if (isWallSliding && !playerSounds.IsPlayingWallSlide)
+                playerSounds.PlayWallSlide();
+            else if(!isWallSliding && playerSounds.IsPlayingWallSlide)
+                playerSounds.StopWallSlide();
+
+            if (player.IsRunning && !playerSounds.IsPlayingRun)
+                playerSounds.PlayRun();
+            else if (!player.IsRunning && playerSounds.IsPlayingRun)
+                playerSounds.StopRun();
         }
     }
 }

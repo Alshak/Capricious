@@ -97,6 +97,8 @@ MonoBehaviour:
   TimeAlive: 2.5
   FadeOut: 0
   IsActived: 1
+  SpawnOnDeath: {fileID: 1181174420695310, guid: 5e19d814d19bf754b9171817f598215f,
+    type: 2}
 --- !u!114 &114879703876806054
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -8,19 +8,43 @@ namespace Assets.Code.LevelChange
 {
     public class MusicManager : MonoBehaviour
     {
-        public AudioSource MusicGameplay;
-        public AudioSource MusicDeath;
+        public AudioClip MusicGameplay;
+        public AudioClip MusicMainMenu;
+        public AudioClip MusicDeath;
+
+        private AudioSource music;
+
+        void Start()
+        {
+            music = GetComponent<AudioSource>();
+        }
+
+        public void PlayMainMenu()
+        {
+            music.Stop();
+            music.clip = MusicMainMenu;
+            music.Play();
+        }
 
         public void PlayGameplay()
         {
-            MusicGameplay.Play();
-            MusicDeath.Stop();
+            music.Stop();
+            music.clip = MusicGameplay;
+            music.Play();
         }
 
         public void PlayDeath()
         {
-            MusicGameplay.Stop();
-            MusicDeath.Play();
+            music.Stop();
+            music.clip = MusicDeath;
+            music.Play();
+        }
+
+        public void StopAllMusic()
+        {
+            if (music == null)
+                music = GetComponent<AudioSource>();
+            music.Stop();
         }
     }
 }
