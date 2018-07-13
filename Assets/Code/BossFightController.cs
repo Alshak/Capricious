@@ -201,6 +201,7 @@ public class BossFightController : MonoBehaviour
                 }
                 break;
             case BOSS_PHASE.BOSS_DYING:
+                Timer.PauseTimer();
                 transform.position -= new Vector3(0, 0.1f, 0);
                 if(currentTimer > 2f)
                 {

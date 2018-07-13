@@ -16,5 +16,10 @@ public class PauseButton : MonoBehaviour {
                 Time.timeScale = 0;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 }
