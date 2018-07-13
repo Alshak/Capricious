@@ -142,9 +142,9 @@ public class BossFightController : MonoBehaviour
                 spriteRenderer.enabled = false;
                 firstTornado = Instantiate(hurricaneTemplate, transform);
                 secondTornado = Instantiate(hurricaneTemplate, transform);
-                firstTornado.GetComponent<HurricaneController>().SetTotalHealth(1);
+                firstTornado.GetComponent<HurricaneController>().SetTotalHealth(7);
                 firstTornado.GetComponent<HurricaneController>().DoNotGoBack(this);
-                secondTornado.GetComponent<HurricaneController>().SetTotalHealth(1);
+                secondTornado.GetComponent<HurricaneController>().SetTotalHealth(7);
                 secondTornado.GetComponent<HurricaneController>().DoNotGoBack(this);
                 currentBossPhase++;
                 break;
