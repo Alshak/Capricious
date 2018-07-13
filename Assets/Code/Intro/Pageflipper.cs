@@ -13,7 +13,7 @@ namespace Assets.Code.Intro
 {
     public class Pageflipper : MonoBehaviour
     {
-        public Platformer2DUserControl Player;
+        public GameObject Player;
         public Text storyText;
         public GameObject bottomBorder;
 
