@@ -42,11 +42,16 @@ namespace Assets.Code.UI
         {
             ListStory = new List<string>
             {
-                "'I've been expecting you..' Steves boss says quitly while looking sinister.",
+                "Boss: I have been expecting you.. Wait, you're not Captain McSuperface. What are you doing here?",
 
-                "The boss turns around and looks at Steve: 'Who the hell are you!? And why do you bring cheese!? I'm lactose intolerant damnit!' Steves boss screams.",
+                "Steve: I brought you your favourite Capricious Cheese boss, the elevator was broken so I had to-" +
+                "Boss: YOU BROUGHT ME WHAT?! AT THIS LATE HOUR?! I'M ON A DIET, YOU INSENSITIVE *#@^*$^#*!!! " +
+                "Steve had just been through an experience that changed him. He no longer felt pride in his job, or loyalty towards his boss. " +
+                "So, for the first time ever, his personality broke loose - He threw the cheese at his boss.",
 
-                "'I'm the boss now! We are legion! All your base are belong to us!!' Steve yells back at his boss who is becoming more and more red in his face.",
+                "First half of panel: YOU INSOLENT FOOL! YOU WORTHLESS WASTE OF A CLONE! YOU'RE GOING TO REGRET THIS!\n" +
+                "I’m going to rock you…\n\n" +
+                "..like a hurricane."
             };
             storyText.text = ListStory[0];
         }

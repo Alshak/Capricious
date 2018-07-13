@@ -59,21 +59,26 @@ namespace Assets.Code.Intro
         {
             ListStory = new List<string>
             {
-                "This is the Super Evil Corporation Castle.",
+                "A typical medieval castle, home of an Evil Mastermind bent on world domination.\n" +
+                "Have you ever wondered what goes on behind the scenes of such an establishment? No?\n" +
+                " Well, I’ll tell you anyhow. You signed up for this.",
 
-                "Here all the employees worked on finalizing the boss plans for world domination.\n" +
-                "They were all named Steve as the boss had trouble remembering what his minions were called.",
+                "Welcome to Super Evil Corp where dozens of happy clones named Steve keep the place up and running." +
+                " I mean, somebody has to do the paperwork, after all. Evil schemes require money, and doing the paperwork is just depressing." +
+                " I mean, have you seen the tax paperwork these days? It’s insane. " +
+                "Anyhow, our story begins one busy Monday morning at the office, when one little inconvenience will set in motion a series of events..",
 
                 "'Hey Steve!' said Steve. The boss wants his Capricious Cheese. You know how moody he becomes without it.",
 
-                "Oh no! Someone broke the elevator again, probably by practising wall jumping. Now the only way to the boss is by going through the hero route." +
-                "The route was reserved for heroes trying to stop the Boss from putting his super evil plans into motion.",
+                "Steve walked up to his usual path, planning to take the elevator to the upper offices. He was worried when he saw it wasn't working." +
+                " That had never happened before, and his worry turned into panic. " +
+                "The boss really needed to get his cheese, otherwise all hell would break loose in their offices.",
 
-                "Steve was a model employee, or so he thought. They never really met the boss or recieved any feedback on their work.\n" +
-                "But he would do his duty as an employee and deliver the cheese to his boss, like any employee would.",
+                "Steve No. 1 was a model employee, or so he thought. " +
+                "So he decided to do what needs to be done- he would take the Hero Path, an obstacle course designed to keep annoying heroes from bothering the boss." +
+                " ‘’I can do this’’ thought Steve and sucked up the courage to enter the door.",
 
-                "Steve went to the front gate of the castle and begun his route up to the boss. This would be the first time he met the boss.\n" +
-                "Hopefully he wouldn't be in a capricious mood."
+                "As he pushed the door open, he had a feeling his life would change… And thus his journey began."
             };
             storyText.text = ListStory[0];
         }

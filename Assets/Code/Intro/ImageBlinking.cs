@@ -29,7 +29,6 @@ namespace Assets.Code.Intro
                     alpha = 1;
                     fadeIn = false;
                 }
-                
             }
             else
             {
