@@ -49,7 +49,7 @@ public class BossFightController : MonoBehaviour
     void Start()
     {
         currentTimer = 0;
-        currentBossPhase = BOSS_PHASE.TWIN_TORNADO_FIGHT;
+        currentBossPhase = BOSS_PHASE.INTRO;
         spriteRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player");
         gameController = GameObject.FindGameObjectWithTag("GameController");
