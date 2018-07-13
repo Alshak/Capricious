@@ -30,7 +30,7 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
-        const float k_GroundedRadius = .12f; // Radius of the overlap circle to determine if grounded
+        const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
         public bool m_Grounded;            // Whether or not the player is grounded.
 
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
@@ -39,7 +39,7 @@ namespace UnityStandardAssets._2D
         private Transform m_WallCheck;
         private Transform m_WallCheck2;
         private Transform m_WallCheck3;
-        const float k_WallJumpRadius = .175f; // Radius of the overlap circle to determine if player can wall jump
+        const float k_WallJumpRadius = .15f; // Radius of the overlap circle to determine if player can wall jump
         public bool touchingWall;            // Whether or not the player can wall jump.
 
         private Transform m_ThrowPosition;
@@ -108,15 +108,12 @@ namespace UnityStandardAssets._2D
             touchingWall = false;
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-            if (Mathf.Approximately(m_Rigidbody2D.velocity.y, 0f))
+            Collider2D[] groundColliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+            for (int i = 0; i < groundColliders.Length; i++)
             {
-                Collider2D[] groundColliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-                for (int i = 0; i < groundColliders.Length; i++)
+                if (groundColliders[i].gameObject != gameObject)
                 {
-                    if (groundColliders[i].gameObject != gameObject)
-                    {
-                        m_Grounded = true;
-                    }
+                    m_Grounded = true;
                 }
             }
 
@@ -177,7 +174,6 @@ namespace UnityStandardAssets._2D
             if (jump)
             {
                 jumpBuffer = m_JumpBuffer;
-                slideBuffer = 0;
             }
             else
             {
@@ -191,7 +187,6 @@ namespace UnityStandardAssets._2D
             // Slide buffer
             if (slide)
             {
-                jumpBuffer = 0;
                 slideBuffer = m_SlideBuffer;
             }
             else
@@ -242,6 +237,7 @@ namespace UnityStandardAssets._2D
                 {
                     m_Grounded = false;
                     m_Anim.SetBool("Ground", false);
+                    m_Rigidbody2D.velocity = Vector2.zero;
                     m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
                     jumpBuffer = 0;
                     timeSinceLastJump = 0f;
@@ -299,7 +295,7 @@ namespace UnityStandardAssets._2D
                     }
                 }
 
-                if (slideCooldown <= 0f || forceSlide)
+                if (!touchingWall && (slideCooldown <= 0f || forceSlide))
                 {
                     // Set whether or not the character is crouching in the animator
                     if (m_Anim.GetBool("Crouch") != slide)
