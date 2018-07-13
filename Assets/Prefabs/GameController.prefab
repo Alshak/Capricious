@@ -543,6 +543,8 @@ MonoBehaviour:
   MusicDeath: {fileID: 8300000, guid: 2cacefd33a2936f4e91fc80705fdeca7, type: 3}
   MusicBoss: {fileID: 8300000, guid: 76a82c8eb23b5da4c9f0cfb4c5a8a696, type: 3}
   MusicBossLoop: {fileID: 8300000, guid: 36bb3a941053e1d4b88384a4ab1597eb, type: 3}
+  MusicVictory: {fileID: 8300000, guid: ec6d64ce050cbab448a2c9f576f05cc9, type: 3}
+  MusicVictoryLoop: {fileID: 8300000, guid: 005237f1c07a78d4baf3cf1a36d658fc, type: 3}
 --- !u!114 &114818669137652192
 MonoBehaviour:
   m_ObjectHideFlags: 1
