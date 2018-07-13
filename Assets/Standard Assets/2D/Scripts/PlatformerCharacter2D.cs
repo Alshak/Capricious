@@ -295,7 +295,7 @@ namespace UnityStandardAssets._2D
                     }
                 }
 
-                if (!touchingWall && (slideCooldown <= 0f || forceSlide))
+                if (slideCooldown <= 0f || forceSlide)
                 {
                     // Set whether or not the character is crouching in the animator
                     if (m_Anim.GetBool("Crouch") != slide)
@@ -374,10 +374,11 @@ namespace UnityStandardAssets._2D
                 {
                     m_Rigidbody2D.velocity = new Vector2(move * m_MaxWalkingSpeed, verticalSpeed);
                 }
-                
-                m_Anim.SetFloat("Speed", speed.x);
 
-                IsRunning = speed.x > 0.01;
+                var speedX = Mathf.Abs(transform.position.x - previousX);
+                m_Anim.SetFloat("Speed", speedX);
+
+                IsRunning = speedX > 0.01;
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)
@@ -417,9 +418,9 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        public Vector2 CurrentSpeed()
+        public Vector3 CurrentSpeed()
         {
-            return new Vector2(Mathf.Abs(transform.position.x - previousX), Mathf.Abs(transform.position.y - previousY));
+            return new Vector3(Mathf.Abs(transform.position.x - previousX), Mathf.Abs(transform.position.y - previousY));
         }
 
         private void ActivateAirControlBlock()
