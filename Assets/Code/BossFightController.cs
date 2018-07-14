@@ -246,20 +246,14 @@ public class BossFightController : MonoBehaviour
                 }
                 break;
             case BOSS_PHASE.END:
-                if (currentTimer > 25f)
+                if (currentTimer > 15f)
                 {
                     blackFade.color = Color.Lerp(blackFade.color, Color.black, currentTimer * 0.001f);
                 }
-                if (currentTimer > 30f)
+                if (currentTimer > 20f)
                 {
-                    bool jump = CrossPlatformInputManager.GetButtonDown("Jump");
-                    bool crouch = CrossPlatformInputManager.GetButtonDown("Crouch");
-                    bool throwing = CrossPlatformInputManager.GetButtonDown("Throw");
-                    if (jump || crouch || throwing)
-                    {
-                        //SceneManager.LoadScene(0);
                         SceneManager.LoadScene(LevelName.CreditsScene.ToString(), LoadSceneMode.Single);
-                    }
+
                 }
                 break;
         }
