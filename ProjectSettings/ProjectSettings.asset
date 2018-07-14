@@ -117,11 +117,11 @@ PlayerSettings:
   vulkanEnableSetSRGBWrite: 0
   vulkanUseSWCommandBuffers: 0
   m_SupportedAspectRatios:
-    4:3: 1
-    5:4: 1
+    4:3: 0
+    5:4: 0
     16:10: 1
     16:9: 1
-    Others: 1
+    Others: 0
   bundleVersion: 1.0
   preloadedAssets: []
   metroInputSource: 0
@@ -258,13 +258,13 @@ PlayerSettings:
     height: 180
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
-  resolutionDialogBanner: {fileID: 2800000, guid: db4b16d2f3dde5544b0a468af78d6b4b,
+  resolutionDialogBanner: {fileID: 2800000, guid: 67de2013fc2508f4dada466cc4092817,
     type: 3}
   m_BuildTargetIcons:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: c0382a736a433d640ba5752ce8c32a50, type: 3}
+      m_Icon: {fileID: 2800000, guid: ece74d520e9cc6946abb694940f5a29d, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
