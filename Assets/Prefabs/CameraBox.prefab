@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4620435975040752}
   - component: {fileID: 114821488364371808}
-  - component: {fileID: 114160815905654536}
   m_Layer: 0
   m_Name: CameraBox
   m_TagString: Untagged
@@ -119,22 +118,6 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1944443662824006}
   m_Enabled: 1
---- !u!114 &114160815905654536
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1834720447879156}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d8238cc53530b64fbb7828c3d3bb591, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  damping: 0.5
-  lookAheadFactor: 3
-  lookAheadReturnSpeed: 0.5
-  lookAheadMoveThreshold: 0.1
 --- !u!114 &114821488364371808
 MonoBehaviour:
   m_ObjectHideFlags: 1

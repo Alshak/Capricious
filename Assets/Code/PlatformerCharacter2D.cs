@@ -267,7 +267,7 @@ namespace UnityStandardAssets._2D
                 {
                     jumpSlideCoef = -1;
                 }
-                throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(jumpSlideCoef * rightCoef * m_ThrowForce + m_Rigidbody2D.velocity.x * (m_ThrowForce / 20), m_ThrowForce * 0.4f));
+                throwable.GetComponent<Rigidbody2D>().AddForce(new Vector2(jumpSlideCoef * rightCoef * m_ThrowForce + m_Rigidbody2D.velocity.x * (m_ThrowForce / 10), m_ThrowForce * 0.4f));
                 throwCooldown = m_ThrowCooldown;
             }
         }

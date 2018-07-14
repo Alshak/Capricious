@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capricious", "Assembly-CSha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capricious", "Assembly-CSharp-Editor-firstpass.csproj", "{7EB70452-55B9-BD1B-EEEF-FEB33617497F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capricious", "Assembly-CSharp-Editor.csproj", "{C6B4510C-F9EF-D3F2-5EE2-190899F69144}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +25,6 @@ Global
 		{7EB70452-55B9-BD1B-EEEF-FEB33617497F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EB70452-55B9-BD1B-EEEF-FEB33617497F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EB70452-55B9-BD1B-EEEF-FEB33617497F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C6B4510C-F9EF-D3F2-5EE2-190899F69144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6B4510C-F9EF-D3F2-5EE2-190899F69144}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6B4510C-F9EF-D3F2-5EE2-190899F69144}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6B4510C-F9EF-D3F2-5EE2-190899F69144}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
