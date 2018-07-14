@@ -13,6 +13,7 @@ namespace Assets.Code.Intro
         private float alpha;
         private Image rend;
         public float Speed = 0.1f;
+        public bool IsActivated = true;
 
         void Start()
         {
@@ -21,6 +22,10 @@ namespace Assets.Code.Intro
 
         private void Update()
         {
+            if (IsActivated == false)
+            {
+                return;
+            }
             if (fadeIn)
             {
                 alpha += Speed;
