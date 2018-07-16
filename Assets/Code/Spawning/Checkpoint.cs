@@ -42,7 +42,7 @@ namespace Assets.Code.Spawning
         public void SetActived(bool active)
         {
             IsActived = active;
-            rend.material.color = IsActived ? ColorActivated : ColorDefault;
+            //rend.material.color = IsActived ? ColorActivated : ColorDefault;
         }
 
         public Spawnpoint GetSpawnpoint()

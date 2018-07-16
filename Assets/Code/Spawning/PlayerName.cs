@@ -11,6 +11,7 @@ namespace Assets.Code.Spawning
     {
         private TextMesh[] textMeshes;
         private SteveNames SteveNames;
+        private bool IsActivated = false;
 
         void Start()
         {
@@ -21,6 +22,21 @@ namespace Assets.Code.Spawning
             foreach (TextMesh textMesh in textMeshes)
             {
                 textMesh.text = name;
+            }
+        }
+
+        void Update()
+        {
+            if (IsActivated == false)
+            {
+                IsActivated = true;
+                string name = SteveNames.GetCurrentName();
+
+                foreach (TextMesh textMesh in textMeshes)
+                {
+                    if (textMesh != null)
+                        textMesh.text = name;
+                }
             }
         }
 

@@ -10,11 +10,15 @@ namespace Assets.Code.Gibs
         [Range(0f, 2f)]
         public float MaxPower;
         public float Radius = 1;
+
+        public float MinUp = -0.002f;
         void Start()
         {
             float power = Random.Range(MinPower, MaxPower);
             if (MinPower > 0 || MaxPower > 0 && MinPower < MaxPower)
+            {
                 AddExplosionForce(power * 100, transform.position, Radius);
+            }
         }
 
         private void AddExplosionForce(float expForce, Vector3 expPosition, float expRadius)
@@ -26,9 +30,11 @@ namespace Assets.Code.Gibs
                 float calc = 1 - (dir.magnitude / expRadius);
                 if (calc <= 0)
                 {
-                    calc = 0;
+                    calc = MinUp;
                 }
-                body.AddForce(dir.normalized * expForce * calc);
+                //Debug.Log("calc: " + calc);
+                Debug.Log("force " + dir.normalized * 1000 * calc);
+                body.AddForce(dir.normalized * 1000 * calc);
             }
         }
     }

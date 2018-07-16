@@ -14,24 +14,36 @@ namespace Assets.Code.Humanoids
     /// </summary>
     public class KillableByTraps : MonoBehaviour
     {
-        public GameObject LeftDeathObj;
-        public GameObject RightDeathObj;
+        public GameObject SpawnUponDeath;
         public float XOffset;
         public float YOffset;
         public bool IsDead = false;
         public bool IsKillableByEvilSteve = true;
+        public bool IsPlayer = false;
 
-        private CharacterSounds characterSounds;
         public GameObject zombieSoundPlayer;
+
+        private PlatformerCharacter2D _characterInput;
+        private CharacterSounds characterSounds;
+        private Vector3 spawnUponDeathScale;
+        private PlayerRespawner respawner;
 
         void Start()
         {
             characterSounds = GetComponentInChildren<CharacterSounds>();
             _characterInput = GetComponent<PlatformerCharacter2D>();
+
+            if (IsPlayer)
+            {
+                respawner = GetComponent<PlayerRespawner>();
+            }
+
+            if (SpawnUponDeath != null)
+            {
+                spawnUponDeathScale = this.transform.localScale;
+            }
         }
 
-        public bool IsPlayer = false;
-        private PlatformerCharacter2D _characterInput;
 
         public virtual void Kill(bool isFacingRight)
         {
@@ -39,33 +51,20 @@ namespace Assets.Code.Humanoids
                 return;
 
             IsDead = true;
-            GameObject createdObj = null;
 
             if(_characterInput != null)
+            {
                 _characterInput.MoveParticles.Stop();
-
-            if (isFacingRight)
-            {
-                if (RightDeathObj != null)
-                {
-                    var pos = transform.position;
-                    RightDeathObj.transform.position = new Vector3(pos.x + XOffset, pos.y + YOffset, pos.z);
-                    createdObj = Instantiate(RightDeathObj);
-                }
-            }
-            else
-            {
-                if (LeftDeathObj != null)
-                {
-                    var pos = transform.position;
-                    LeftDeathObj.transform.position = new Vector3(pos.x + XOffset, pos.y + YOffset, pos.z);
-                    createdObj = Instantiate(LeftDeathObj);
-                }
             }
 
-            if (characterSounds != null)
+            TimedLife gibLife = null;
+            if (SpawnUponDeath != null)
             {
-                characterSounds.PlayDeath();
+                gibLife = SpawnGibs(isFacingRight);
+                if (characterSounds != null)
+                {
+                    characterSounds.PlayDeath();
+                }
             }
 
             if (zombieSoundPlayer != null)
@@ -75,17 +74,44 @@ namespace Assets.Code.Humanoids
 
             if (IsPlayer)
             {
-                PlayerRespawner respawner = GetComponent<PlayerRespawner>();
-                if (respawner != null)
-                {
-                    var gibLife = createdObj.GetComponent<TimedLife>();
-                    respawner.RespawnPlayer(gameObject, gibLife);
-                }
+                
+                respawner.RespawnPlayer(gameObject, gibLife);
+
             }
             else
             {
                 Destroy(gameObject);
             }
+        }
+
+        private TimedLife SpawnGibs(bool isFacingRight)
+        {
+            GameObject createdObj = null;
+            var pos = transform.position;
+            SpawnUponDeath.transform.position = new Vector3(pos.x + XOffset, pos.y + YOffset, pos.z);
+
+            if (isFacingRight)
+            {
+                SpawnUponDeath.transform.localScale = spawnUponDeathScale;
+                createdObj = Instantiate(SpawnUponDeath);
+            }
+            else
+            {
+                SpawnUponDeath.transform.position = new Vector3(pos.x + XOffset, pos.y + YOffset, pos.z);
+                SpawnUponDeath.transform.localScale = new Vector3(spawnUponDeathScale.x * -1, spawnUponDeathScale.y, spawnUponDeathScale.z);
+            }
+            createdObj = Instantiate(SpawnUponDeath);
+
+
+            if (IsPlayer)
+            {
+                if (respawner != null)
+                {
+                    createdObj = Instantiate(SpawnUponDeath);
+                    return createdObj.GetComponent<TimedLife>();
+                }
+            }
+            return null;
         }
     }
 }
