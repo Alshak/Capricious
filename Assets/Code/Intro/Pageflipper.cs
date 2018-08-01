@@ -61,7 +61,7 @@ namespace Assets.Code.Intro
             {
                 "A typical medieval castle, home of an Evil Mastermind bent on world domination.\n" +
                 "Have you ever wondered what goes on behind the scenes of such an establishment? No?\n" +
-                " Well, I’ll tell you anyhow. You signed up for this.",
+                "Well, I’ll tell you anyhow. You signed up for this.",
 
                 "Welcome to Super Evil Corp where dozens of happy clones named Steve keep the place up and running." +
                 " I mean, somebody has to do the paperwork, after all. Evil schemes require money, and doing the paperwork is just depressing." +

@@ -69,12 +69,13 @@ namespace Assets.Code.Humanoids
 
             if (zombieSoundPlayer != null)
             {
-                Instantiate(zombieSoundPlayer);
+                var zombieSound = Instantiate(zombieSoundPlayer).GetComponent<CharacterSounds>();
+                Debug.Log("zombieSound == null?" + zombieSound == null);
+                zombieSound.PlayDeath();
             }
 
             if (IsPlayer)
             {
-                
                 respawner.RespawnPlayer(gameObject, gibLife);
 
             }
@@ -93,7 +94,6 @@ namespace Assets.Code.Humanoids
             if (isFacingRight)
             {
                 SpawnUponDeath.transform.localScale = spawnUponDeathScale;
-                createdObj = Instantiate(SpawnUponDeath);
             }
             else
             {
@@ -107,7 +107,6 @@ namespace Assets.Code.Humanoids
             {
                 if (respawner != null)
                 {
-                    createdObj = Instantiate(SpawnUponDeath);
                     return createdObj.GetComponent<TimedLife>();
                 }
             }

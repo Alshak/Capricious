@@ -33,7 +33,7 @@ namespace Assets.Code.Gibs
                     calc = MinUp;
                 }
                 //Debug.Log("calc: " + calc);
-                Debug.Log("force " + dir.normalized * 1000 * calc);
+                //Debug.Log("force " + dir.normalized * 1000 * calc);
                 body.AddForce(dir.normalized * 1000 * calc);
             }
         }

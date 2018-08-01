@@ -42,7 +42,8 @@ namespace Assets.Code.UI
         {
             ListStory = new List<string>
             {
-                "Boss: I have been expecting you.. Wait, you're not Captain McSuperface. What are you doing here?",
+                "Boss: I have been expecting you.. Wait, you're not Captain McSuperface.\n" +
+                "What are you doing here?",
 
                 "Steve: I brought you your favourite Capricious Cheese boss, the elevator was broken so I had to-" +
                 "Boss: YOU BROUGHT ME WHAT?! AT THIS LATE HOUR?! I'M ON A DIET, YOU INSENSITIVE *#@^*$^#*!!! " +

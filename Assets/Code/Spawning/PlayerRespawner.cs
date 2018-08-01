@@ -86,7 +86,6 @@ namespace Assets.Code.Spawning
 
             if (PrevTimeLife != null)
             {
-                //Debug.Log("prev life null");
                 PrevTimeLife.IsActived = true;
             }
             PrevTimeLife = newTimedLife;

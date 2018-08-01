@@ -105,8 +105,11 @@ namespace Assets.Code.Humanoids
 
         private void Reset()
         {
-            OneShotSoundPlayer.pitch = 1;
-            OneShotSoundPlayer.loop = false;
+            if (OneShotSoundPlayer != null)
+            {
+                OneShotSoundPlayer.pitch = 1;
+                OneShotSoundPlayer.loop = false;
+            }
         }
 
         private AudioClip GetRandom(List<AudioClip> sounds)
